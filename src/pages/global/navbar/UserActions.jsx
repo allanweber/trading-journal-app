@@ -9,6 +9,7 @@ import { useColors } from '../../../hooks/useColors';
 export const UserActions = () => {
   const colors = useColors();
   const dispatch = useAuthDispatch();
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {

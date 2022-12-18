@@ -7,7 +7,7 @@ import { ThemeChange } from '../../../components/theme-change';
 import { useAuthState } from '../../../context/UserContext';
 import { useColors } from '../../../hooks/useColors';
 import { useIsMobile } from '../../../hooks/useIsMobile';
-import { UserActions } from './UserActions';
+import { UserActions } from '../navbar/UserActions';
 
 export const TopBar = () => {
   const { user } = useAuthState();
