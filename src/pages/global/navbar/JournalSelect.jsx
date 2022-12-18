@@ -22,7 +22,7 @@ export const JournalSelect = ({ onChange }) => {
   const { data: journals } = useGetJournals();
 
   useEffect(() => {
-    if (!journal && journals && journals.length > 0) {
+    if (!journal && journals) {
       setJournal(journals[0]);
     }
   }, [journals, journal, setJournal]);
