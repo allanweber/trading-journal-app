@@ -18,7 +18,7 @@ export const tokens = (mode) => ({
         },
         primary: {
           100: '#d0d1d5',
-          200: '#a1a4ab',
+          200: '#252f45',
           300: '#1d273d',
           400: '#1F2A40',
           500: '#141b2d',
@@ -242,10 +242,10 @@ export const themeSettings = (mode) => {
             fontSize: '1rem',
           },
           columnHeaders: {
-            backgroundColor: colors.primary[300],
+            backgroundColor: colors.primary[400],
           },
           footerContainer: {
-            backgroundColor: colors.primary[300],
+            backgroundColor: colors.primary[400],
           },
         },
       },

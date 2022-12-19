@@ -5,3 +5,8 @@ export const useColors = () => {
   const theme = useTheme();
   return tokens(theme.palette.mode);
 };
+
+export const useMode = () => {
+  const theme = useTheme();
+  return theme.palette.mode;
+};

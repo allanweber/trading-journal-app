@@ -1,10 +1,12 @@
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Box, Link, Typography } from '@mui/material';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
-import { useCallback } from 'react';
+
+import { useCallback, useState } from 'react';
 import { Alert } from '../../components/alert';
 import { useConfirmationModal } from '../../components/dialog/Confirmation';
 import { Loading } from '../../components/loading';
+import { useJournalContext } from '../../context/JournalContext';
 import {
   useDeleteJournal,
   useGetJournals,
@@ -15,8 +17,10 @@ import { currencyFormatter } from '../../utilities/numberUtilities';
 export const JournalTable = ({ onEdit }) => {
   const JournalDataGrid = Loading(DataGrid);
   const { data, error, isLoading } = useGetJournals();
+  const { journal: contextJournal, setJournal } = useJournalContext();
   const mutation = useDeleteJournal();
   const deleteConfirmation = useConfirmationModal();
+  const [lastJournal, setLastJournal] = useState(false);
 
   const editAction = (journal) => {
     onEdit(journal);
@@ -24,23 +28,30 @@ export const JournalTable = ({ onEdit }) => {
 
   const deleteAction = useCallback(
     async (journal) => {
-      const result = await deleteConfirmation.showConfirmation(
-        'Delete Journal',
-        <div>
-          <Typography fontSize={20}>
-            Are you sure do you want to remove {journal.name}?
-          </Typography>
-          <Typography fontSize={14}>
-            All entries for this journal will also be delete.
-          </Typography>
-          <Typography fontSize={14}>This action can not be undone</Typography>
-        </div>
-      );
-      if (result) {
-        mutation.mutate(journal.id);
+      if (data.length === 1) {
+        setLastJournal(true);
+      } else {
+        const result = await deleteConfirmation.showConfirmation(
+          'Delete Journal',
+          <div>
+            <Typography fontSize={20}>
+              Are you sure do you want to remove {journal.name}?
+            </Typography>
+            <Typography fontSize={14}>
+              All entries for this journal will also be delete.
+            </Typography>
+            <Typography fontSize={14}>This action can not be undone</Typography>
+          </div>
+        );
+        if (result) {
+          mutation.mutate(journal.id);
+          if (contextJournal.id === journal.id) {
+            setJournal(data.find((item) => item.id !== journal.id));
+          }
+        }
       }
     },
-    [mutation, deleteConfirmation]
+    [mutation, deleteConfirmation, contextJournal, data, setJournal]
   );
 
   const columns = [
@@ -97,6 +108,12 @@ export const JournalTable = ({ onEdit }) => {
         disableSelectionOnClick
         disableColumnMenu
       />
+      <Box marginTop="10px">
+        <Alert show={lastJournal} severity="error">
+          You cannot delete the last journal, at least one journal must be
+          present
+        </Alert>
+      </Box>
     </Box>
   );
 };
