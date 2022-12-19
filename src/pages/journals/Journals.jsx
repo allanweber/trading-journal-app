@@ -4,8 +4,7 @@ import { Box, Button } from '@mui/material';
 import { useState } from 'react';
 import { Dialog } from '../../components/dialog/Dialog';
 import { Header } from '../../components/header';
-import { JournalForm } from './JournalForm';
-import { JournalTable } from './JournalTable';
+import { JournalForm, JournalTable } from '../../containers/journals';
 
 export const Journals = () => {
   const [journal, setJournal] = useState(undefined);
