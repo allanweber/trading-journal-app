@@ -31,7 +31,12 @@ const initialValues = {
   currency: 'DOLLAR',
 };
 
-export const JournalForm = ({ journal, onCancel }) => {
+export const JournalForm = ({
+  journal,
+  onCancel,
+  onSaved,
+  showCancel = true,
+}) => {
   const [editDisabled, setEditDisabled] = useState(false);
   const mutation = useSaveJournal();
 
@@ -40,10 +45,10 @@ export const JournalForm = ({ journal, onCancel }) => {
   };
 
   useEffect(() => {
-    if (mutation.isSuccess) {
-      onCancel();
+    if (mutation.isSuccess && onSaved) {
+      onSaved();
     }
-  }, [mutation, onCancel]);
+  }, [mutation, onSaved]);
 
   useEffect(() => {
     if (journal) {
@@ -149,6 +154,7 @@ export const JournalForm = ({ journal, onCancel }) => {
                 cancel="Cancel"
                 onCancel={onCancel}
                 loading={mutation.isLoading}
+                showCancel={showCancel}
               />
             </Box>
           </form>

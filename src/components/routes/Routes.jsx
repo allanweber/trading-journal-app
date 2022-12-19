@@ -1,5 +1,6 @@
 import { Route, Routes as ReactRoutes } from 'react-router-dom';
 import { Dashboard } from '../../pages/dashboard';
+import { FirstJournal } from '../../pages/journals/FirstJournal';
 import { Journals } from '../../pages/journals/Journals';
 import { ChangePassword } from '../../pages/password/ChangePassword';
 import { RequestPassword } from '../../pages/password/RequestPassword';
@@ -24,6 +25,9 @@ export const Routes = () => {
       </Route>
       <Route path="/journals" element={<PrivateRoute />}>
         <Route path="" element={<Journals />} />
+      </Route>
+      <Route path="/first-journal" element={<PrivateRoute />}>
+        <Route path="" element={<FirstJournal />} />
       </Route>
       <Route path="/trades" element={<PrivateRoute />}>
         <Route path="" element={<Trades />} />
