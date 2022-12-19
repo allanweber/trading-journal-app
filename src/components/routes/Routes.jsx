@@ -1,0 +1,39 @@
+import { Route, Routes as ReactRoutes } from 'react-router-dom';
+import { Dashboard } from '../../pages/dashboard';
+import { Journals } from '../../pages/journals/Journals';
+import { ChangePassword } from '../../pages/password/ChangePassword';
+import { RequestPassword } from '../../pages/password/RequestPassword';
+import { SignIn } from '../../pages/signin';
+import { SignUp } from '../../pages/signup';
+import { AllEntries } from '../../pages/trades/AllEntries';
+import { Calendar } from '../../pages/trades/Calendar';
+import { Trades } from '../../pages/trades/Trades';
+import { VerifyEmail } from '../../pages/verify';
+import { PrivateRoute } from './PrivateRoute';
+
+export const Routes = () => {
+  return (
+    <ReactRoutes>
+      <Route path="/login" element={<SignIn />} />
+      <Route path="/register" element={<SignUp />} />
+      <Route path="/email-verified" element={<VerifyEmail />} />
+      <Route path="/forgot-password" element={<RequestPassword />} />
+      <Route path="/change-password" element={<ChangePassword />} />
+      <Route path="/" element={<PrivateRoute />}>
+        <Route path="" element={<Dashboard />} />
+      </Route>
+      <Route path="/journals" element={<PrivateRoute />}>
+        <Route path="" element={<Journals />} />
+      </Route>
+      <Route path="/trades" element={<PrivateRoute />}>
+        <Route path="" element={<Trades />} />
+      </Route>
+      <Route path="/entries" element={<PrivateRoute />}>
+        <Route path="" element={<AllEntries />} />
+      </Route>
+      <Route path="/calendar" element={<PrivateRoute />}>
+        <Route path="" element={<Calendar />} />
+      </Route>
+    </ReactRoutes>
+  );
+};

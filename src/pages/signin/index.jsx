@@ -3,9 +3,9 @@ import { Avatar, Box, Typography } from '@mui/material';
 import Link from '@mui/material/Link';
 import { Link as RouterLink, Navigate } from 'react-router-dom';
 import { Alert } from '../../components/alert';
-import { ThemeChange } from '../../components/theme-change';
 import { useAuthState } from '../../context/UserContext';
 import { useIsMobile } from '../../hooks/useIsMobile';
+import { ThemeChange } from '../global/theme-change';
 import { SignInForm } from './SignInForm';
 
 export const SignIn = () => {

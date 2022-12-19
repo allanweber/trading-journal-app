@@ -5,6 +5,7 @@ import { Box, ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useJournalContext } from '../../../context/JournalContext';
 import { useColors } from '../../../hooks/useColors';
 import { useIsMobile } from '../../../hooks/useIsMobile';
 
@@ -13,6 +14,7 @@ export const NavLinks = ({ onChange }) => {
   const location = useLocation();
   const isMobile = useIsMobile();
   const navigate = useNavigate();
+  const { journal } = useJournalContext();
   let currentLocation = location.pathname;
 
   const [selected, setSelected] = useState(currentLocation);
@@ -66,91 +68,93 @@ export const NavLinks = ({ onChange }) => {
       <MenuItem key="Dashboard" onClick={() => onSelect('/')}>
         <MenuHeader select={selected === '/'}>DASHBOARD</MenuHeader>
       </MenuItem>
-      <MenuItem onMouseEnter={openMenu} onMouseLeave={closeMenu}>
-        <MenuHeader
-          select={
-            selected === '/trades' ||
-            selected === '/entries' ||
-            selected === '/calendar'
-          }
-        >
-          TRADES
-        </MenuHeader>
-        <Menu
-          id="trades-select"
-          anchorEl={anchorEl}
-          open={open}
-          sx={{
-            '& .MuiMenu-paper': {
-              backgroundColor: colors.primary[400],
-              backgroundImage: 'none !important',
-              width: 320,
-              maxWidth: '100%',
-            },
-          }}
-        >
-          <MenuItem
-            key="Trades"
-            onClick={() => onSelect('/trades')}
-            sx={{ padding: '20px' }}
+      {journal && (
+        <MenuItem onMouseEnter={openMenu} onMouseLeave={closeMenu}>
+          <MenuHeader
+            select={
+              selected === '/trades' ||
+              selected === '/entries' ||
+              selected === '/calendar'
+            }
           >
-            <ListItemIcon>
-              <AutoStoriesOutlined />
-            </ListItemIcon>
-            <ListItemText>
-              <Typography
-                variant="h5"
-                style={selected === '/trades' ? selectedStyle : null}
-              >
-                JOURNAL
-              </Typography>
-              <Typography variant="body2">
-                Entry and manage your trades by date or symbol
-              </Typography>
-            </ListItemText>
-          </MenuItem>
-          <MenuItem
-            key="Table"
-            onClick={() => onSelect('/entries')}
-            sx={{ padding: '20px' }}
+            TRADES
+          </MenuHeader>
+          <Menu
+            id="trades-select"
+            anchorEl={anchorEl}
+            open={open}
+            sx={{
+              '& .MuiMenu-paper': {
+                backgroundColor: colors.primary[400],
+                backgroundImage: 'none !important',
+                width: 320,
+                maxWidth: '100%',
+              },
+            }}
           >
-            <ListItemIcon>
-              <TableRowsOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText>
-              <Typography
-                variant="h5"
-                style={selected === '/entries' ? selectedStyle : null}
-              >
-                ALL ENTRIES
-              </Typography>
-              <Typography variant="body2">
-                View all your entries, trades, deposits, withdrawals
-              </Typography>
-            </ListItemText>
-          </MenuItem>
-          <MenuItem
-            key="Calendar"
-            onClick={() => onSelect('/calendar')}
-            sx={{ padding: '20px' }}
-          >
-            <ListItemIcon>
-              <CalendarMonthOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText>
-              <Typography
-                variant="h5"
-                style={selected === '/calendar' ? selectedStyle : null}
-              >
-                CALENDAR
-              </Typography>
-              <Typography variant="body2">
-                Explore your trades via the Calendar
-              </Typography>
-            </ListItemText>
-          </MenuItem>
-        </Menu>
-      </MenuItem>
+            <MenuItem
+              key="Trades"
+              onClick={() => onSelect('/trades')}
+              sx={{ padding: '20px' }}
+            >
+              <ListItemIcon>
+                <AutoStoriesOutlined />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography
+                  variant="h5"
+                  style={selected === '/trades' ? selectedStyle : null}
+                >
+                  JOURNAL
+                </Typography>
+                <Typography variant="body2">
+                  Entry and manage your trades by date or symbol
+                </Typography>
+              </ListItemText>
+            </MenuItem>
+            <MenuItem
+              key="Table"
+              onClick={() => onSelect('/entries')}
+              sx={{ padding: '20px' }}
+            >
+              <ListItemIcon>
+                <TableRowsOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography
+                  variant="h5"
+                  style={selected === '/entries' ? selectedStyle : null}
+                >
+                  ALL ENTRIES
+                </Typography>
+                <Typography variant="body2">
+                  View all your entries, trades, deposits, withdrawals
+                </Typography>
+              </ListItemText>
+            </MenuItem>
+            <MenuItem
+              key="Calendar"
+              onClick={() => onSelect('/calendar')}
+              sx={{ padding: '20px' }}
+            >
+              <ListItemIcon>
+                <CalendarMonthOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography
+                  variant="h5"
+                  style={selected === '/calendar' ? selectedStyle : null}
+                >
+                  CALENDAR
+                </Typography>
+                <Typography variant="body2">
+                  Explore your trades via the Calendar
+                </Typography>
+              </ListItemText>
+            </MenuItem>
+          </Menu>
+        </MenuItem>
+      )}
     </Box>
   );
 };

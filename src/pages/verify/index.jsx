@@ -11,9 +11,9 @@ import {
 } from 'react-router-dom';
 import { Alert } from '../../components/alert';
 import { Button } from '../../components/button/Button';
-import { ThemeChange } from '../../components/theme-change';
 import { useIsMobile } from '../../hooks/useIsMobile';
 import { useVerify } from '../../services/AuthenticationQueries';
+import { ThemeChange } from '../global/theme-change';
 import { VerifyForm } from './VerifyForm';
 
 export const VerifyEmail = () => {

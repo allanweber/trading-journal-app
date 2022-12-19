@@ -9,9 +9,9 @@ import Toolbar from '@mui/material/Toolbar';
 import { useState } from 'react';
 import { useAuthState } from '../../../context/UserContext';
 import { useColors, useMode } from '../../../hooks/useColors';
+import { OptionsMenu } from '../options/OptionsMenu';
 import { JournalSelect } from './JournalSelect';
 import { NavLinks } from './NavLinks';
-import { OptionsMenu } from './OptionsMenu';
 
 export const NavBar = () => {
   const colors = useColors();
