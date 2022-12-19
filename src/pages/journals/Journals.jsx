@@ -49,7 +49,11 @@ export const Journals = () => {
         title="Add Journal"
         icon={<AutoStoriesOutlinedIcon />}
       >
-        <JournalForm journal={journal} onCancel={closeDialog} />
+        <JournalForm
+          journal={journal}
+          onCancel={closeDialog}
+          onSaved={closeDialog}
+        />
       </Dialog>
     </div>
   );
