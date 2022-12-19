@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useColors } from '../../../hooks/useColors';
 import { useGetJournals } from '../../../services/JournalQueries';
 
-import { AutoStories } from '@mui/icons-material';
+import { AutoStoriesOutlined } from '@mui/icons-material';
 import RadioButtonCheckedOutlinedIcon from '@mui/icons-material/RadioButtonCheckedOutlined';
 import RadioButtonUncheckedOutlinedIcon from '@mui/icons-material/RadioButtonUncheckedOutlined';
 import { useJournalContext } from '../../../context/JournalContext';
@@ -69,7 +69,7 @@ export const JournalSelect = ({ onChange }) => {
         aria-expanded={open ? 'true' : undefined}
         onClick={openMenu}
         startIcon={
-          <AutoStories
+          <AutoStoriesOutlined
             sx={{
               mr: 1,
               mb: '3px',
