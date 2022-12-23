@@ -23,20 +23,15 @@ function TabPanel(props) {
   );
 }
 
-function a11yProps(index) {
-  return {
-    id: `entries-tab-${index}`,
-    'aria-controls': `entries-tabpanel-${index}`,
-  };
-}
-
 export const Entries = ({ journal }) => {
   const [value, setValue] = useState(0);
-  const { data: openCount, isSuccess } = useGetOpenTradesCount(journal.id);
+  const count = useGetOpenTradesCount(journal.id).data.trades;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  console.log('load');
 
   return (
     <Box>
@@ -48,16 +43,11 @@ export const Entries = ({ journal }) => {
           textColor="secondary"
           indicatorColor="secondary"
         >
-          <Tab
-            label={<Typography fontSize="1rem">Closed</Typography>}
-            {...a11yProps(0)}
-          ></Tab>
+          <Tab label={<Typography fontSize="1rem">Closed</Typography>}></Tab>
           <Tab
             label={
               <Badge
-                badgeContent={
-                  isSuccess && openCount.trades > 0 ? openCount.trades : 0
-                }
+                badgeContent={count > 0 ? count : 0}
                 max={99}
                 showZero={false}
                 color="success"
@@ -65,7 +55,6 @@ export const Entries = ({ journal }) => {
                 <Typography fontSize="1rem">Open</Typography>
               </Badge>
             }
-            {...a11yProps(1)}
           />
         </Tabs>
       </Box>
