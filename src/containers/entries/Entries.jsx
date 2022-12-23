@@ -1,6 +1,5 @@
-import { Badge, Box, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Tab, Tabs, Typography } from '@mui/material';
 import { useState } from 'react';
-import { useGetOpenTradesCount } from '../../services/EntryQueries';
 import { ClosedEntries } from './ClosedEntries';
 
 function TabPanel(props) {
@@ -25,37 +24,19 @@ function TabPanel(props) {
 
 export const Entries = ({ journal }) => {
   const [value, setValue] = useState(0);
-  const count = useGetOpenTradesCount(journal.id).data.trades;
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  console.log('load');
 
   return (
     <Box>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
           value={value}
-          onChange={handleChange}
+          onChange={(event, newValue) => setValue(newValue)}
           aria-label="entries tabs"
           textColor="secondary"
           indicatorColor="secondary"
         >
           <Tab label={<Typography fontSize="1rem">Closed</Typography>}></Tab>
-          <Tab
-            label={
-              <Badge
-                badgeContent={count > 0 ? count : 0}
-                max={99}
-                showZero={false}
-                color="success"
-              >
-                <Typography fontSize="1rem">Open</Typography>
-              </Badge>
-            }
-          />
+          <Tab label={<Typography fontSize="1rem">Open</Typography>} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>

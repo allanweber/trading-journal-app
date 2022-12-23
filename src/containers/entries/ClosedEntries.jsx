@@ -10,14 +10,18 @@ import { EntriesTable } from './EntriesTable';
 export const ClosedEntries = ({ journal }) => {
   const EntriesTableLoading = Loading(EntriesTable);
   const [symbol, setSymbol] = useState(undefined);
-
-  // private EntryType type;
+  const [type, setType] = useState(undefined);
 
   // private EntryStatus status;
 
   // private String from;
-
-  const { data, error, isLoading } = useGetEntries(journal.id, symbol);
+  const status = 'CLOSED';
+  const { data, error, isLoading } = useGetEntries(
+    journal.id,
+    status,
+    symbol,
+    type
+  );
 
   const timeChanged = (time) => {
     console.log(time);
@@ -28,7 +32,7 @@ export const ClosedEntries = ({ journal }) => {
   };
 
   const changeType = (value) => {
-    console.log(value);
+    setType(value);
   };
 
   return (

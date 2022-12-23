@@ -42,7 +42,7 @@ export const EntrySelect = ({ filterChanged }) => {
   const changeFilter = (type) => {
     setType(type);
     if (filterChanged) {
-      filterChanged(type);
+      filterChanged(type === 'ALL' ? undefined : type);
     }
   };
 

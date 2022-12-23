@@ -10,11 +10,11 @@ import {
   saveWithdrawal,
 } from './Entry';
 
-export const useGetEntries = (journalId, symbol) => {
+export const useGetEntries = (journalId, status, symbol, type) => {
   const accessToken = useAccessTokenState();
   return useQuery(
-    [`entries-${journalId}-${symbol}`],
-    async () => await getEntries(accessToken, journalId, symbol)
+    [`entries-${journalId}`, `${journalId}-${status}-${symbol}-${type}`],
+    async () => await getEntries(accessToken, journalId, status, symbol, type)
   );
 };
 
@@ -32,7 +32,11 @@ export const useSaveTrade = (journalId, tradeId) => {
   return useMutation(
     (trade) => saveTrade(accessToken, journalId, trade, tradeId),
     {
-      onSuccess: refreshQueries(queryClient, journalId),
+      onSuccess: () => {
+        queryClient.invalidateQueries([`entries-open-count-${journalId}`]);
+        queryClient.invalidateQueries([`entries-${journalId}`]);
+        queryClient.invalidateQueries([`journals-balance-${journalId}`]);
+      },
     }
   );
 };
@@ -43,7 +47,10 @@ export const useSaveDeposit = (journalId) => {
   return useMutation(
     (deposit) => saveDeposit(accessToken, journalId, deposit),
     {
-      onSuccess: refreshQueries(queryClient, journalId),
+      onSuccess: () => {
+        queryClient.invalidateQueries([`entries-${journalId}`]);
+        queryClient.invalidateQueries([`journals-balance-${journalId}`]);
+      },
     }
   );
 };
@@ -54,7 +61,10 @@ export const useSaveWithdrawal = (journalId) => {
   return useMutation(
     (withdrawal) => saveWithdrawal(accessToken, journalId, withdrawal),
     {
-      onSuccess: refreshQueries(queryClient, journalId),
+      onSuccess: () => {
+        queryClient.invalidateQueries([`entries-${journalId}`]);
+        queryClient.invalidateQueries([`journals-balance-${journalId}`]);
+      },
     }
   );
 };
@@ -63,7 +73,10 @@ export const useSaveTaxes = (journalId) => {
   const queryClient = useQueryClient();
   const accessToken = useAccessTokenState();
   return useMutation((taxes) => saveTaxes(accessToken, journalId, taxes), {
-    onSuccess: refreshQueries(queryClient, journalId),
+    onSuccess: () => {
+      queryClient.invalidateQueries([`entries-${journalId}`]);
+      queryClient.invalidateQueries([`journals-balance-${journalId}`]);
+    },
   });
 };
 
@@ -73,13 +86,10 @@ export const useDeleteEntry = (journalId) => {
   return useMutation(
     (entryId) => deleteEntry(accessToken, journalId, entryId),
     {
-      onSuccess: refreshQueries(queryClient, journalId),
+      onSuccess: () => {
+        queryClient.invalidateQueries([`entries-${journalId}`]);
+        queryClient.invalidateQueries([`journals-balance-${journalId}`]);
+      },
     }
   );
-};
-
-const refreshQueries = (queryClient, journalId) => {
-  queryClient.invalidateQueries([`entries-${journalId}`]);
-  queryClient.invalidateQueries([`entries-open-count-${journalId}`]);
-  queryClient.invalidateQueries([`journals-balance-${journalId}`]);
 };

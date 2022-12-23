@@ -2,10 +2,16 @@ import { config } from '../utilities/config';
 import { apiFormat } from '../utilities/dateTimeUtilities';
 import { readErrors } from './readErrors';
 
-export const getEntries = (accessToken, journalId, symbol) => {
+export const getEntries = (accessToken, journalId, status, symbol, type) => {
   let url = `${config.entries}/journals/${journalId}/entries?`;
+  if (status) {
+    url += `status=${status}&`;
+  }
   if (symbol) {
-    url += `symbol=${symbol}`;
+    url += `symbol=${symbol}&`;
+  }
+  if (type) {
+    url += `type=${type}&`;
   }
   return fetch(url, {
     method: 'GET',
