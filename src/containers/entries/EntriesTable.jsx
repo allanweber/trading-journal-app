@@ -1,22 +1,29 @@
 import { Box, Link, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { Alert } from '../../components/alert';
-import { useJournalContext } from '../../context/JournalContext';
+import { Loading } from '../../components/loading';
 import { useColors } from '../../hooks/useColors';
-import { useDeleteEntry } from '../../services/EntryQueries';
+import { useDeleteEntry, useGetEntries } from '../../services/EntryQueries';
 import { displayDateTime } from '../../utilities/dateTimeUtilities';
 import {
   currencyFormatter,
   percentFormatter,
 } from '../../utilities/numberUtilities';
 
-export const EntriesTable = ({ rows }) => {
-  const { journal } = useJournalContext();
+export const EntriesTable = ({ args }) => {
   const colors = useColors();
   const red = colors.redAccent[500];
   const green = colors.greenAccent[400];
 
+  const journal = args.journal;
+  const DataGridLoading = Loading(DataGrid);
+  const { data, error, isLoading } = useGetEntries({
+    ...args,
+    journalId: journal.id,
+  });
+
   const mutation = useDeleteEntry(journal.id);
+
   const currency = journal.currency;
 
   const columns = [
@@ -137,8 +144,10 @@ export const EntriesTable = ({ rows }) => {
       <Box marginBottom="10px">
         {mutation.isError && <Alert mutation={mutation} />}
       </Box>
-      <DataGrid
-        rows={rows || []}
+      <DataGridLoading
+        error={error}
+        loading={isLoading}
+        rows={data || []}
         columns={columns}
         autoHeight
         disableSelectionOnClick

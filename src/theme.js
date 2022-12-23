@@ -240,6 +240,13 @@ export const themeSettings = (mode) => {
           },
         },
       },
+      MuiCircularProgress: {
+        styleOverrides: {
+          root: {
+            color: colors.grey[100],
+          },
+        },
+      },
       MuiDataGrid: {
         styleOverrides: {
           root: {

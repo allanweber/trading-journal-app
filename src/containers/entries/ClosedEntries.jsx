@@ -1,38 +1,23 @@
 import { Box } from '@mui/material';
 import { useState } from 'react';
 import { EntrySelect } from '../../components/entry-select';
-import { Loading } from '../../components/loading';
 import { Search } from '../../components/search';
 import { TimeSelect } from '../../components/time-select';
-import { useGetEntries } from '../../services/EntryQueries';
 import { EntriesTable } from './EntriesTable';
 
 export const ClosedEntries = ({ journal }) => {
-  const EntriesTableLoading = Loading(EntriesTable);
-  const [symbol, setSymbol] = useState(undefined);
-  const [type, setType] = useState(undefined);
-
-  // private EntryStatus status;
-
-  // private String from;
-  const status = 'CLOSED';
-  const { data, error, isLoading } = useGetEntries(
-    journal.id,
-    status,
-    symbol,
-    type
-  );
+  const [tableProps, setTableProps] = useState({ journal, status: 'CLOSED' });
 
   const timeChanged = (time) => {
-    console.log(time);
+    setTableProps({ ...tableProps, from: time });
   };
 
   const onSearch = (value) => {
-    setSymbol(value);
+    setTableProps({ ...tableProps, symbol: value });
   };
 
   const changeType = (value) => {
-    setType(value);
+    setTableProps({ ...tableProps, type: value });
   };
 
   return (
@@ -48,7 +33,7 @@ export const ClosedEntries = ({ journal }) => {
           <TimeSelect onChange={timeChanged} />
         </Box>
       </Box>
-      <EntriesTableLoading isLoading={isLoading} error={error} rows={data} />
+      <EntriesTable args={tableProps} />
     </Box>
   );
 };
