@@ -99,8 +99,6 @@ export const JournalSelect = ({ onChange }) => {
         onClose={closeMenu}
         sx={{
           '& .MuiMenu-paper': {
-            backgroundColor: colors.primary[400],
-            backgroundImage: 'none !important',
             width: 320,
             maxWidth: '100%',
           },

@@ -4,10 +4,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 import { doLogout, useAuthDispatch } from '../../../context/UserContext';
-import { useColors } from '../../../hooks/useColors';
 
 export const UserActions = () => {
-  const colors = useColors();
   const dispatch = useAuthDispatch();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -39,12 +37,6 @@ export const UserActions = () => {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        sx={{
-          '& .MuiMenu-paper': {
-            backgroundColor: colors.primary[400],
-            backgroundImage: 'none !important',
-          },
-        }}
       >
         <MenuItem onClick={() => handleClose('profile')}>Profile</MenuItem>
         <MenuItem onClick={() => handleClose('account')}>My account</MenuItem>

@@ -3,17 +3,26 @@ import { useAccessTokenState } from '../context/UserContext';
 import {
   deleteEntry,
   getEntries,
+  getOpenTradesCount,
   saveDeposit,
   saveTaxes,
   saveTrade,
   saveWithdrawal,
 } from './Entry';
 
-export const useGetEntries = (journalId) => {
+export const useGetEntries = (journalId, symbol) => {
   const accessToken = useAccessTokenState();
   return useQuery(
-    [`entries-${journalId}`],
-    async () => await getEntries(accessToken, journalId)
+    [`entries-${journalId}-${symbol}`],
+    async () => await getEntries(accessToken, journalId, symbol)
+  );
+};
+
+export const useGetOpenTradesCount = (journalId) => {
+  const accessToken = useAccessTokenState();
+  return useQuery(
+    [`entries-open-count-${journalId}`],
+    async () => await getOpenTradesCount(accessToken, journalId)
   );
 };
 
@@ -71,5 +80,6 @@ export const useDeleteEntry = (journalId) => {
 
 const refreshQueries = (queryClient, journalId) => {
   queryClient.invalidateQueries([`entries-${journalId}`]);
+  queryClient.invalidateQueries([`entries-open-count-${journalId}`]);
   queryClient.invalidateQueries([`journals-balance-${journalId}`]);
 };

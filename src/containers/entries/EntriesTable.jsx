@@ -1,21 +1,21 @@
 import { Box, Link, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { Alert } from '../../components/alert';
-import { Loading } from '../../components/loading';
+import { useJournalContext } from '../../context/JournalContext';
 import { useColors } from '../../hooks/useColors';
-import { useDeleteEntry, useGetEntries } from '../../services/EntryQueries';
+import { useDeleteEntry } from '../../services/EntryQueries';
 import { displayDateTime } from '../../utilities/dateTimeUtilities';
 import {
   currencyFormatter,
   percentFormatter,
 } from '../../utilities/numberUtilities';
 
-export const EntriesTable = ({ journal }) => {
+export const EntriesTable = ({ rows }) => {
+  const { journal } = useJournalContext();
   const colors = useColors();
   const red = colors.redAccent[500];
   const green = colors.greenAccent[400];
-  const JournalDataGrid = Loading(DataGrid);
-  const { data, error, isLoading } = useGetEntries(journal.id);
+
   const mutation = useDeleteEntry(journal.id);
   const currency = journal.currency;
 
@@ -137,10 +137,8 @@ export const EntriesTable = ({ journal }) => {
       <Box marginBottom="10px">
         {mutation.isError && <Alert mutation={mutation} />}
       </Box>
-      <JournalDataGrid
-        isLoading={isLoading}
-        error={error}
-        rows={data}
+      <DataGrid
+        rows={rows || []}
         columns={columns}
         autoHeight
         disableSelectionOnClick
