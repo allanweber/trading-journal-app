@@ -3,7 +3,7 @@ import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import SavingsIcon from '@mui/icons-material/Savings';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import { Box } from '@mui/material';
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
@@ -38,8 +38,9 @@ const types = [
 ];
 
 export const EntrySelect = ({ filterChanged }) => {
-  const [type, setType] = useState('ALL');
+  const [type, setType] = useState('TRADE');
   const changeFilter = (type) => {
+    console.log(type);
     setType(type);
     if (filterChanged) {
       filterChanged(type === 'ALL' ? undefined : type);
@@ -67,6 +68,22 @@ export const EntrySelect = ({ filterChanged }) => {
             </ToggleButton>
           ))}
         </ToggleButtonGroup>
+      </Box>
+      <Box sx={{ flexGrow: 1, p: 1, display: { xs: 'flex', md: 'none' } }}>
+        <FormControl sx={{ m: 1, minWidth: 100 }} size="small">
+          <InputLabel id="filter-types-label">Entry Type</InputLabel>
+          <Select
+            labelId="filter-types-label"
+            id="filter-types"
+            value={type}
+            label="Entry Type"
+            onChange={(event) => changeFilter(event.target.value)}
+          >
+            {types.map((type) => (
+              <MenuItem value={type.key}>{type.value}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </Box>
     </Box>
   );

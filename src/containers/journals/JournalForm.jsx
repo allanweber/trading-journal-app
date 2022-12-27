@@ -140,10 +140,6 @@ export const JournalForm = ({
                   name="currency"
                   error={!!touched.currency && !!errors.currency}
                   helperText={touched.currency && errors.currency}
-                  items={[
-                    { value: 'DOLLAR', label: 'DOLLAR' },
-                    { value: 'EURO', label: 'EURO' },
-                  ]}
                 />
               </Grid>
             </Grid>

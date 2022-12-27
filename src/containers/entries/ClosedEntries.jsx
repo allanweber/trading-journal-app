@@ -11,6 +11,7 @@ export const ClosedEntries = ({ journal }) => {
   const [tableProps, setTableProps] = useState({
     journal,
     status: 'CLOSED',
+    type: 'TRADE',
     from: apiFormat(dayjs().startOf('date')),
   });
 
@@ -32,7 +33,7 @@ export const ClosedEntries = ({ journal }) => {
         <Box>
           <Search placeholder="Symbol" onSearch={onSearch} />
         </Box>
-        <Box>
+        <Box minWidth={100}>
           <EntrySelect filterChanged={changeType} />
         </Box>
         <Box sx={{ ml: 'auto' }}>
