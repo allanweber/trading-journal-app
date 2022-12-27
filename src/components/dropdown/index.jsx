@@ -19,7 +19,7 @@ export const Dropdown = ({ items, onChange, small, name, ...rest }) => {
       {...rest}
     >
       {items.map((item) => (
-        <MenuItem key={item.value || 'null-option'} value={item.value}>
+        <MenuItem key={item.value} value={item.value}>
           {item.label}
         </MenuItem>
       ))}
