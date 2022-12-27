@@ -2,8 +2,35 @@ import { config } from '../utilities/config';
 import { apiFormat } from '../utilities/dateTimeUtilities';
 import { readErrors } from './readErrors';
 
-export const getEntries = (accessToken, journalId) => {
-  return fetch(`${config.entries}/journals/${journalId}/entries`, {
+export const getEntries = (
+  accessToken,
+  journalId,
+  status,
+  symbol,
+  type,
+  from
+) => {
+  let url = `${config.entries}/journals/${journalId}/entries?`;
+  if (status) {
+    url += `status=${status}&`;
+  }
+  if (symbol) {
+    url += `symbol=${symbol}&`;
+  }
+  if (type) {
+    url += `type=${type}&`;
+  }
+  if (from) {
+    url += `from=${from}&`;
+  }
+  return fetch(url, {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${accessToken}` },
+  }).then(responseOrError);
+};
+
+export const getOpenTradesCount = (accessToken, journalId) => {
+  return fetch(`${config.entries}/journals/${journalId}/entries/open`, {
     method: 'GET',
     headers: { Authorization: `Bearer ${accessToken}` },
   }).then(responseOrError);

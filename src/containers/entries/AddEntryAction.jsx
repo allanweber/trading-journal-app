@@ -6,12 +6,10 @@ import MenuItem from '@mui/material/MenuItem';
 import { cloneElement, useState } from 'react';
 import { Button } from '../../components/button/Button';
 import { Dialog } from '../../components/dialog/Dialog';
-import { useColors } from '../../hooks/useColors';
 import { EntryForm } from './EntryForm';
 import { types } from './EntryTypes';
 
 export const AddEntryAction = ({ journal }) => {
-  const colors = useColors();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -52,12 +50,6 @@ export const AddEntryAction = ({ journal }) => {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        sx={{
-          '& .MuiMenu-paper': {
-            backgroundColor: colors.primary[400],
-            backgroundImage: 'none !important',
-          },
-        }}
       >
         {entryTypes.map((type, index) => (
           <MenuItem

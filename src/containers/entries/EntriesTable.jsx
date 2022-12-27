@@ -1,48 +1,77 @@
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Box, Link, Typography } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import { useCallback } from 'react';
 import { Alert } from '../../components/alert';
+import { ColorfulCurrency } from '../../components/colorful-currency';
+import { ColorfulPercentage } from '../../components/colorful-percentage';
+import { DateTimeDisplay } from '../../components/datetime-display';
+import { useConfirmationModal } from '../../components/dialog/Confirmation';
+import { Direction } from '../../components/direction';
 import { Loading } from '../../components/loading';
-import { useColors } from '../../hooks/useColors';
 import { useDeleteEntry, useGetEntries } from '../../services/EntryQueries';
-import { displayDateTime } from '../../utilities/dateTimeUtilities';
-import {
-  currencyFormatter,
-  percentFormatter,
-} from '../../utilities/numberUtilities';
+import { currencyFormatter } from '../../utilities/numberUtilities';
 
-export const EntriesTable = ({ journal }) => {
-  const colors = useColors();
-  const red = colors.redAccent[500];
-  const green = colors.greenAccent[400];
-  const JournalDataGrid = Loading(DataGrid);
-  const { data, error, isLoading } = useGetEntries(journal.id);
+export const EntriesTable = ({ args }) => {
+  const { journal } = args;
+  const DataGridLoading = Loading(DataGrid);
+  const { data, error, isLoading } = useGetEntries({
+    ...args,
+    journalId: journal.id,
+  });
+  const { currency } = journal;
+
   const mutation = useDeleteEntry(journal.id);
-  const currency = journal.currency;
+  const deleteConfirmation = useConfirmationModal();
+
+  const deleteAction = useCallback(
+    async (entry) => {
+      const result = await deleteConfirmation.showConfirmation(
+        'Delete Journal',
+        <div>
+          <Typography fontSize={20}>
+            Are you sure do you want to remove this {entry.type}?
+          </Typography>
+          {entry.type === 'TRADE' && (
+            <Typography fontSize={14}>
+              All data end profits of {entry.symbol} will be removed
+            </Typography>
+          )}
+          <Typography fontSize={14}>This action can not be undone</Typography>
+        </div>
+      );
+      if (result) {
+        mutation.mutate(entry.id);
+      }
+    },
+    [mutation, deleteConfirmation]
+  );
 
   const columns = [
-    // {
-    //   field: 'actions',
-    //   type: 'actions',
-    //   width: 30,
-    //   getActions: (params) => [
-    //     <GridActionsCellItem
-    //       icon={<DeleteOutlineOutlinedIcon />}
-    //       label="Delete"
-    //       onClick={() => deleteAction(params.row)}
-    //     />,
-    //   ],
-    // },
+    {
+      field: 'actions',
+      type: 'actions',
+      width: 30,
+      getActions: (params) => [
+        <GridActionsCellItem
+          icon={<DeleteOutlineOutlinedIcon />}
+          label="Delete"
+          onClick={() => deleteAction(params.row)}
+        />,
+      ],
+    },
     {
       field: 'date',
-      headerName: 'Entry Date',
+      headerName: 'Open Date',
       width: 140,
-      valueGetter: (params) => displayDateTime(params.row.date),
+      renderCell: (params) => <DateTimeDisplay date={params.row.date} />,
     },
     {
       field: 'exitDate',
-      headerName: 'Exit Date',
+      headerName: 'Close Date',
       width: 140,
-      valueGetter: (params) => displayDateTime(params.row.exitDate),
+      hide: args.status === 'OPEN',
+      renderCell: (params) => <DateTimeDisplay date={params.row.exitDate} />,
     },
     {
       field: 'symbol',
@@ -56,8 +85,14 @@ export const EntriesTable = ({ journal }) => {
       },
     },
     {
+      field: 'direction',
+      headerName: 'Direction',
+      width: 80,
+      renderCell: (params) => <Direction direction={params.row.direction} />,
+    },
+    {
       field: 'size',
-      headerName: 'Entry Size',
+      headerName: 'Quantity',
       type: 'number',
       width: 130,
       valueGetter: (params) => {
@@ -74,26 +109,11 @@ export const EntriesTable = ({ journal }) => {
       valueGetter: (params) => currencyFormatter(params.row.price, currency),
     },
     {
-      field: 'direction',
-      headerName: 'Direction',
-      width: 80,
-      renderCell: (params) => {
-        return (
-          <Typography
-            sx={{
-              color: params.row.direction === 'SHORT' ? red : green,
-            }}
-          >
-            {params.row.direction}
-          </Typography>
-        );
-      },
-    },
-    {
       field: 'exitPrice',
       headerName: 'Exit Price',
       type: 'number',
       width: 130,
+      hide: args.status === 'OPEN',
       valueGetter: (params) => {
         if (params.row.exitPrice) {
           return currencyFormatter(params.row.exitPrice, currency);
@@ -105,14 +125,9 @@ export const EntriesTable = ({ journal }) => {
       headerName: 'Net Result',
       type: 'number',
       width: 130,
+      hide: args.status === 'OPEN',
       renderCell: (params) => (
-        <Typography
-          sx={{
-            color: params.row.netResult >= 0 ? green : red,
-          }}
-        >
-          {currencyFormatter(params.row.netResult, currency)}
-        </Typography>
+        <ColorfulCurrency value={params.row.netResult} currency={currency} />
       ),
     },
     {
@@ -120,14 +135,9 @@ export const EntriesTable = ({ journal }) => {
       headerName: 'Account Changed',
       type: 'number',
       width: 130,
+      hide: args.status === 'OPEN',
       renderCell: (params) => (
-        <Typography
-          sx={{
-            color: params.row.accountChange >= 0 ? green : red,
-          }}
-        >
-          {percentFormatter(params.row.accountChange)}
-        </Typography>
+        <ColorfulPercentage value={params.row.accountChange} />
       ),
     },
   ];
@@ -137,11 +147,12 @@ export const EntriesTable = ({ journal }) => {
       <Box marginBottom="10px">
         {mutation.isError && <Alert mutation={mutation} />}
       </Box>
-      <JournalDataGrid
-        isLoading={isLoading}
+      <DataGridLoading
         error={error}
-        rows={data}
+        loading={isLoading}
+        rows={data || []}
         columns={columns}
+        density="comfortable"
         autoHeight
         disableSelectionOnClick
         disableColumnMenu

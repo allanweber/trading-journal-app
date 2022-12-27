@@ -85,8 +85,6 @@ export const NavLinks = ({ onChange }) => {
             open={open}
             sx={{
               '& .MuiMenu-paper': {
-                backgroundColor: colors.primary[400],
-                backgroundImage: 'none !important',
                 width: 320,
                 maxWidth: '100%',
               },

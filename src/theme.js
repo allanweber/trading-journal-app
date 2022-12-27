@@ -232,6 +232,21 @@ export const themeSettings = (mode) => {
           },
         },
       },
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            backgroundColor: colors.primary[400],
+            backgroundImage: 'none !important',
+          },
+        },
+      },
+      MuiCircularProgress: {
+        styleOverrides: {
+          root: {
+            color: colors.grey[100],
+          },
+        },
+      },
       MuiDataGrid: {
         styleOverrides: {
           root: {
