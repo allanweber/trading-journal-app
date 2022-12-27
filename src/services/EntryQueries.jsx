@@ -10,15 +10,32 @@ import {
   saveWithdrawal,
 } from './Entry';
 
-export const useGetEntries = ({ journalId, status, symbol, type, from }) => {
+export const useGetEntries = ({
+  journalId,
+  status,
+  symbol,
+  type,
+  from,
+  direction,
+  result,
+}) => {
   const accessToken = useAccessTokenState();
   return useQuery(
     [
       `entries-${journalId}`,
-      `${journalId}-${status}-${symbol}-${type}-${from}`,
+      `${journalId}-${status}-${symbol}-${type}-${from}-${direction}-${result}`,
     ],
     async () =>
-      await getEntries(accessToken, journalId, status, symbol, type, from)
+      await getEntries(
+        accessToken,
+        journalId,
+        status,
+        symbol,
+        type,
+        from,
+        direction,
+        result
+      )
   );
 };
 

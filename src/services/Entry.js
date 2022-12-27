@@ -8,7 +8,9 @@ export const getEntries = (
   status,
   symbol,
   type,
-  from
+  from,
+  direction,
+  result
 ) => {
   let url = `${config.entries}/journals/${journalId}/entries?`;
   if (status) {
@@ -23,6 +25,13 @@ export const getEntries = (
   if (from) {
     url += `from=${from}&`;
   }
+  if (direction) {
+    url += `direction=${direction}&`;
+  }
+  if (result) {
+    url += `result=${result}&`;
+  }
+
   return fetch(url, {
     method: 'GET',
     headers: { Authorization: `Bearer ${accessToken}` },

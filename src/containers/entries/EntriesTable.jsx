@@ -7,7 +7,7 @@ import { ColorfulCurrency } from '../../components/colorful-currency';
 import { ColorfulPercentage } from '../../components/colorful-percentage';
 import { DateTimeDisplay } from '../../components/datetime-display';
 import { useConfirmationModal } from '../../components/dialog/Confirmation';
-import { Direction } from '../../components/direction';
+import { DirectionDisplay } from '../../components/direction/DirectionDisplay';
 import { Loading } from '../../components/loading';
 import { useDeleteEntry, useGetEntries } from '../../services/EntryQueries';
 import { currencyFormatter } from '../../utilities/numberUtilities';
@@ -87,8 +87,10 @@ export const EntriesTable = ({ args }) => {
     {
       field: 'direction',
       headerName: 'Direction',
-      width: 80,
-      renderCell: (params) => <Direction direction={params.row.direction} />,
+      width: 100,
+      renderCell: (params) => (
+        <DirectionDisplay direction={params.row.direction} />
+      ),
     },
     {
       field: 'size',
