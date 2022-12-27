@@ -1,6 +1,7 @@
-import { Box } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import dayjs from 'dayjs';
 import { useState } from 'react';
+import { Accordion } from '../../components/accordion';
 import { Direction } from '../../components/direction/Direction';
 import { EntrySelect } from '../../components/entry-select';
 import { Search } from '../../components/search';
@@ -45,31 +46,34 @@ export const ClosedEntries = ({ journal }) => {
 
   return (
     <Box>
-      <Box
-        display="flex"
-        alignItems="center"
-        flexDirection={isMobile ? 'column' : 'row'}
-      >
-        <Box>
-          <Search placeholder="Symbol" onSearch={onSearch} />
-        </Box>
-        <Box>
-          <EntrySelect onChange={changeType} />
-        </Box>
-        {showFilters() && (
-          <Box>
-            <Direction showEmpty={true} onChange={changeDirection} />
+      <Accordion title="Filters" override={!isMobile}>
+        <Grid
+          container
+          direction="row"
+          alignItems="center"
+          justifyContent="start"
+        >
+          <Box item xs padding={1}>
+            <Search placeholder="Symbol" onSearch={onSearch} />
           </Box>
-        )}
-        {showFilters() && (
-          <Box>
-            <WinLose onChange={changeResult} />
+          <Box item xs padding={1}>
+            <EntrySelect onChange={changeType} />
           </Box>
-        )}
-        <Box sx={{ ml: 'auto' }}>
-          <TimeSelect onChange={timeChanged} />
-        </Box>
-      </Box>
+          {showFilters() && (
+            <Box item xs padding={1}>
+              <Direction showEmpty={true} onChange={changeDirection} />
+            </Box>
+          )}
+          {showFilters() && (
+            <Box item xs padding={1}>
+              <WinLose onChange={changeResult} />
+            </Box>
+          )}
+          <Box sx={{ ml: 'auto' }} padding={1}>
+            <TimeSelect onChange={timeChanged} />
+          </Box>
+        </Grid>
+      </Accordion>
       <EntriesTable args={tableProps} />
     </Box>
   );

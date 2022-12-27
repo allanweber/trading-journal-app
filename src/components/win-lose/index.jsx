@@ -20,7 +20,7 @@ export const WinLose = ({ onChange }) => {
     }
   };
   return (
-    <Box sx={{ flexGrow: 1, p: 1 }}>
+    <Box>
       <ToggleButtonGroup
         value={type}
         onChange={(e, value) => changeFilter(value)}
