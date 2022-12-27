@@ -1,8 +1,8 @@
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import CandlestickChartOutlinedIcon from '@mui/icons-material/CandlestickChartOutlined';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import SavingsIcon from '@mui/icons-material/Savings';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 export const types = [
   {
@@ -13,7 +13,7 @@ export const types = [
   {
     key: 'TRADE',
     value: 'Trade',
-    icon: <TrendingUpIcon />,
+    icon: <CandlestickChartOutlinedIcon />,
   },
   {
     key: 'DEPOSIT',
