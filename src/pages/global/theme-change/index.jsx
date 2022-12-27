@@ -11,9 +11,9 @@ export const ThemeChange = () => {
   return (
     <IconButton onClick={colorMode.toggleColorMode}>
       {theme.palette.mode === 'dark' ? (
-        <DarkModeOutlinedIcon />
-      ) : (
         <LightModeOutlinedIcon />
+      ) : (
+        <DarkModeOutlinedIcon />
       )}
     </IconButton>
   );
