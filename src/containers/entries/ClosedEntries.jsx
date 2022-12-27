@@ -1,12 +1,18 @@
 import { Box } from '@mui/material';
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { EntrySelect } from '../../components/entry-select';
 import { Search } from '../../components/search';
 import { TimeSelect } from '../../components/time-select';
+import { apiFormat } from '../../utilities/dateTimeUtilities';
 import { EntriesTable } from './EntriesTable';
 
 export const ClosedEntries = ({ journal }) => {
-  const [tableProps, setTableProps] = useState({ journal, status: 'CLOSED' });
+  const [tableProps, setTableProps] = useState({
+    journal,
+    status: 'CLOSED',
+    from: apiFormat(dayjs().startOf('date')),
+  });
 
   const timeChanged = (time) => {
     setTableProps({ ...tableProps, from: time });

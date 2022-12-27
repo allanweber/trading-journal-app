@@ -1,6 +1,7 @@
 import { Box, Tab, Tabs, Typography } from '@mui/material';
 import { useState } from 'react';
 import { ClosedEntries } from './ClosedEntries';
+import { OpenEntries } from './OpenEntries';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -43,7 +44,7 @@ export const Entries = ({ journal }) => {
         <ClosedEntries journal={journal} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <OpenEntries journal={journal} />
       </TabPanel>
     </Box>
   );
