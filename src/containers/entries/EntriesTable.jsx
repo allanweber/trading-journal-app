@@ -1,19 +1,25 @@
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import ModeOutlinedIcon from '@mui/icons-material/ModeOutlined';
 import { Box, Link, Typography } from '@mui/material';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { Alert } from '../../components/alert';
 import { ColorfulCurrency } from '../../components/colorful-currency';
 import { ColorfulPercentage } from '../../components/colorful-percentage';
 import { DateTimeDisplay } from '../../components/datetime-display';
 import { useConfirmationModal } from '../../components/dialog/Confirmation';
+import { Dialog } from '../../components/dialog/Dialog';
 import { DirectionDisplay } from '../../components/direction/DirectionDisplay';
 import { Loading } from '../../components/loading';
 import { useDeleteEntry, useGetEntries } from '../../services/EntryQueries';
 import { currencyFormatter } from '../../utilities/numberUtilities';
+import { getByType } from './EntryTypes';
+import { TradeForm } from './TradeForm';
 
 export const EntriesTable = ({ args }) => {
   const { journal } = args;
+  const [openEdit, setOpenEdit] = useState(false);
+  const [trade, setTrade] = useState(undefined);
   const DataGridLoading = Loading(DataGrid);
   const { data, error, isLoading } = useGetEntries({
     ...args,
@@ -47,16 +53,49 @@ export const EntriesTable = ({ args }) => {
     [mutation, deleteConfirmation]
   );
 
+  const closeDialog = () => {
+    setOpenEdit(false);
+    setTrade(undefined);
+  };
+
+  const editAction = (trade) => {
+    setTrade(trade);
+    setOpenEdit(true);
+  };
+
+  const showAction = (trade) => {
+    if (args.status === 'OPEN') {
+      editAction(trade);
+    } else {
+      alert('No Show yet');
+    }
+  };
+
   const columns = [
     {
-      field: 'actions',
+      field: 'delete',
       type: 'actions',
+      headerName: 'Del',
       width: 30,
       getActions: (params) => [
         <GridActionsCellItem
           icon={<DeleteOutlineOutlinedIcon />}
           label="Delete"
           onClick={() => deleteAction(params.row)}
+        />,
+      ],
+    },
+    {
+      field: 'edit',
+      type: 'actions',
+      width: 30,
+      headerName: 'Edit',
+      hide: args.status === 'CLOSED',
+      getActions: (params) => [
+        <GridActionsCellItem
+          icon={<ModeOutlinedIcon />}
+          label="Edit"
+          onClick={() => editAction(params.row)}
         />,
       ],
     },
@@ -78,7 +117,11 @@ export const EntriesTable = ({ args }) => {
       headerName: 'Symbol',
       renderCell: (params) => {
         if (params.row.type === 'TRADE') {
-          return <Link key={params.row.id}>{params.row.symbol}</Link>;
+          return (
+            <Link key={params.row.id} onClick={(e) => showAction(params.row)}>
+              {params.row.symbol}
+            </Link>
+          );
         } else {
           return <Typography fontStyle="italic">{params.row.type}</Typography>;
         }
@@ -159,6 +202,19 @@ export const EntriesTable = ({ args }) => {
         disableSelectionOnClick
         disableColumnMenu
       />
+      <Dialog
+        open={openEdit}
+        onClose={closeDialog}
+        title={trade && `Edit ${trade.symbol}`}
+        icon={getByType('TRADE').icon}
+      >
+        <TradeForm
+          journal={journal}
+          onCancel={closeDialog}
+          onSave={closeDialog}
+          {...(trade && { trade: trade })}
+        />
+      </Dialog>
     </Box>
   );
 };

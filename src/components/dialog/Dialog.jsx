@@ -8,7 +8,7 @@ import { forwardRef } from 'react';
 import { useColors } from '../../hooks/useColors';
 
 const Transition = forwardRef(function Transition(props, ref) {
-  return <Slide direction="down" ref={ref} {...props} />;
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export const Dialog = ({
