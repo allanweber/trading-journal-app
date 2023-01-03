@@ -1,22 +1,28 @@
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import TrendingDownOutlinedIcon from '@mui/icons-material/TrendingDownOutlined';
 import TrendingUpOutlinedIcon from '@mui/icons-material/TrendingUpOutlined';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import { useColors } from '../../hooks/useColors';
 
-export const Direction = ({ showEmpty = false, onChange }) => {
+export const Direction = ({
+  onChange,
+  value,
+  showEmpty = false,
+  size = 'medium',
+}) => {
   const colors = useColors();
-  const red = colors.redAccent[500];
-  const green = colors.greenAccent[400];
-  const [type, setType] = useState(showEmpty ? 'ALL' : 'LONG');
+  const theme = useTheme();
+  const [type, setType] = useState(showEmpty ? 'ALL' : value || 'LONG');
   const changeFilter = (type) => {
-    setType(type);
-    if (onChange) {
-      onChange(type === 'ALL' ? undefined : type);
+    if (type !== null) {
+      setType(type);
+      if (onChange) {
+        onChange(type === 'ALL' ? undefined : type);
+      }
     }
   };
   return (
@@ -25,27 +31,53 @@ export const Direction = ({ showEmpty = false, onChange }) => {
         value={type}
         onChange={(e, value) => changeFilter(value)}
         exclusive
-        size="small"
+        size={size}
+        sx={{
+          '& .Mui-selected.long': {
+            color: '#E7F2FE !important',
+            backgroundColor: `${
+              theme.palette.mode === 'dark'
+                ? colors.greenAccent[700]
+                : colors.greenAccent[300]
+            }`,
+            '&:hover': {
+              backgroundColor: `${
+                theme.palette.mode === 'dark'
+                  ? colors.greenAccent[700]
+                  : colors.greenAccent[300]
+              }`,
+            },
+          },
+          '& .Mui-selected.short': {
+            color: '#E7F2FE !important',
+            backgroundColor: `${
+              theme.palette.mode === 'dark'
+                ? colors.redAccent[700]
+                : colors.redAccent[300]
+            }`,
+            '&:hover': {
+              backgroundColor: `${
+                theme.palette.mode === 'dark'
+                  ? colors.redAccent[700]
+                  : colors.redAccent[300]
+              }`,
+            },
+          },
+        }}
       >
         {showEmpty && (
           <ToggleButton value="ALL" key="ALL">
-            <StarOutlineIcon fontSize="small" />
-            <Typography sx={{ ml: 1 }} variant="body2">
-              ALL
-            </Typography>
+            <StarOutlineIcon fontSize={size} />
+            <Typography sx={{ ml: 1 }}>ALL</Typography>
           </ToggleButton>
         )}
-        <ToggleButton value="LONG" key="LONG">
-          <TrendingUpOutlinedIcon color="success" fontSize="small" />
-          <Typography sx={{ ml: 1 }} variant="body2" color={green}>
-            LONG
-          </Typography>
+        <ToggleButton value="LONG" key="LONG" className="long">
+          <TrendingUpOutlinedIcon fontSize={size} />
+          <Typography sx={{ ml: 1 }}>LONG</Typography>
         </ToggleButton>
-        <ToggleButton value="SHORT" key="SHORT">
-          <TrendingDownOutlinedIcon color="error" fontSize="small" />
-          <Typography sx={{ ml: 1 }} variant="body2" color={red}>
-            SHORT
-          </Typography>
+        <ToggleButton value="SHORT" key="SHORT" className="short">
+          <TrendingDownOutlinedIcon fontSize={size} />
+          <Typography sx={{ ml: 1 }}>SHORT</Typography>
         </ToggleButton>
       </ToggleButtonGroup>
     </Box>

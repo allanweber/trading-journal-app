@@ -28,6 +28,7 @@ const TextMaskCustom = forwardRef(function TextMaskCustom(props, ref) {
 export const NumberInput = ({
   value,
   zeroIsInvalid,
+  zeroIsNull,
   onChange,
   scale,
   error,
@@ -44,7 +45,7 @@ export const NumberInput = ({
 
   const handleChange = (event) => {
     const value = parseFloat(event.target.value);
-    if (zeroIsInvalid && value === 0) {
+    if (value === 0 && (zeroIsInvalid || zeroIsNull)) {
       setCurrent(undefined);
       onChange(undefined);
     } else {
@@ -59,6 +60,9 @@ export const NumberInput = ({
       onChange={handleChange}
       error={error || (zeroIsInvalid && current === 0)}
       helperText={helperText}
+      onFocus={(event) => {
+        event.target.select();
+      }}
       InputProps={{
         inputComponent: TextMaskCustom,
         inputProps: {

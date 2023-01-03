@@ -6,6 +6,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import 'dayjs/locale/en-gb';
 import { useState } from 'react';
+
 export const DateTime = ({
   onChange,
   name,
@@ -16,14 +17,19 @@ export const DateTime = ({
   error,
   helperText,
   dateOnly,
+  ...rest
 }) => {
   const [locale] = useState('en-gb');
 
-  const onDateChange = (value) => {
-    if (value) {
-      onChange(value.toDate());
+  const [current, setCurrent] = useState(value || null);
+
+  const onDateChange = (newValue) => {
+    if (newValue) {
+      setCurrent(newValue);
+      onChange(newValue.toDate());
     } else {
       onChange(undefined);
+      setCurrent(null);
     }
   };
 
@@ -33,8 +39,11 @@ export const DateTime = ({
         {dateOnly && (
           <DatePicker
             onChange={onDateChange}
-            value={value}
+            value={current}
             label={label}
+            onFocus={(event) => {
+              event.target.select();
+            }}
             renderInput={(props) => (
               <TextField
                 variant={variant}
@@ -43,6 +52,10 @@ export const DateTime = ({
                 {...props}
                 error={error}
                 helperText={helperText}
+                onFocus={(event) => {
+                  event.target.select();
+                }}
+                {...rest}
               />
             )}
           />
@@ -51,8 +64,11 @@ export const DateTime = ({
         {!dateOnly && (
           <DateTimePicker
             onChange={onDateChange}
-            value={value}
+            value={current}
             label={label}
+            onFocus={(event) => {
+              event.target.select();
+            }}
             renderInput={(props) => (
               <TextField
                 variant={variant}

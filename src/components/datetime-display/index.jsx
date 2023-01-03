@@ -2,9 +2,6 @@ import { Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 
-//DEC 8 2022 - Bold
-//Fri 09:35 AM - Light color
-
 export const DateTimeDisplay = ({ date }) => {
   const [dt, setDt] = useState();
   const [time, setTime] = useState();
@@ -16,6 +13,8 @@ export const DateTimeDisplay = ({ date }) => {
   useEffect(() => {
     setTime(dayjs(date).format('ddd, hh:mm A').toLocaleUpperCase());
   }, [date]);
+
+  if (!date) return <div></div>;
 
   return (
     <div>

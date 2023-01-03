@@ -1,7 +1,7 @@
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
 import MoneyOffOutlinedIcon from '@mui/icons-material/MoneyOffOutlined';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
@@ -10,8 +10,7 @@ import { useColors } from '../../hooks/useColors';
 
 export const WinLose = ({ onChange }) => {
   const colors = useColors();
-  const red = colors.redAccent[500];
-  const green = colors.greenAccent[400];
+  const theme = useTheme();
   const [type, setType] = useState('ALL');
   const changeFilter = (type) => {
     setType(type);
@@ -26,24 +25,50 @@ export const WinLose = ({ onChange }) => {
         onChange={(e, value) => changeFilter(value)}
         exclusive
         size="small"
+        sx={{
+          '& .Mui-selected.win': {
+            color: '#E7F2FE !important',
+            backgroundColor: `${
+              theme.palette.mode === 'dark'
+                ? colors.greenAccent[700]
+                : colors.greenAccent[300]
+            }`,
+            '&:hover': {
+              backgroundColor: `${
+                theme.palette.mode === 'dark'
+                  ? colors.greenAccent[700]
+                  : colors.greenAccent[300]
+              }`,
+            },
+          },
+          '& .Mui-selected.lose': {
+            color: '#E7F2FE !important',
+            backgroundColor: `${
+              theme.palette.mode === 'dark'
+                ? colors.redAccent[700]
+                : colors.redAccent[300]
+            }`,
+            '&:hover': {
+              backgroundColor: `${
+                theme.palette.mode === 'dark'
+                  ? colors.redAccent[700]
+                  : colors.redAccent[300]
+              }`,
+            },
+          },
+        }}
       >
         <ToggleButton value="ALL" key="ALL">
           <StarOutlineIcon fontSize="small" />
-          <Typography sx={{ ml: 1 }} variant="body2">
-            ALL
-          </Typography>
+          <Typography sx={{ ml: 1 }}>ALL</Typography>
         </ToggleButton>
-        <ToggleButton value="WIN" key="WIN">
-          <AttachMoneyOutlinedIcon color="success" fontSize="small" />
-          <Typography sx={{ ml: 1 }} variant="body2" color={green}>
-            WIN
-          </Typography>
+        <ToggleButton value="WIN" key="WIN" className="win">
+          <AttachMoneyOutlinedIcon fontSize="small" />
+          <Typography sx={{ ml: 1 }}>WIN</Typography>
         </ToggleButton>
-        <ToggleButton value="LOSE" key="LOSE">
-          <MoneyOffOutlinedIcon color="error" fontSize="small" />
-          <Typography sx={{ ml: 1 }} variant="body2" color={red}>
-            LOSE
-          </Typography>
+        <ToggleButton value="LOSE" key="LOSE" className="lose">
+          <MoneyOffOutlinedIcon fontSize="small" />
+          <Typography sx={{ ml: 1 }}>LOSE</Typography>
         </ToggleButton>
       </ToggleButtonGroup>
     </Box>

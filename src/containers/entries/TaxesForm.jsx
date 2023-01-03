@@ -58,6 +58,7 @@ export const TaxesForm = ({ journal, onCancel, onSave }) => {
               <Grid item xs={12} sm={12}>
                 <DateTime
                   dateOnly
+                  required
                   fullWidth
                   variant="filled"
                   type="text"
@@ -73,6 +74,7 @@ export const TaxesForm = ({ journal, onCancel, onSave }) => {
               <Grid item xs={12} sm={12}>
                 <NumberInput
                   fullWidth
+                  required
                   variant="filled"
                   type="text"
                   label={`Taxes Value (${currencySymbol(journal.currency)})`}

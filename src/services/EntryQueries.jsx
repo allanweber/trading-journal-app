@@ -60,11 +60,11 @@ export const useGetSymbols = (journalId) => {
   );
 };
 
-export const useSaveTrade = (journalId, tradeId) => {
+export const useSaveTrade = (journalId) => {
   const queryClient = useQueryClient();
   const accessToken = useAccessTokenState();
   return useMutation(
-    (trade) => saveTrade(accessToken, journalId, trade, tradeId),
+    (trade) => saveTrade(accessToken, journalId, trade, trade.id),
     {
       onSuccess: () => {
         queryClient.invalidateQueries([`entries-open-count-${journalId}`]);

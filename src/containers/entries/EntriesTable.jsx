@@ -13,13 +13,16 @@ import { DirectionDisplay } from '../../components/direction/DirectionDisplay';
 import { Loading } from '../../components/loading';
 import { useDeleteEntry, useGetEntries } from '../../services/EntryQueries';
 import { currencyFormatter } from '../../utilities/numberUtilities';
+import { EntryDetails } from './EntryDetails';
 import { getByType } from './EntryTypes';
 import { TradeForm } from './TradeForm';
 
 export const EntriesTable = ({ args }) => {
   const { journal } = args;
   const [openEdit, setOpenEdit] = useState(false);
+  const [openDetails, setOpenDetails] = useState(false);
   const [trade, setTrade] = useState(undefined);
+  const [entry, setEntry] = useState(undefined);
   const DataGridLoading = Loading(DataGrid);
   const { data, error, isLoading } = useGetEntries({
     ...args,
@@ -55,6 +58,7 @@ export const EntriesTable = ({ args }) => {
 
   const closeDialog = () => {
     setOpenEdit(false);
+    setOpenDetails(false);
     setTrade(undefined);
   };
 
@@ -63,11 +67,12 @@ export const EntriesTable = ({ args }) => {
     setOpenEdit(true);
   };
 
-  const showAction = (trade) => {
+  const showAction = (entry) => {
     if (args.status === 'OPEN') {
-      editAction(trade);
+      editAction(entry);
     } else {
-      alert('No Show yet');
+      setEntry(entry);
+      setOpenDetails(true);
     }
   };
 
@@ -115,17 +120,11 @@ export const EntriesTable = ({ args }) => {
     {
       field: 'symbol',
       headerName: 'Symbol',
-      renderCell: (params) => {
-        if (params.row.type === 'TRADE') {
-          return (
-            <Link key={params.row.id} onClick={(e) => showAction(params.row)}>
-              {params.row.symbol}
-            </Link>
-          );
-        } else {
-          return <Typography fontStyle="italic">{params.row.type}</Typography>;
-        }
-      },
+      renderCell: (params) => (
+        <Link key={params.row.id} onClick={(e) => showAction(params.row)}>
+          {params.row.symbol || params.row.type}
+        </Link>
+      ),
     },
     {
       field: 'direction',
@@ -203,6 +202,7 @@ export const EntriesTable = ({ args }) => {
         disableColumnMenu
       />
       <Dialog
+        maxWidth="md"
         open={openEdit}
         onClose={closeDialog}
         title={trade && `Edit ${trade.symbol}`}
@@ -214,6 +214,18 @@ export const EntriesTable = ({ args }) => {
           onSave={closeDialog}
           {...(trade && { trade: trade })}
         />
+      </Dialog>
+      <Dialog
+        maxWidth="md"
+        open={openDetails}
+        onClose={closeDialog}
+        title={
+          entry &&
+          `${entry.type === 'TRADE' ? entry.symbol : entry.type} Details`
+        }
+        icon={entry && getByType(entry.type).icon}
+      >
+        <EntryDetails {...(entry && { entry: entry })} />
       </Dialog>
     </Box>
   );

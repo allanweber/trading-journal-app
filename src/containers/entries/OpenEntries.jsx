@@ -35,7 +35,11 @@ export const OpenEntries = ({ journal }) => {
             <Search placeholder="Symbol" onSearch={onSearch} />
           </Box>
           <Box item xs padding={1}>
-            <Direction showEmpty={true} onChange={changeDirection} />
+            <Direction
+              showEmpty={true}
+              onChange={changeDirection}
+              size="small"
+            />
           </Box>
         </Grid>
       </Accordion>
