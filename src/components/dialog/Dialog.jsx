@@ -1,5 +1,11 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Dialog as MuiDialog, Typography } from '@mui/material';
+import {
+  Box,
+  Dialog as MuiDialog,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
@@ -8,22 +14,19 @@ import { forwardRef } from 'react';
 import { useColors } from '../../hooks/useColors';
 
 const Transition = forwardRef(function Transition(props, ref) {
-  return <Slide direction="down" ref={ref} {...props} />;
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export const Dialog = ({
-  open,
-  children,
-  title,
-  icon,
-  fullScreen = false,
-  onClose,
-}) => {
+export const Dialog = ({ open, children, title, icon, onClose, ...rest }) => {
   const colors = useColors();
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <MuiDialog
       open={open}
       fullScreen={fullScreen}
+      {...rest}
       TransitionComponent={Transition}
       sx={{
         '& .MuiDialogContent-root, & .MuiDialogTitle-root': {

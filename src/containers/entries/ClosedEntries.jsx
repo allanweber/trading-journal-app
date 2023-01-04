@@ -61,7 +61,11 @@ export const ClosedEntries = ({ journal }) => {
           </Box>
           {showFilters() && (
             <Box item xs padding={1}>
-              <Direction showEmpty={true} onChange={changeDirection} />
+              <Direction
+                showEmpty={true}
+                onChange={changeDirection}
+                size="small"
+              />
             </Box>
           )}
           {showFilters() && (
@@ -69,7 +73,7 @@ export const ClosedEntries = ({ journal }) => {
               <WinLose onChange={changeResult} />
             </Box>
           )}
-          <Box sx={{ ml: 'auto' }} padding={1}>
+          <Box sx={{ ml: isMobile ? 0 : 'auto' }} padding={1}>
             <TimeSelect onChange={timeChanged} />
           </Box>
         </Grid>

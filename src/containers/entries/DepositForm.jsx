@@ -59,6 +59,7 @@ export const DepositForm = ({ journal, onCancel, onSave }) => {
                 <DateTime
                   dateOnly
                   fullWidth
+                  required
                   variant="filled"
                   type="text"
                   label="Deposit at"
@@ -73,6 +74,7 @@ export const DepositForm = ({ journal, onCancel, onSave }) => {
               <Grid item xs={12} sm={12}>
                 <NumberInput
                   fullWidth
+                  required
                   variant="filled"
                   type="text"
                   label={`Deposit Value (${currencySymbol(journal.currency)})`}

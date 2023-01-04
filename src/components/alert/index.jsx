@@ -10,6 +10,7 @@ export const Alert = ({
   show,
   children,
   closeable = true,
+  onClose,
   ...rest
 }) => {
   const [open, setOpen] = useState(show);
@@ -24,6 +25,13 @@ export const Alert = ({
     }
   }, [mutation]);
 
+  const closeAlert = () => {
+    setOpen(false);
+    if (onClose) {
+      onClose();
+    }
+  };
+
   const Close = () => {
     if (closeable) {
       return (
@@ -31,9 +39,7 @@ export const Alert = ({
           aria-label="close"
           color="inherit"
           size="small"
-          onClick={() => {
-            setOpen(false);
-          }}
+          onClick={closeAlert}
         >
           <CloseIcon fontSize="inherit" />
         </IconButton>

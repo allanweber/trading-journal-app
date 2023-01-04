@@ -39,10 +39,20 @@ export const getEntries = (
 };
 
 export const getOpenTradesCount = (accessToken, journalId) => {
-  return fetch(`${config.entries}/journals/${journalId}/entries/open`, {
+  return fetch(`${config.entries}/journals/${journalId}/entries/trade/open`, {
     method: 'GET',
     headers: { Authorization: `Bearer ${accessToken}` },
   }).then(responseOrError);
+};
+
+export const getSymbols = (accessToken, journalId) => {
+  return fetch(
+    `${config.entries}/journals/${journalId}/entries/trade/symbols`,
+    {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${accessToken}` },
+    }
+  ).then(responseOrError);
 };
 
 export const saveTrade = (accessToken, journalId, trade, tradeId) => {
@@ -123,6 +133,18 @@ export const deleteEntry = (accessToken, journalId, entryId) => {
       throw new Error(errors);
     }
   });
+};
+
+export const getEntryImage = (accessToken, journalId, entryId, type) => {
+  return fetch(
+    `${config.entries}/journals/${journalId}/entries/${entryId}/image?type=${type}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    }
+  ).then(responseOrError);
 };
 
 const responseOrError = async (response) => {

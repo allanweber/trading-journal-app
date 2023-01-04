@@ -33,3 +33,7 @@ body,
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.medium-zoom-image--opened {
+  z-index: 1900;
+}

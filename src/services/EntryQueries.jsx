@@ -4,6 +4,7 @@ import {
   deleteEntry,
   getEntries,
   getOpenTradesCount,
+  getSymbols,
   saveDeposit,
   saveTaxes,
   saveTrade,
@@ -47,14 +48,27 @@ export const useGetOpenTradesCount = (journalId) => {
   );
 };
 
-export const useSaveTrade = (journalId, tradeId) => {
+export const useGetSymbols = (journalId) => {
+  const accessToken = useAccessTokenState();
+  return useQuery(
+    [`entries-symbols-${journalId}`],
+    async () => await getSymbols(accessToken, journalId),
+    {
+      cacheTime: 50000,
+      staleTime: 40000,
+    }
+  );
+};
+
+export const useSaveTrade = (journalId) => {
   const queryClient = useQueryClient();
   const accessToken = useAccessTokenState();
   return useMutation(
-    (trade) => saveTrade(accessToken, journalId, trade, tradeId),
+    (trade) => saveTrade(accessToken, journalId, trade, trade.id),
     {
       onSuccess: () => {
         queryClient.invalidateQueries([`entries-open-count-${journalId}`]);
+        queryClient.invalidateQueries([`entries-symbols-${journalId}`]);
         queryClient.invalidateQueries([`entries-${journalId}`]);
         queryClient.invalidateQueries([`journals-balance-${journalId}`]);
       },

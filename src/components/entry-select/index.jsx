@@ -4,10 +4,8 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import { types } from '../../containers/entries/EntryTypes';
-import { useColors } from '../../hooks/useColors';
 
 export const EntrySelect = ({ onChange }) => {
-  const colors = useColors();
   const [type, setType] = useState('TRADE');
   const changeFilter = (type) => {
     setType(type);
@@ -27,12 +25,9 @@ export const EntrySelect = ({ onChange }) => {
         {types.map((type) => (
           <ToggleButton value={type.key} key={type.key}>
             {React.cloneElement(type.icon, {
-              color: colors.grey[100],
               fontSize: 'small',
             })}
-            <Typography sx={{ ml: 1 }} variant="body2">
-              {type.value}
-            </Typography>
+            <Typography sx={{ ml: 1 }}>{type.value}</Typography>
           </ToggleButton>
         ))}
       </ToggleButtonGroup>

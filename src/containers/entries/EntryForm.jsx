@@ -9,8 +9,7 @@ export const EntryForm = ({ type, journal, onClose, entry }) => {
       <TradeForm
         journal={journal}
         onCancel={onClose}
-        onSave={onClose}
-        {...(entry && { update: entry })}
+        {...(entry && { trade: entry })}
       />
     );
   } else if (type === 'DEPOSIT') {

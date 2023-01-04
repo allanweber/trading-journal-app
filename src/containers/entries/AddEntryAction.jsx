@@ -74,6 +74,7 @@ export const AddEntryAction = ({ journal }) => {
           onClose={closeDialog}
           title={`Add ${addType.value}`}
           icon={addType.icon}
+          maxWidth="md"
         >
           <EntryForm
             type={addType.key}

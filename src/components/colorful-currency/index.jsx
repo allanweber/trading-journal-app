@@ -18,7 +18,8 @@ export const ColorfulCurrency = ({ value, currency }) => {
         color: value >= 0 ? green : red,
       }}
     >
-      {currencyFormatter(value, currency)}
+      {currency && currencyFormatter(value, currency)}
+      {!currency && currencyFormatter(value)}
     </Typography>
   );
 };
