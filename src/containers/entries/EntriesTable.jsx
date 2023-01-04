@@ -153,6 +153,13 @@ export const EntriesTable = ({ args }) => {
       valueGetter: (params) => currencyFormatter(params.row.price, currency),
     },
     {
+      field: 'plannedRR',
+      headerName: 'Planned RR',
+      type: 'number',
+      width: 130,
+      valueGetter: (params) => currencyFormatter(params.row.plannedRR),
+    },
+    {
       field: 'exitPrice',
       headerName: 'Exit Price',
       type: 'number',
@@ -211,7 +218,6 @@ export const EntriesTable = ({ args }) => {
         <TradeForm
           journal={journal}
           onCancel={closeDialog}
-          onSave={closeDialog}
           {...(trade && { trade: trade })}
         />
       </Dialog>

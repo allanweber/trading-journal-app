@@ -135,6 +135,18 @@ export const deleteEntry = (accessToken, journalId, entryId) => {
   });
 };
 
+export const getEntryImage = (accessToken, journalId, entryId, type) => {
+  return fetch(
+    `${config.entries}/journals/${journalId}/entries/${entryId}/image?type=${type}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    }
+  ).then(responseOrError);
+};
+
 const responseOrError = async (response) => {
   if (response.ok) return response.json();
   else {

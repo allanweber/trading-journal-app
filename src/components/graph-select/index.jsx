@@ -17,7 +17,7 @@ export const GraphSelect = ({ onChange, value, ...rest }) => {
   const change = (newValue) => {
     setCurrentValue(newValue);
     if (onChange) {
-      onChange(newValue == '' ? undefined : newValue);
+      onChange(newValue === '' ? undefined : newValue);
     }
   };
 

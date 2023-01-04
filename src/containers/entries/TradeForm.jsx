@@ -1,4 +1,11 @@
-import { Box, FormControl, Grid, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Divider,
+  FormControl,
+  Grid,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
@@ -14,6 +21,7 @@ import { useSaveTrade } from '../../services/EntryQueries';
 import { currencySymbol } from '../../utilities/currency';
 import { isDateValid } from '../../utilities/dateTimeUtilities';
 import { EntryDetails } from './EntryDetails';
+import { EntryImages } from './EntryImages';
 
 const schema = yup.object().shape({
   symbol: yup.string().nullable().required('Symbol is required'),
@@ -51,6 +59,7 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
 
   useEffect(() => {
     if (mutation.isSuccess) {
+      setTradeValues(mutation.data);
       if (onSave) {
         onSave(tradeValues);
       }
@@ -59,7 +68,7 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} sm={trade ? 8 : 12}>
+      <Grid item xs={12} sm={tradeValues.id ? 8 : 12}>
         <Box
           sx={{
             display: 'flex',
@@ -301,7 +310,7 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                 <Box display="flex" justifyContent="center" mt="20px">
                   <FormButtons
                     submit="Save Trade"
-                    cancel="Cancel"
+                    cancel="Close"
                     onCancel={onCancel}
                     loading={mutation.isLoading}
                   />
@@ -311,10 +320,12 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
           </Formik>
         </Box>
       </Grid>
-      {trade && (
+      {tradeValues.id && (
         <Grid item xs={12} sm={4}>
           <Header subtitle="Details" />
           <EntryDetails entry={tradeValues} />
+          <Divider sx={{ mt: 1, mb: 1 }} />
+          <EntryImages entry={tradeValues} journal={journal} />
         </Grid>
       )}
     </Grid>
