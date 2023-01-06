@@ -4,12 +4,15 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../../components/header';
 import { JournalForm } from '../../containers/journals';
+import { useJournalContext } from '../../context/JournalContext';
 
 export const FirstJournal = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { setJournal } = useJournalContext();
 
-  const onSaved = () => {
+  const onSaved = (journal) => {
+    setJournal(journal);
     queryClient.invalidateQueries(['journals']);
     setTimeout(() => {
       navigate('/trades');

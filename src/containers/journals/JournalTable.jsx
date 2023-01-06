@@ -5,7 +5,6 @@ import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import { useCallback, useState } from 'react';
 import { Alert } from '../../components/alert';
 import { useConfirmationModal } from '../../components/dialog/Confirmation';
-import { Loading } from '../../components/loading';
 import { useJournalContext } from '../../context/JournalContext';
 import {
   useDeleteJournal,
@@ -15,7 +14,6 @@ import { displayDate } from '../../utilities/dateTimeUtilities';
 import { currencyFormatter } from '../../utilities/numberUtilities';
 
 export const JournalTable = ({ onEdit }) => {
-  const JournalDataGrid = Loading(DataGrid);
   const { data, error, isLoading } = useGetJournals();
   const { journal: contextJournal, setJournal } = useJournalContext();
   const mutation = useDeleteJournal();
@@ -99,7 +97,7 @@ export const JournalTable = ({ onEdit }) => {
       <Box marginBottom="10px">
         {mutation.isError && <Alert mutation={mutation} />}
       </Box>
-      <JournalDataGrid
+      <DataGrid
         isLoading={isLoading}
         error={error}
         rows={data}
