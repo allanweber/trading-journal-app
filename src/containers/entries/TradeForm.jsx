@@ -40,8 +40,6 @@ const initialValues = {
   profitPrice: undefined,
   lossPrice: undefined,
   costs: undefined,
-  exitDate: null,
-  exitPrice: undefined,
   graphType: undefined,
   graphMeasure: undefined,
   notes: undefined,
@@ -235,46 +233,7 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                         zeroIsNull
                       />
                     </Grid>
-                    <Grid item xs={12} sm={12}>
-                      <Typography>Exit Trade</Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <DateTime
-                        fullWidth
-                        required
-                        variant="filled"
-                        type="text"
-                        label="Exit trading date"
-                        onBlur={handleBlur}
-                        onChange={(value) =>
-                          setFieldValue('exitDate', value, true)
-                        }
-                        value={values.exitDate}
-                        name="exitDate"
-                        error={!!touched.exitDate && !!errors.exitDate}
-                        helperText={touched.exitDate && errors.exitDate}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <NumberInput
-                        fullWidth
-                        variant="filled"
-                        type="text"
-                        label={`Exit Price (${currencySymbol(
-                          journal.currency
-                        )})`}
-                        onBlur={handleBlur}
-                        onChange={(value) =>
-                          setFieldValue('exitPrice', value, true)
-                        }
-                        value={values.exitPrice}
-                        name="exitPrice"
-                        error={!!touched.exitPrice && !!errors.exitPrice}
-                        helperText={touched.exitPrice && errors.exitPrice}
-                        scale={2}
-                        zeroIsNull
-                      />
-                    </Grid>
+
                     <Grid item xs={12} sm={12}>
                       <Typography>Details</Typography>
                     </Grid>
