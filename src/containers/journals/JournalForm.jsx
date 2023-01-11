@@ -46,7 +46,7 @@ export const JournalForm = ({
 
   useEffect(() => {
     if (mutation.isSuccess && onSaved) {
-      onSaved();
+      onSaved(mutation.data);
     }
   }, [mutation, onSaved]);
 

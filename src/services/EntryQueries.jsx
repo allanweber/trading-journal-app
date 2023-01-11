@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAccessTokenState } from '../context/UserContext';
 import {
+  closeTrade,
   deleteEntry,
   getEntries,
   getOpenTradesCount,
@@ -65,6 +66,22 @@ export const useSaveTrade = (journalId) => {
   const accessToken = useAccessTokenState();
   return useMutation(
     (trade) => saveTrade(accessToken, journalId, trade, trade.id),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([`entries-open-count-${journalId}`]);
+        queryClient.invalidateQueries([`entries-symbols-${journalId}`]);
+        queryClient.invalidateQueries([`entries-${journalId}`]);
+        queryClient.invalidateQueries([`journals-balance-${journalId}`]);
+      },
+    }
+  );
+};
+
+export const useCloseTrade = (journalId, tradeId) => {
+  const queryClient = useQueryClient();
+  const accessToken = useAccessTokenState();
+  return useMutation(
+    (close) => closeTrade(accessToken, journalId, close, tradeId),
     {
       onSuccess: () => {
         queryClient.invalidateQueries([`entries-open-count-${journalId}`]);

@@ -10,7 +10,6 @@ import { DateTimeDisplay } from '../../components/datetime-display';
 import { useConfirmationModal } from '../../components/dialog/Confirmation';
 import { Dialog } from '../../components/dialog/Dialog';
 import { DirectionDisplay } from '../../components/direction/DirectionDisplay';
-import { Loading } from '../../components/loading';
 import { useDeleteEntry, useGetEntries } from '../../services/EntryQueries';
 import { currencyFormatter } from '../../utilities/numberUtilities';
 import { EntryDetails } from './EntryDetails';
@@ -23,7 +22,6 @@ export const EntriesTable = ({ args }) => {
   const [openDetails, setOpenDetails] = useState(false);
   const [trade, setTrade] = useState(undefined);
   const [entry, setEntry] = useState(undefined);
-  const DataGridLoading = Loading(DataGrid);
   const { data, error, isLoading } = useGetEntries({
     ...args,
     journalId: journal.id,
@@ -191,6 +189,16 @@ export const EntriesTable = ({ args }) => {
         <ColorfulPercentage value={params.row.accountChange} />
       ),
     },
+    {
+      field: 'accountRisked',
+      headerName: 'Account Risked',
+      type: 'number',
+      width: 130,
+      hide: args.status === 'CLOSED',
+      renderCell: (params) => (
+        <ColorfulPercentage value={params.row.accountRisked} />
+      ),
+    },
   ];
 
   return (
@@ -198,7 +206,7 @@ export const EntriesTable = ({ args }) => {
       <Box marginBottom="10px">
         {mutation.isError && <Alert mutation={mutation} />}
       </Box>
-      <DataGridLoading
+      <DataGrid
         error={error}
         loading={isLoading}
         rows={data || []}
