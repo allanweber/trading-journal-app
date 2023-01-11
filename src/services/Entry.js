@@ -72,7 +72,21 @@ export const saveTrade = (accessToken, journalId, trade, tradeId) => {
     body: JSON.stringify({
       ...trade,
       date: apiFormat(trade.date),
-      exitDate: apiFormat(trade.exitDate),
+    }),
+  }).then(responseOrError);
+};
+
+export const closeTrade = (accessToken, journalId, close, tradeId) => {
+  let url = `${config.entries}/journals/${journalId}/entries/trade/${tradeId}/close`;
+  return fetch(url, {
+    method: 'PATCH',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ...close,
+      exitDate: apiFormat(close.exitDate),
     }),
   }).then(responseOrError);
 };

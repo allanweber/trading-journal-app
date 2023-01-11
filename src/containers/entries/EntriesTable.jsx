@@ -189,6 +189,16 @@ export const EntriesTable = ({ args }) => {
         <ColorfulPercentage value={params.row.accountChange} />
       ),
     },
+    {
+      field: 'accountRisked',
+      headerName: 'Account Risked',
+      type: 'number',
+      width: 130,
+      hide: args.status === 'CLOSED',
+      renderCell: (params) => (
+        <ColorfulPercentage value={params.row.accountRisked} />
+      ),
+    },
   ];
 
   return (

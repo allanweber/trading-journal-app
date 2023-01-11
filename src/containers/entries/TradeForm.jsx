@@ -1,25 +1,17 @@
-import {
-  Box,
-  Divider,
-  FormControl,
-  Grid,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, FormControl, Grid, TextField, Typography } from '@mui/material';
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { Alert } from '../../components/alert';
-import { FormButtons } from '../../components/button/FormButtons';
+import { Button } from '../../components/button/Button';
 import { DateTime } from '../../components/date-time';
 import { Direction } from '../../components/direction/Direction';
 import { GraphSelect } from '../../components/graph-select';
-import { Header } from '../../components/header';
 import { NumberInput } from '../../components/number-input';
 import { useSaveTrade } from '../../services/EntryQueries';
 import { currencySymbol } from '../../utilities/currency';
 import { isDateValid } from '../../utilities/dateTimeUtilities';
-import { EntryDetails } from './EntryDetails';
+import { CloseTradeAction } from './CloseTradeAction';
 import { EntryImages } from './EntryImages';
 
 const schema = yup.object().shape({
@@ -47,6 +39,7 @@ const initialValues = {
 
 export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
   const [tradeValues, setTradeValues] = useState(trade || initialValues);
+  const [showMore, setShowMore] = useState(false);
   const mutation = useSaveTrade(journal.id);
 
   const handleFormSubmit = (values) => {
@@ -63,32 +56,38 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
     }
   }, [mutation, tradeValues, onSave]);
 
+  useEffect(() => {
+    if (tradeValues.id) {
+      setShowMore(true);
+    }
+  }, [tradeValues]);
+
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} sm={tradeValues.id ? 8 : 12}>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      {tradeValues && (
+        <Formik
+          onSubmit={handleFormSubmit}
+          initialValues={tradeValues}
+          validationSchema={schema}
         >
-          {tradeValues && (
-            <Formik
-              onSubmit={handleFormSubmit}
-              initialValues={tradeValues}
-              validationSchema={schema}
-            >
-              {({
-                values,
-                errors,
-                touched,
-                handleBlur,
-                handleChange,
-                setFieldValue,
-                handleSubmit,
-              }) => (
-                <form onSubmit={handleSubmit}>
+          {({
+            values,
+            errors,
+            touched,
+            handleBlur,
+            handleChange,
+            setFieldValue,
+            handleSubmit,
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={showMore ? 8 : 12}>
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                       <TextField
@@ -274,29 +273,46 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                       />
                     </Grid>
                   </Grid>
-                  <Alert mutation={mutation} sx={{ mt: 3 }} />
-                  <Box display="flex" justifyContent="center" mt="20px">
-                    <FormButtons
-                      submit="Save Trade"
-                      cancel="Close"
-                      onCancel={onCancel}
-                      loading={mutation.isLoading}
-                    />
-                  </Box>
-                </form>
-              )}
-            </Formik>
+                </Grid>
+                {showMore && (
+                  <Grid item xs={12} sm={4}>
+                    <EntryImages entry={tradeValues} journal={journal} />
+                  </Grid>
+                )}
+              </Grid>
+              <Alert mutation={mutation} sx={{ mt: 3 }} />
+              <Box display="flex" justifyContent="center" mt="20px">
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={showMore ? 4 : 6}>
+                    <Button
+                      fullWidth
+                      onClick={onCancel}
+                      secondary
+                      type="button"
+                    >
+                      Back
+                    </Button>
+                  </Grid>
+                  {showMore && (
+                    <Grid item xs={12} sm={4}>
+                      <CloseTradeAction
+                        trade={tradeValues}
+                        journal={journal}
+                        onChange={onCancel}
+                      ></CloseTradeAction>
+                    </Grid>
+                  )}
+                  <Grid item xs={12} sm={showMore ? 4 : 6}>
+                    <Button fullWidth loading={mutation.isLoading}>
+                      Save Trade
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Box>
+            </form>
           )}
-        </Box>
-      </Grid>
-      {tradeValues.id && (
-        <Grid item xs={12} sm={4}>
-          <Header subtitle="Details" />
-          <EntryDetails entry={tradeValues} />
-          <Divider sx={{ mt: 1, mb: 1 }} />
-          <EntryImages entry={tradeValues} journal={journal} />
-        </Grid>
+        </Formik>
       )}
-    </Grid>
+    </Box>
   );
 };
