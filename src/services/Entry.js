@@ -38,59 +38,6 @@ export const getEntries = (
   }).then(responseOrError);
 };
 
-export const getOpenTradesCount = (accessToken, journalId) => {
-  return fetch(`${config.entries}/journals/${journalId}/entries/trade/open`, {
-    method: 'GET',
-    headers: { Authorization: `Bearer ${accessToken}` },
-  }).then(responseOrError);
-};
-
-export const getSymbols = (accessToken, journalId) => {
-  return fetch(
-    `${config.entries}/journals/${journalId}/entries/trade/symbols`,
-    {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${accessToken}` },
-    }
-  ).then(responseOrError);
-};
-
-export const saveTrade = (accessToken, journalId, trade, tradeId) => {
-  let url = `${config.entries}/journals/${journalId}/entries/trade`;
-  let method = 'POST';
-  if (tradeId) {
-    url += `/${tradeId}`;
-    method = 'PATCH';
-  }
-
-  return fetch(url, {
-    method,
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      ...trade,
-      date: apiFormat(trade.date),
-    }),
-  }).then(responseOrError);
-};
-
-export const closeTrade = (accessToken, journalId, close, tradeId) => {
-  let url = `${config.entries}/journals/${journalId}/entries/trade/${tradeId}/close`;
-  return fetch(url, {
-    method: 'PATCH',
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      ...close,
-      exitDate: apiFormat(close.exitDate),
-    }),
-  }).then(responseOrError);
-};
-
 export const saveDeposit = (accessToken, journalId, deposit) => {
   return fetch(`${config.entries}/journals/${journalId}/entries/deposit`, {
     method: 'POST',

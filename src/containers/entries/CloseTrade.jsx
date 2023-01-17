@@ -8,7 +8,7 @@ import { Alert } from '../../components/alert';
 import { FormButtons } from '../../components/button/FormButtons';
 import { DateTime } from '../../components/date-time';
 import { NumberInput } from '../../components/number-input';
-import { useCloseTrade } from '../../services/EntryQueries';
+import { useCloseTrade } from '../../services/TradeQueries';
 import { currencySymbol } from '../../utilities/currency';
 import { isDateValid } from '../../utilities/dateTimeUtilities';
 

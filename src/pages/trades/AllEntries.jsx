@@ -4,7 +4,7 @@ import { Header } from '../../components/header';
 import { AddEntryAction } from '../../containers/entries/AddEntryAction';
 import { Entries } from '../../containers/entries/Entries';
 import { JournalContext } from '../../context/JournalContext';
-import { useGetOpenTradesCount } from '../../services/EntryQueries';
+import { useGetOpenTradesCount } from '../../services/TradeQueries';
 
 export const AllEntries = () => {
   const { journal } = useContext(JournalContext);
