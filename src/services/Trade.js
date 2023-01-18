@@ -55,6 +55,27 @@ export const closeTrade = (accessToken, journalId, close, tradeId) => {
   }).then(responseOrError);
 };
 
+export const aggregateTime = (
+  accessToken,
+  journalId,
+  aggregation,
+  page,
+  size
+) => {
+  let url = `${config.entries}/journals/${journalId}/entries/trade/aggregate/time?aggregation=${aggregation}`;
+  if (page) {
+    url += `page=${page}&`;
+  }
+  if (size) {
+    url += `size=${size}&`;
+  }
+
+  return fetch(url, {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${accessToken}` },
+  }).then(responseOrError);
+};
+
 const responseOrError = async (response) => {
   if (response.ok) return response.json();
   else {

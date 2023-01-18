@@ -72,7 +72,7 @@ export const NavLinks = ({ onChange }) => {
         <MenuItem onMouseEnter={openMenu} onMouseLeave={closeMenu}>
           <MenuHeader
             select={
-              selected === '/trades' ||
+              selected === '/journal' ||
               selected === '/entries' ||
               selected === '/calendar'
             }
@@ -92,7 +92,7 @@ export const NavLinks = ({ onChange }) => {
           >
             <MenuItem
               key="Trades"
-              onClick={() => onSelect('/trades')}
+              onClick={() => onSelect('/journal')}
               sx={{ padding: '20px' }}
             >
               <ListItemIcon>
@@ -101,7 +101,7 @@ export const NavLinks = ({ onChange }) => {
               <ListItemText>
                 <Typography
                   variant="h5"
-                  style={selected === '/trades' ? selectedStyle : null}
+                  style={selected === '/journal' ? selectedStyle : null}
                 >
                   JOURNAL
                 </Typography>

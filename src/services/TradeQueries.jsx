@@ -1,6 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAccessTokenState } from '../context/UserContext';
-import { closeTrade, getOpenTradesCount, getSymbols, saveTrade } from './Trade';
+import {
+  aggregateTime,
+  closeTrade,
+  getOpenTradesCount,
+  getSymbols,
+  saveTrade,
+} from './Trade';
 
 export const useGetOpenTradesCount = (journalId) => {
   const accessToken = useAccessTokenState();
@@ -51,5 +57,17 @@ export const useCloseTrade = (journalId, tradeId) => {
         queryClient.invalidateQueries([`journals-balance-${journalId}`]);
       },
     }
+  );
+};
+
+export const useAggregateTime = (journalId, aggregation, page, size) => {
+  const accessToken = useAccessTokenState();
+  return useQuery(
+    [
+      `entries-aggregate-time-${journalId}`,
+      `entries-aggregate-time-${journalId}-${aggregation}`,
+    ],
+    async () =>
+      await aggregateTime(accessToken, journalId, aggregation, page, size)
   );
 };
