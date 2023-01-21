@@ -62,7 +62,7 @@ export const aggregateTime = (
   page,
   size
 ) => {
-  let url = `${config.entries}/journals/${journalId}/entries/trade/aggregate/time?aggregation=${aggregation}`;
+  let url = `${config.entries}/journals/${journalId}/entries/trade/aggregate/time?aggregation=${aggregation}&`;
   if (page) {
     url += `page=${page}&`;
   }

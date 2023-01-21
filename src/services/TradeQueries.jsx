@@ -65,7 +65,7 @@ export const useAggregateTime = (journalId, aggregation, page, size) => {
   return useQuery(
     [
       `entries-aggregate-time-${journalId}`,
-      `entries-aggregate-time-${journalId}-${aggregation}`,
+      `entries-aggregate-time-${journalId}-${aggregation}-${page}`,
     ],
     async () =>
       await aggregateTime(accessToken, journalId, aggregation, page, size)
