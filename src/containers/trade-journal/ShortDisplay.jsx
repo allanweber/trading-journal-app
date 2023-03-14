@@ -13,7 +13,7 @@ export const ShortDisplay = ({ date, type }) => {
     if (type === 'DAY') {
       const day = dayjs(date, 'YYYY-MM-DD');
       setFormatted(
-        day.format('MMM D, ').toLocaleUpperCase() + day.format('ddd')
+        `${day.format('MMM D, ').toLocaleUpperCase()} ${day.format('ddd')}`
       );
     } else if (type === 'WEEK') {
       setFormatted(`WEEK ${date.split('-')[1]}`);
@@ -25,6 +25,11 @@ export const ShortDisplay = ({ date, type }) => {
       );
     } else if (type === 'YEAR') {
       setFormatted(date);
+    } else if (type === 'DATE_HOUR') {
+      const day = dayjs(date, 'YYYY-MM-DD HH:mm:ss');
+      setFormatted(
+        `${day.format('MMM D, HH:mm').toLocaleUpperCase()} ${day.format('ddd')}`
+      );
     } else {
       setFormatted('INVALID TYPE');
     }

@@ -76,6 +76,21 @@ export const aggregateTime = (
   }).then(responseOrError);
 };
 
+export const aggregateTrades = (
+  accessToken,
+  journalId,
+  from,
+  until,
+  aggregation
+) => {
+  const url = `${config.entries}/journals/${journalId}/entries/trade/aggregate/trade?aggregation=${aggregation}&from=${from}&until=${until}`;
+
+  return fetch(url, {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${accessToken}` },
+  }).then(responseOrError);
+};
+
 const responseOrError = async (response) => {
   if (response.ok) return response.json();
   else {

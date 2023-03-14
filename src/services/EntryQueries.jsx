@@ -3,6 +3,7 @@ import { useAccessTokenState } from '../context/UserContext';
 import {
   deleteEntry,
   getEntries,
+  getEntry,
   saveDeposit,
   saveTaxes,
   saveWithdrawal,
@@ -34,6 +35,14 @@ export const useGetEntries = ({
         direction,
         result
       )
+  );
+};
+
+export const useGetEntry = (journalId, entryId) => {
+  const accessToken = useAccessTokenState();
+  return useQuery(
+    [`entry-${journalId}-${entryId}`],
+    async () => await getEntry(accessToken, journalId, entryId)
   );
 };
 

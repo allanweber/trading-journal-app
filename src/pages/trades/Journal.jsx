@@ -8,7 +8,7 @@ export const Journal = () => {
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title={`Trades for ${journal.name}`} />
+        <Header title={journal.name} />
       </Box>
       <TradeJournal journal={journal} />
     </Box>

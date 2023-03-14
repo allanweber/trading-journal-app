@@ -14,6 +14,7 @@ import { LoadingPage } from '../../components/loading-page';
 import { TimeGroup } from '../../components/time-group';
 import { useColors } from '../../hooks/useColors';
 import { useAggregateTime } from '../../services/TradeQueries';
+import { periodToDates } from '../../utilities/dateTimeUtilities';
 import { ShortDisplay } from './ShortDisplay';
 
 export const TimeAggregation = ({ journal, onChange }) => {
@@ -27,7 +28,7 @@ export const TimeAggregation = ({ journal, onChange }) => {
     data: periodGroups,
     isFetching,
     error,
-  } = useAggregateTime(journal.id, aggregation, page, 10);
+  } = useAggregateTime(journal.id, aggregation, page, 15);
 
   const changeGroup = (agg) => {
     setAggregation(agg);
@@ -41,24 +42,12 @@ export const TimeAggregation = ({ journal, onChange }) => {
   }, []);
 
   useEffect(() => {
-    if (periodGroups && periodGroups.items) {
-      const [firstPeriod] = periodGroups.items;
-      if (firstPeriod) {
-        const [firstItem] = firstPeriod.items;
-        if (firstItem) {
-          const select = { time: firstItem.group, aggregation };
-          setSelected(select);
-        }
-      }
-    }
-  }, [periodGroups, aggregation]);
-
-  useEffect(() => {
     setPage(0);
   }, [aggregation]);
 
   const selectTime = (item) => {
-    const select = { time: item.group, aggregation };
+    const [from, until] = periodToDates({ time: item.group, aggregation });
+    const select = { aggregation, time: item.group, from, until };
     setSelected(select);
   };
 
@@ -98,7 +87,7 @@ export const TimeAggregation = ({ journal, onChange }) => {
           flexDirection: 'column',
           height: '80vh',
           overflow: 'hidden',
-          overflowY: 'scroll',
+          overflowY: 'auto',
         }}
       >
         {periodGroups &&
@@ -183,9 +172,9 @@ export const TimeAggregation = ({ journal, onChange }) => {
               component="div"
               count={periodGroups.total}
               page={page}
-              rowsPerPage={10}
+              rowsPerPage={15}
               labelRowsPerPage=""
-              rowsPerPageOptions={[10]}
+              rowsPerPageOptions={[15]}
               showFirstButton={true}
               showLastButton={true}
               onPageChange={handleChangePage}

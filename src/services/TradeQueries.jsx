@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAccessTokenState } from '../context/UserContext';
 import {
   aggregateTime,
+  aggregateTrades,
   closeTrade,
   getOpenTradesCount,
   getSymbols,
@@ -69,5 +70,17 @@ export const useAggregateTime = (journalId, aggregation, page, size) => {
     ],
     async () =>
       await aggregateTime(accessToken, journalId, aggregation, page, size)
+  );
+};
+
+export const useAggregateTrades = (journalId, from, until, aggregation) => {
+  const accessToken = useAccessTokenState();
+  return useQuery(
+    [
+      `entries-aggregate-trades-${journalId}`,
+      `entries-aggregate-trades-${journalId}-${from}-${until}-${aggregation}`,
+    ],
+    async () =>
+      await aggregateTrades(accessToken, journalId, from, until, aggregation)
   );
 };

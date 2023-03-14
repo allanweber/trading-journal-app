@@ -38,6 +38,15 @@ export const getEntries = (
   }).then(responseOrError);
 };
 
+export const getEntry = (accessToken, journalId, entryId) => {
+  const url = `${config.entries}/journals/${journalId}/entries/${entryId}`;
+
+  return fetch(url, {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${accessToken}` },
+  }).then(responseOrError);
+};
+
 export const saveDeposit = (accessToken, journalId, deposit) => {
   return fetch(`${config.entries}/journals/${journalId}/entries/deposit`, {
     method: 'POST',

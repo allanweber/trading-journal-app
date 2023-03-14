@@ -1,17 +1,23 @@
 import { Box, Grid } from '@mui/material';
 import React, { useState } from 'react';
 import { TimeAggregation } from './TimeAggregation';
+import { Trade } from './Trade';
 import { TradeAggregation } from './TradeAggregation';
 
 export const TradeJournal = ({ journal }) => {
   const [period, setPeriod] = useState();
+  const [trade, setTrade] = useState();
 
   const timeAggregationChange = (time) => {
     setPeriod(time);
   };
 
-  const tradeAggregationChange = (time) => {
-    console.log(time);
+  const tradeAggregationChange = (trade) => {
+    setTrade(trade);
+  };
+
+  const validPeriod = () => {
+    return period && period.aggregation && period.from && period.until;
   };
 
   return (
@@ -20,14 +26,16 @@ export const TradeJournal = ({ journal }) => {
         <TimeAggregation journal={journal} onChange={timeAggregationChange} />
       </Box>
       <Box padding={1} paddingLeft={2} minWidth="250px">
-        <TradeAggregation
-          journal={journal}
-          period={period}
-          onChange={tradeAggregationChange}
-        />
+        {validPeriod() && (
+          <TradeAggregation
+            journal={journal}
+            period={period}
+            onChange={tradeAggregationChange}
+          />
+        )}
       </Box>
       <Box padding={1} paddingLeft={2} flexGrow="1">
-        <label>a</label>
+        {trade && <Trade journal={journal} trade={trade} />}
       </Box>
     </Grid>
   );
