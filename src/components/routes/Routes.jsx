@@ -8,7 +8,7 @@ import { SignIn } from '../../pages/signin';
 import { SignUp } from '../../pages/signup';
 import { AllEntries } from '../../pages/trades/AllEntries';
 import { Calendar } from '../../pages/trades/Calendar';
-import { Trades } from '../../pages/trades/Trades';
+import { Journal } from '../../pages/trades/Journal';
 import { VerifyEmail } from '../../pages/verify';
 import { PrivateRoute } from './PrivateRoute';
 
@@ -29,8 +29,8 @@ export const Routes = () => {
       <Route path="/first-journal" element={<PrivateRoute />}>
         <Route path="" element={<FirstJournal />} />
       </Route>
-      <Route path="/trades" element={<PrivateRoute />}>
-        <Route path="" element={<Trades />} />
+      <Route path="/journal" element={<PrivateRoute />}>
+        <Route path="" element={<Journal />} />
       </Route>
       <Route path="/entries" element={<PrivateRoute />}>
         <Route path="" element={<AllEntries />} />

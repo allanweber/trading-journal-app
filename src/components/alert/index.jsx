@@ -66,10 +66,12 @@ export const Alert = ({
   }
 
   return (
-    <Collapse in={open}>
-      <MuiAlert severity={severity} action={<Close />} {...rest}>
-        <span style={{ whiteSpace: 'pre-line' }}>{children}</span>
-      </MuiAlert>
-    </Collapse>
+    open && (
+      <Collapse in={open}>
+        <MuiAlert severity={severity} action={<Close />} {...rest}>
+          <span style={{ whiteSpace: 'pre-line' }}>{children}</span>
+        </MuiAlert>
+      </Collapse>
+    )
   );
 };

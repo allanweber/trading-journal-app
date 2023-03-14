@@ -8,7 +8,7 @@ import { DateTime } from '../../components/date-time';
 import { Direction } from '../../components/direction/Direction';
 import { GraphSelect } from '../../components/graph-select';
 import { NumberInput } from '../../components/number-input';
-import { useSaveTrade } from '../../services/EntryQueries';
+import { useSaveTrade } from '../../services/TradeQueries';
 import { currencySymbol } from '../../utilities/currency';
 import { isDateValid } from '../../utilities/dateTimeUtilities';
 import { CloseTradeAction } from './CloseTradeAction';

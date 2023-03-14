@@ -31,10 +31,10 @@ export const OpenEntries = ({ journal }) => {
           alignItems="center"
           justifyContent="start"
         >
-          <Box item xs padding={1}>
+          <Box padding={1}>
             <Search placeholder="Symbol" onSearch={onSearch} />
           </Box>
-          <Box item xs padding={1}>
+          <Box padding={1}>
             <Direction
               showEmpty={true}
               onChange={changeDirection}
