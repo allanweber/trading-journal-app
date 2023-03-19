@@ -34,7 +34,7 @@ export const StrategiesTable = ({ onEdit }) => {
         mutation.mutate(strategy.id);
       }
     },
-    [mutation, deleteConfirmation, data]
+    [mutation, deleteConfirmation]
   );
 
   const columns = [
