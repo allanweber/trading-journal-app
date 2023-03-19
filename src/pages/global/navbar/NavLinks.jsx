@@ -153,6 +153,9 @@ export const NavLinks = ({ onChange }) => {
           </Menu>
         </MenuItem>
       )}
+      <MenuItem key="Strategies" onClick={() => onSelect('/strategies')}>
+        <MenuHeader select={selected === '/strategies'}>STRATEGIES</MenuHeader>
+      </MenuItem>
     </Box>
   );
 };

@@ -100,7 +100,7 @@ export const JournalTable = ({ onEdit }) => {
       <DataGrid
         isLoading={isLoading}
         error={error}
-        rows={data}
+        rows={data || []}
         columns={columns}
         autoHeight
         disableSelectionOnClick

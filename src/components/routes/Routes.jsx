@@ -6,6 +6,7 @@ import { ChangePassword } from '../../pages/password/ChangePassword';
 import { RequestPassword } from '../../pages/password/RequestPassword';
 import { SignIn } from '../../pages/signin';
 import { SignUp } from '../../pages/signup';
+import { Strategies } from '../../pages/strategies/Strategies';
 import { AllEntries } from '../../pages/trades/AllEntries';
 import { Calendar } from '../../pages/trades/Calendar';
 import { Journal } from '../../pages/trades/Journal';
@@ -37,6 +38,9 @@ export const Routes = () => {
       </Route>
       <Route path="/calendar" element={<PrivateRoute />}>
         <Route path="" element={<Calendar />} />
+      </Route>
+      <Route path="/strategies" element={<PrivateRoute />}>
+        <Route path="" element={<Strategies />} />
       </Route>
     </ReactRoutes>
   );
