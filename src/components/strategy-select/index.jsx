@@ -85,6 +85,9 @@ export const StrategySelect = ({ onChanged, initialValues, small = false }) => {
                   size={small ? 'small' : 'medium'}
                   label={data.name}
                   onDelete={handleDelete(data)}
+                  sx={{
+                    backgroundColor: data.color,
+                  }}
                 />
               </ListItem>
             );

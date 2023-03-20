@@ -38,7 +38,7 @@ export const Strategies = () => {
           <Box>
             <Button variant="contained" onClick={onNew}>
               <AddCircleOutlineOutlinedIcon sx={{ mr: '5px' }} />
-              New Journal
+              New Strategy
             </Button>
           </Box>
         </Box>
