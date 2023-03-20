@@ -8,6 +8,7 @@ import { DateTime } from '../../components/date-time';
 import { Direction } from '../../components/direction/Direction';
 import { GraphSelect } from '../../components/graph-select';
 import { NumberInput } from '../../components/number-input';
+import { StrategySelect } from '../../components/strategy-select';
 import { useSaveTrade } from '../../services/TradeQueries';
 import { currencySymbol } from '../../utilities/currency';
 import { isDateValid } from '../../utilities/dateTimeUtilities';
@@ -35,6 +36,7 @@ const initialValues = {
   graphType: undefined,
   graphMeasure: undefined,
   notes: undefined,
+  strategyIds: [],
 };
 
 export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
@@ -257,6 +259,18 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                         onChange={handleChange}
                         value={values.graphMeasure}
                         name="graphMeasure"
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <StrategySelect
+                        initialValues={values.strategies}
+                        onChanged={(value) =>
+                          setFieldValue(
+                            'strategyIds',
+                            value.map((strategy) => strategy.id),
+                            false
+                          )
+                        }
                       />
                     </Grid>
                     <Grid item xs={12} sm={12}>

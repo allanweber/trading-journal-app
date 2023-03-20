@@ -10,7 +10,12 @@ import {
   useGetStrategies,
 } from '../../services/StrategyQueries';
 
-export const StrategiesTable = ({ onEdit }) => {
+export const StrategiesTable = ({
+  onEdit,
+  selectOnly = false,
+  onRowsSelected,
+  selectedRows,
+}) => {
   const { data, error, isLoading } = useGetStrategies();
   const mutation = useDeleteStrategy();
   const deleteConfirmation = useConfirmationModal();
@@ -18,6 +23,15 @@ export const StrategiesTable = ({ onEdit }) => {
   const editAction = (strategy) => {
     onEdit(strategy);
   };
+
+  const dataSelected = (ids) => {
+    const rowsSelected = ids.map((id) => data.find((row) => row.id === id));
+    if (onRowsSelected) {
+      onRowsSelected(rowsSelected);
+    }
+  };
+
+  const selectionChanged = selectedRows && selectedRows.map((row) => row.id);
 
   const deleteAction = useCallback(
     async (strategy) => {
@@ -42,6 +56,7 @@ export const StrategiesTable = ({ onEdit }) => {
       field: 'actions',
       type: 'actions',
       width: 30,
+      hide: selectOnly,
       getActions: (params) => [
         <GridActionsCellItem
           icon={<DeleteOutlineOutlinedIcon />}
@@ -59,7 +74,6 @@ export const StrategiesTable = ({ onEdit }) => {
       ),
     },
   ];
-
   return (
     <Box>
       <Box marginBottom="10px">
@@ -73,6 +87,9 @@ export const StrategiesTable = ({ onEdit }) => {
         autoHeight
         disableSelectionOnClick
         disableColumnMenu
+        checkboxSelection={selectOnly}
+        onSelectionModelChange={dataSelected}
+        selectionModel={selectionChanged}
       />
     </Box>
   );

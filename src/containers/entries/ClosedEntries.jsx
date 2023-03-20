@@ -5,6 +5,7 @@ import { Accordion } from '../../components/accordion';
 import { Direction } from '../../components/direction/Direction';
 import { EntrySelect } from '../../components/entry-select';
 import { Search } from '../../components/search';
+import { StrategySelect } from '../../components/strategy-select';
 import { TimeSelect } from '../../components/time-select';
 import { WinLose } from '../../components/win-lose';
 import { useIsMobile } from '../../hooks/useIsMobile';
@@ -13,7 +14,7 @@ import { EntriesTable } from './EntriesTable';
 
 export const ClosedEntries = ({ journal }) => {
   const isMobile = useIsMobile();
-  const [tableProps, setTableProps] = useState({
+  const [filters, setFilters] = useState({
     journal,
     status: 'CLOSED',
     type: 'TRADE',
@@ -21,27 +22,27 @@ export const ClosedEntries = ({ journal }) => {
   });
 
   const timeChanged = (time) => {
-    setTableProps({ ...tableProps, from: time });
+    setFilters({ ...filters, from: time });
   };
 
   const onSearch = (value) => {
-    setTableProps({ ...tableProps, symbol: value });
+    setFilters({ ...filters, symbol: value });
   };
 
   const changeType = (value) => {
-    setTableProps({ ...tableProps, type: value });
+    setFilters({ ...filters, type: value });
   };
 
   const changeDirection = (value) => {
-    setTableProps({ ...tableProps, direction: value });
+    setFilters({ ...filters, direction: value });
   };
 
   const changeResult = (value) => {
-    setTableProps({ ...tableProps, result: value });
+    setFilters({ ...filters, result: value });
   };
 
   const showFilters = () => {
-    return tableProps.type === 'TRADE' || tableProps.type === undefined;
+    return filters.type === 'TRADE' || filters.type === undefined;
   };
 
   return (
@@ -73,12 +74,17 @@ export const ClosedEntries = ({ journal }) => {
               <WinLose onChange={changeResult} />
             </Box>
           )}
+          {showFilters() && (
+            <Box padding={1}>
+              <StrategySelect small />
+            </Box>
+          )}
           <Box sx={{ ml: isMobile ? 0 : 'auto' }} padding={1}>
             <TimeSelect onChange={timeChanged} />
           </Box>
         </Grid>
       </Accordion>
-      <EntriesTable args={tableProps} />
+      <EntriesTable args={filters} />
     </Box>
   );
 };
