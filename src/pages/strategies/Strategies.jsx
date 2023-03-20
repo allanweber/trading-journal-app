@@ -1,13 +1,14 @@
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import AutoStoriesOutlinedIcon from '@mui/icons-material/AutoStoriesOutlined';
+import ExtensionOutlinedIcon from '@mui/icons-material/ExtensionOutlined';
 import { Box, Button } from '@mui/material';
 import { useState } from 'react';
 import { Dialog } from '../../components/dialog/Dialog';
 import { Header } from '../../components/header';
-import { JournalForm, JournalTable } from '../../containers/journals';
+import { StrategiesTable } from './StrategiesTable';
+import { StrategyForm } from './StrategyForm';
 
-export const Journals = () => {
-  const [journal, setJournal] = useState(undefined);
+export const Strategies = () => {
+  const [strategy, setStrategy] = useState(undefined);
   const [openForm, setOpenForm] = useState(false);
 
   const openDialog = () => {
@@ -19,12 +20,12 @@ export const Journals = () => {
   };
 
   const onNew = () => {
-    setJournal(undefined);
+    setStrategy(undefined);
     openDialog();
   };
 
-  const onEdit = (journal) => {
-    setJournal(journal);
+  const onEdit = (strategy) => {
+    setStrategy(strategy);
     openDialog();
   };
 
@@ -32,25 +33,25 @@ export const Journals = () => {
     <div>
       <Box m="10px">
         <Box display="flex" justifyContent="space-between">
-          <Header title="Journals" subtitle="Manage your journals" />
+          <Header title="Strategies" subtitle="Manage your strategies" />
 
           <Box>
             <Button variant="contained" onClick={onNew}>
               <AddCircleOutlineOutlinedIcon sx={{ mr: '5px' }} />
-              New Journal
+              New Strategy
             </Button>
           </Box>
         </Box>
-        <JournalTable onEdit={onEdit} />
+        <StrategiesTable onEdit={onEdit} />
       </Box>
       <Dialog
         open={openForm}
         onClose={closeDialog}
-        title={journal ? `Edit ${journal.name}` : 'Add Journal'}
-        icon={<AutoStoriesOutlinedIcon />}
+        title={strategy ? `Edit ${strategy.name}` : 'Add Strategy'}
+        icon={<ExtensionOutlinedIcon />}
       >
-        <JournalForm
-          journal={journal}
+        <StrategyForm
+          strategy={strategy}
           onCancel={closeDialog}
           onSaved={closeDialog}
         />

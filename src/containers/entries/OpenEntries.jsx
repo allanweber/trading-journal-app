@@ -3,23 +3,29 @@ import { useState } from 'react';
 import { Accordion } from '../../components/accordion';
 import { Direction } from '../../components/direction/Direction';
 import { Search } from '../../components/search';
+import { StrategySelect } from '../../components/strategy-select';
 import { useIsMobile } from '../../hooks/useIsMobile';
 import { EntriesTable } from './EntriesTable';
 
 export const OpenEntries = ({ journal }) => {
   const isMobile = useIsMobile();
 
-  const [tableProps, setTableProps] = useState({
+  const [filters, setFilters] = useState({
     journal,
     status: 'OPEN',
   });
 
   const onSearch = (value) => {
-    setTableProps({ ...tableProps, symbol: value });
+    setFilters({ ...filters, symbol: value });
   };
 
   const changeDirection = (value) => {
-    setTableProps({ ...tableProps, direction: value });
+    setFilters({ ...filters, direction: value });
+  };
+
+  const changeStrategies = (values) => {
+    const ids = values.map((strategy) => strategy.id);
+    setFilters({ ...filters, strategies: ids });
   };
 
   return (
@@ -41,10 +47,13 @@ export const OpenEntries = ({ journal }) => {
               size="small"
             />
           </Box>
+          <Box padding={1}>
+            <StrategySelect onChanged={changeStrategies} small />
+          </Box>
         </Grid>
       </Accordion>
 
-      <EntriesTable args={tableProps} />
+      <EntriesTable args={filters} />
     </Box>
   );
 };
