@@ -7,9 +7,12 @@ import {
   saveStrategy,
 } from './Strategies';
 
-export const useGetStrategies = () => {
+export const useGetStrategies = (page, size) => {
   const accessToken = useAccessTokenState();
-  return useQuery(['strategies'], async () => await getStrategies(accessToken));
+  return useQuery(
+    [`strategies-${page}-${size}`],
+    async () => await getStrategies(accessToken, page, size)
+  );
 };
 
 export const useGetStrategy = (strategyId) => {
