@@ -10,7 +10,7 @@ import {
 export const useGetStrategies = (page, size) => {
   const accessToken = useAccessTokenState();
   return useQuery(
-    [`strategies-${page}-${size}`],
+    ['strategies', `strategies-${page}-${size}`],
     async () => await getStrategies(accessToken, page, size)
   );
 };
@@ -18,7 +18,7 @@ export const useGetStrategies = (page, size) => {
 export const useGetStrategy = (strategyId) => {
   const accessToken = useAccessTokenState();
   return useQuery(
-    [`journals-${strategyId}`],
+    [`strategies-${strategyId}`],
     async () => await getStrategy(accessToken, strategyId)
   );
 };

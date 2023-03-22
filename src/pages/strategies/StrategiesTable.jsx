@@ -1,5 +1,6 @@
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Chip, Link, Typography } from '@mui/material';
+import { Stack } from '@mui/system';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 
@@ -96,7 +97,17 @@ export const StrategiesTable = ({
       headerName: 'Name',
       flex: 1,
       renderCell: (params) => (
-        <Link onClick={() => editAction(params.row)}>{params.row.name}</Link>
+        <Stack direction="row" spacing={1}>
+          <Link onClick={() => editAction(params.row)}>{params.row.name}</Link>
+          {params.row.color && (
+            <Chip
+              size="small"
+              sx={{
+                backgroundColor: params.row.color,
+              }}
+            />
+          )}
+        </Stack>
       ),
     },
   ];
