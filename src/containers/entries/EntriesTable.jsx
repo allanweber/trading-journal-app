@@ -2,7 +2,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import ModeOutlinedIcon from '@mui/icons-material/ModeOutlined';
 import { Box, Link, Typography } from '@mui/material';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Alert } from '../../components/alert';
 import { ColorfulCurrency } from '../../components/colorful-currency';
 import { ColorfulPercentage } from '../../components/colorful-percentage';
@@ -22,10 +22,34 @@ export const EntriesTable = ({ args }) => {
   const [openDetails, setOpenDetails] = useState(false);
   const [trade, setTrade] = useState(undefined);
   const [entry, setEntry] = useState(undefined);
+  const [items, setItems] = useState([]);
+  const [pagination, setPagination] = useState({
+    page: 0,
+    pageSize: 10,
+  });
   const { data, error, isLoading } = useGetEntries({
     ...args,
     journalId: journal.id,
+    page: pagination.page,
+    size: pagination.pageSize,
   });
+  const [rowCount, setRowCount] = useState(0);
+
+  const handleChangePage = (newPage) => {
+    setPagination({ ...pagination, page: newPage });
+  };
+
+  const handleChangePageSize = (newSize) => {
+    setPagination({ ...pagination, pageSize: newSize });
+  };
+
+  useEffect(() => {
+    if (data) {
+      setItems(data.items);
+      setRowCount(data.totalItems);
+    }
+  }, [data]);
+
   const { currency } = journal;
 
   const mutation = useDeleteEntry(journal.id);
@@ -209,12 +233,18 @@ export const EntriesTable = ({ args }) => {
       <DataGrid
         error={error}
         loading={isLoading}
-        rows={data || []}
+        rows={items}
         columns={columns}
         density="comfortable"
         autoHeight
         disableSelectionOnClick
         disableColumnMenu
+        rowsPerPageOptions={[10, 20, 50, 100]}
+        pageSize={pagination.pageSize}
+        onPageChange={handleChangePage}
+        onPageSizeChange={handleChangePageSize}
+        rowCount={rowCount}
+        paginationMode="server"
       />
       <Dialog
         maxWidth="md"

@@ -18,7 +18,8 @@ export const StrategiesTable = ({
   onRowsSelected,
   selectedRows,
 }) => {
-  const [items, setItems] = useState(undefined);
+  const [selection, setSelection] = useState();
+  const [items, setItems] = useState([]);
   const [pagination, setPagination] = useState({
     page: 0,
     pageSize: 10,
@@ -47,6 +48,12 @@ export const StrategiesTable = ({
     }
   }, [data]);
 
+  useEffect(() => {
+    if (selectedRows) {
+      setSelection(selectedRows.map((row) => row.id));
+    }
+  }, [selectedRows]);
+
   const editAction = (strategy) => {
     onEdit(strategy);
   };
@@ -57,8 +64,6 @@ export const StrategiesTable = ({
       onRowsSelected(rowsSelected);
     }
   };
-
-  const selectionChanged = selectedRows && selectedRows.map((row) => row.id);
 
   const deleteAction = useCallback(
     async (strategy) => {
@@ -98,7 +103,13 @@ export const StrategiesTable = ({
       flex: 1,
       renderCell: (params) => (
         <Stack direction="row" spacing={1}>
-          <Link onClick={() => editAction(params.row)}>{params.row.name}</Link>
+          {selectOnly ? (
+            <Typography>{params.row.name}</Typography>
+          ) : (
+            <Link onClick={() => editAction(params.row)}>
+              {params.row.name}
+            </Link>
+          )}
           {params.row.color && (
             <Chip
               size="small"
@@ -119,14 +130,14 @@ export const StrategiesTable = ({
       <DataGrid
         loading={isLoading}
         error={error}
-        rows={items || []}
+        rows={items}
         columns={columns}
         autoHeight
         disableSelectionOnClick
         disableColumnMenu
         checkboxSelection={selectOnly}
         onSelectionModelChange={dataSelected}
-        selectionModel={selectionChanged}
+        selectionModel={selection}
         rowsPerPageOptions={[10, 20, 50, 100]}
         pageSize={pagination.pageSize}
         onPageChange={handleChangePage}

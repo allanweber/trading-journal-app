@@ -4,7 +4,7 @@ import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import { Box, IconButton, Paper, Tooltip } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import { styled } from '@mui/material/styles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StrategiesTable } from '../../pages/strategies/StrategiesTable';
 import { Dialog } from '../dialog/Dialog';
 
@@ -12,10 +12,17 @@ const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
-export const StrategySelect = ({ onChanged, initialValues, small = false }) => {
-  const [selected, setSelected] = useState(initialValues || []);
-
+export const StrategySelect = ({
+  onChanged,
+  selectedValues,
+  small = false,
+}) => {
+  const [selected, setSelected] = useState();
   const [openForm, setOpenForm] = useState(false);
+
+  useEffect(() => {
+    setSelected(selectedValues);
+  }, [selectedValues]);
 
   const openDialog = () => {
     setOpenForm(true);
@@ -31,14 +38,15 @@ export const StrategySelect = ({ onChanged, initialValues, small = false }) => {
   };
 
   const handleDelete = (toDelete) => () => {
-    const selection = selected.filter((item) => item.id !== toDelete.id);
+    let selection = selected.filter((item) => item.id !== toDelete.id);
+    selection = selection.length === 0 ? undefined : selection;
     setSelected(selection);
     change(selection);
   };
 
   const deleteAll = () => {
-    setSelected([]);
-    change([]);
+    setSelected();
+    change();
   };
 
   const change = (selection) => {
@@ -74,30 +82,35 @@ export const StrategySelect = ({ onChanged, initialValues, small = false }) => {
             p: small ? null : 0.5,
           }}
         >
-          {selected.length === 0 && (
-            <Chip size={small ? 'small' : 'medium'} label="All Strategies" />
+          {!selected && (
+            <Chip
+              size={small ? 'small' : 'medium'}
+              label="All Strategies"
+              onClick={openDialog}
+            />
           )}
 
-          {selected.map((data) => {
-            return (
-              <ListItem key={data.id}>
-                <Chip
-                  size={small ? 'small' : 'medium'}
-                  label={data.name}
-                  onDelete={handleDelete(data)}
-                  sx={{
-                    backgroundColor: data.color,
-                  }}
-                />
-              </ListItem>
-            );
-          })}
+          {selected &&
+            selected.map((data) => {
+              return (
+                <ListItem key={data.id}>
+                  <Chip
+                    size={small ? 'small' : 'medium'}
+                    label={data.name}
+                    onDelete={handleDelete(data)}
+                    sx={{
+                      backgroundColor: data.color,
+                    }}
+                  />
+                </ListItem>
+              );
+            })}
           <Tooltip title="Filter Strategies">
             <IconButton type="button" onClick={openDialog}>
               <FilterAltOutlinedIcon />
             </IconButton>
           </Tooltip>
-          {selected.length > 0 && (
+          {selected && (
             <Tooltip title="Clear Strategies Filter">
               <IconButton type="button" onClick={deleteAll}>
                 <FilterAltOffOutlinedIcon />

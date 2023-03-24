@@ -11,9 +11,12 @@ export const getEntries = (
   from,
   direction,
   result,
-  strategies
+  strategies,
+  page = 0,
+  size = 10
 ) => {
-  let url = `${config.entries}/journals/${journalId}/entries?`;
+  let url = `${config.entries}/journals/${journalId}/entries?page=${page}&size=${size}&`;
+
   if (status) {
     url += `status=${status}&`;
   }

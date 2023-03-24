@@ -41,6 +41,11 @@ export const ClosedEntries = ({ journal }) => {
     setFilters({ ...filters, result: value });
   };
 
+  const changeStrategies = (values) => {
+    const ids = values && values.map((strategy) => strategy.id);
+    setFilters({ ...filters, strategies: ids });
+  };
+
   const showFilters = () => {
     return filters.type === 'TRADE' || filters.type === undefined;
   };
@@ -76,7 +81,11 @@ export const ClosedEntries = ({ journal }) => {
           )}
           {showFilters() && (
             <Box padding={1}>
-              <StrategySelect small />
+              <StrategySelect
+                onChanged={changeStrategies}
+                // initialValues={strategies}
+                small
+              />
             </Box>
           )}
           <Box sx={{ ml: isMobile ? 0 : 'auto' }} padding={1}>
