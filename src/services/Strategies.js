@@ -12,8 +12,9 @@ export const saveStrategy = (accessToken, strategy) => {
   }).then(responseOrError);
 };
 
-export const getStrategies = (accessToken) => {
-  return fetch(`${config.entries}/strategies`, {
+export const getStrategies = (accessToken, page = 0, size = 10) => {
+  const url = `${config.entries}/strategies?page=${page}&size=${size}`;
+  return fetch(url, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${accessToken}`,

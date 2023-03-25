@@ -263,7 +263,7 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                     </Grid>
                     <Grid item xs={12} sm={12}>
                       <StrategySelect
-                        initialValues={values.strategies}
+                        selectedValues={values.strategies}
                         onChanged={(value) =>
                           setFieldValue(
                             'strategyIds',

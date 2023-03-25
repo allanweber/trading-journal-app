@@ -1,6 +1,8 @@
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Chip, Link, Typography } from '@mui/material';
+import { Stack } from '@mui/system';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import { useEffect, useState } from 'react';
 
 import { useCallback } from 'react';
 import { Alert } from '../../components/alert';
@@ -16,22 +18,52 @@ export const StrategiesTable = ({
   onRowsSelected,
   selectedRows,
 }) => {
-  const { data, error, isLoading } = useGetStrategies();
+  const [selection, setSelection] = useState();
+  const [items, setItems] = useState([]);
+  const [pagination, setPagination] = useState({
+    page: 0,
+    pageSize: 10,
+  });
+  const { data, error, isLoading } = useGetStrategies(
+    pagination.page,
+    pagination.pageSize
+  );
   const mutation = useDeleteStrategy();
   const deleteConfirmation = useConfirmationModal();
+
+  const [rowCount, setRowCount] = useState(0);
+
+  const handleChangePage = (newPage) => {
+    setPagination({ ...pagination, page: newPage });
+  };
+
+  const handleChangePageSize = (newSize) => {
+    setPagination({ ...pagination, pageSize: newSize });
+  };
+
+  useEffect(() => {
+    if (data) {
+      setItems(data.items);
+      setRowCount(data.totalItems);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (selectedRows) {
+      setSelection(selectedRows.map((row) => row.id));
+    }
+  }, [selectedRows]);
 
   const editAction = (strategy) => {
     onEdit(strategy);
   };
 
   const dataSelected = (ids) => {
-    const rowsSelected = ids.map((id) => data.find((row) => row.id === id));
+    const rowsSelected = ids.map((id) => items.find((row) => row.id === id));
     if (onRowsSelected) {
       onRowsSelected(rowsSelected);
     }
   };
-
-  const selectionChanged = selectedRows && selectedRows.map((row) => row.id);
 
   const deleteAction = useCallback(
     async (strategy) => {
@@ -70,7 +102,23 @@ export const StrategiesTable = ({
       headerName: 'Name',
       flex: 1,
       renderCell: (params) => (
-        <Link onClick={() => editAction(params.row)}>{params.row.name}</Link>
+        <Stack direction="row" spacing={1}>
+          {selectOnly ? (
+            <Typography>{params.row.name}</Typography>
+          ) : (
+            <Link onClick={() => editAction(params.row)}>
+              {params.row.name}
+            </Link>
+          )}
+          {params.row.color && (
+            <Chip
+              size="small"
+              sx={{
+                backgroundColor: params.row.color,
+              }}
+            />
+          )}
+        </Stack>
       ),
     },
   ];
@@ -80,16 +128,22 @@ export const StrategiesTable = ({
         {mutation.isError && <Alert mutation={mutation} />}
       </Box>
       <DataGrid
-        isLoading={isLoading}
+        loading={isLoading}
         error={error}
-        rows={data || []}
+        rows={items}
         columns={columns}
         autoHeight
         disableSelectionOnClick
         disableColumnMenu
         checkboxSelection={selectOnly}
         onSelectionModelChange={dataSelected}
-        selectionModel={selectionChanged}
+        selectionModel={selection}
+        rowsPerPageOptions={[10, 20, 50, 100]}
+        pageSize={pagination.pageSize}
+        onPageChange={handleChangePage}
+        onPageSizeChange={handleChangePageSize}
+        rowCount={rowCount}
+        paginationMode="server"
       />
     </Box>
   );
