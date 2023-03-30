@@ -20,12 +20,13 @@ export const useGetEntries = ({
   strategies,
   page,
   size,
+  sort,
 }) => {
   const accessToken = useAccessTokenState();
   return useQuery(
     [
       `entries-${journalId}`,
-      `${journalId}-${status}-${symbol}-${type}-${from}-${direction}-${result}-${strategies}-${page}-${size}`,
+      `${journalId}-${status}-${symbol}-${type}-${from}-${direction}-${result}-${strategies}-${page}-${size}-${sort}`,
     ],
     async () =>
       await getEntries(
@@ -39,7 +40,8 @@ export const useGetEntries = ({
         result,
         strategies,
         page,
-        size
+        size,
+        sort
       )
   );
 };

@@ -13,7 +13,8 @@ export const getEntries = (
   result,
   strategies,
   page = 0,
-  size = 10
+  size = 10,
+  sort
 ) => {
   let url = `${config.entries}/journals/${journalId}/entries?page=${page}&size=${size}&`;
 
@@ -37,6 +38,9 @@ export const getEntries = (
   }
   if (strategies && strategies.length > 0) {
     url += `strategies=${strategies}&`;
+  }
+  if (sort) {
+    url += `sort=${sort}&`;
   }
 
   return fetch(url, {

@@ -12,6 +12,13 @@ import {
   useGetStrategies,
 } from '../../services/StrategyQueries';
 
+const SORT = [
+  {
+    field: 'name',
+    sort: 'asc',
+  },
+];
+
 export const StrategiesTable = ({
   onEdit,
   selectOnly = false,
@@ -24,10 +31,16 @@ export const StrategiesTable = ({
     page: 0,
     pageSize: 10,
   });
+
+  const [sortModel, setSortModel] = useState(SORT);
+  const [sortItems, setSortItems] = useState('name,asc');
+
   const { data, error, isLoading } = useGetStrategies(
     pagination.page,
-    pagination.pageSize
+    pagination.pageSize,
+    sortItems
   );
+
   const mutation = useDeleteStrategy();
   const deleteConfirmation = useConfirmationModal();
 
@@ -43,8 +56,8 @@ export const StrategiesTable = ({
 
   useEffect(() => {
     if (data) {
-      setItems(data.items);
-      setRowCount(data.totalItems);
+      setItems(data.content);
+      setRowCount(data.total);
     }
   }, [data]);
 
@@ -64,6 +77,14 @@ export const StrategiesTable = ({
       onRowsSelected(rowsSelected);
     }
   };
+
+  const handleSortModelChange = useCallback((model) => {
+    if (model.length === 0) {
+      model = SORT;
+    }
+    setSortItems(`${model[0].field},${model[0].sort}`);
+    setSortModel(model);
+  }, []);
 
   const deleteAction = useCallback(
     async (strategy) => {
@@ -138,12 +159,15 @@ export const StrategiesTable = ({
         checkboxSelection={selectOnly}
         onSelectionModelChange={dataSelected}
         selectionModel={selection}
+        sortModel={sortModel}
+        onSortModelChange={handleSortModelChange}
         rowsPerPageOptions={[10, 20, 50, 100]}
         pageSize={pagination.pageSize}
         onPageChange={handleChangePage}
         onPageSizeChange={handleChangePageSize}
         rowCount={rowCount}
         paginationMode="server"
+        sortingMode="server"
       />
     </Box>
   );

@@ -12,8 +12,11 @@ export const saveStrategy = (accessToken, strategy) => {
   }).then(responseOrError);
 };
 
-export const getStrategies = (accessToken, page = 0, size = 10) => {
-  const url = `${config.entries}/strategies?page=${page}&size=${size}`;
+export const getStrategies = (accessToken, page = 0, size = 10, sort) => {
+  let url = `${config.entries}/strategies?page=${page}&size=${size}`;
+  if (sort) {
+    url += `&sort=${sort}`;
+  }
   return fetch(url, {
     method: 'GET',
     headers: {
