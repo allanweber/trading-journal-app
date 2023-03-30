@@ -24,7 +24,7 @@ export const OpenEntries = ({ journal }) => {
   };
 
   const changeStrategies = (values) => {
-    const ids = values.map((strategy) => strategy.id);
+    const ids = values && values.map((strategy) => strategy.id);
     setFilters({ ...filters, strategies: ids });
   };
 

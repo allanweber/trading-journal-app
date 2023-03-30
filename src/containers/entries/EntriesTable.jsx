@@ -16,6 +16,13 @@ import { EntryDetails } from './EntryDetails';
 import { getByType } from './EntryTypes';
 import { TradeForm } from './TradeForm';
 
+const SORT = [
+  {
+    field: 'date',
+    sort: 'asc',
+  },
+];
+
 export const EntriesTable = ({ args }) => {
   const { journal } = args;
   const [openEdit, setOpenEdit] = useState(false);
@@ -27,12 +34,18 @@ export const EntriesTable = ({ args }) => {
     page: 0,
     pageSize: 10,
   });
+
+  const [sortModel, setSortModel] = useState(SORT);
+  const [sortItems, setSortItems] = useState('date,desc');
+
   const { data, error, isLoading } = useGetEntries({
     ...args,
     journalId: journal.id,
     page: pagination.page,
     size: pagination.pageSize,
+    sort: sortItems,
   });
+
   const [rowCount, setRowCount] = useState(0);
 
   const handleChangePage = (newPage) => {
@@ -45,8 +58,8 @@ export const EntriesTable = ({ args }) => {
 
   useEffect(() => {
     if (data) {
-      setItems(data.items);
-      setRowCount(data.totalItems);
+      setItems(data.content);
+      setRowCount(data.total);
     }
   }, [data]);
 
@@ -97,6 +110,14 @@ export const EntriesTable = ({ args }) => {
       setOpenDetails(true);
     }
   };
+
+  const handleSortModelChange = useCallback((model) => {
+    if (model.length === 0) {
+      model = SORT;
+    }
+    setSortItems(`${model[0].field},${model[0].sort}`);
+    setSortModel(model);
+  }, []);
 
   const columns = [
     {
@@ -239,6 +260,8 @@ export const EntriesTable = ({ args }) => {
         autoHeight
         disableSelectionOnClick
         disableColumnMenu
+        sortModel={sortModel}
+        onSortModelChange={handleSortModelChange}
         rowsPerPageOptions={[10, 20, 50, 100]}
         pageSize={pagination.pageSize}
         onPageChange={handleChangePage}
