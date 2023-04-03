@@ -166,9 +166,13 @@ export const TimeAggregation = ({ journal, onChange }) => {
                 pr: 0,
                 pl: 0,
               },
+              '& .MuiTablePagination-actions': {
+                marginLeft: 0,
+              },
             }}
           >
             <TablePagination
+              size="small"
               component="div"
               count={periodGroups.total}
               page={page}
