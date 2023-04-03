@@ -4,6 +4,7 @@ import { ColorfulCurrency } from '../../components/colorful-currency';
 import { ColorfulPercentage } from '../../components/colorful-percentage';
 import { Duration } from '../../components/duration';
 import { useJournalContext } from '../../context/JournalContext';
+import { EntryImagesPreview } from './EntryImagesPreview';
 
 const Title = ({ children }) => {
   return (
@@ -23,15 +24,9 @@ export const EntryDetails = ({ entry }) => {
     setIsTrade(entry.type === 'TRADE');
   }, [entry]);
 
-  if (!entry) return <div></div>;
+  if (!entry) return null;
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
+    <Box>
       <Grid container spacing={2}>
         {isTrade && entry.grossResult && (
           <Grid item xs={12} sm={6}>
@@ -45,19 +40,19 @@ export const EntryDetails = ({ entry }) => {
             <ColorfulCurrency value={entry.netResult} currency={currency} />
           </Grid>
         )}
-        {entry.accountChange && (
+        {entry.accountChange > 0 && (
           <Grid item xs={12} sm={6}>
             <Title>Account Change</Title>
             <ColorfulPercentage value={entry.accountChange} />
           </Grid>
         )}
-        {entry.accountBalance && (
+        {entry.accountBalance > 0 && (
           <Grid item xs={12} sm={6}>
             <Title>Account Balance</Title>
             <ColorfulCurrency value={entry.accountBalance} />
           </Grid>
         )}
-        {isTrade && (
+        {entry.accountRisked > 0 && (
           <Grid item xs={12} sm={6}>
             <Title>Account Risked</Title>
             <ColorfulPercentage value={entry.accountRisked} />
@@ -73,6 +68,18 @@ export const EntryDetails = ({ entry }) => {
           <Grid item xs={12} sm={6}>
             <Title>Duration</Title>
             <Duration start={entry.date} end={entry.exitDate} />
+          </Grid>
+        )}
+        {entry.notes && (
+          <Grid item xs={12} sm={12}>
+            <Title>Notes</Title>
+            <Typography>{entry.notes}</Typography>
+          </Grid>
+        )}
+        {isTrade && (
+          <Grid item xs={12} sm={12}>
+            <Title>Trade Images</Title>
+            <EntryImagesPreview entry={entry} />
           </Grid>
         )}
       </Grid>

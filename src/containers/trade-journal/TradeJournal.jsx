@@ -34,7 +34,7 @@ export const TradeJournal = ({ journal }) => {
           />
         )}
       </Box>
-      <Box padding={1} paddingLeft={2} flexGrow="1">
+      <Box padding={1} paddingLeft={2}>
         {trade && <Trade journal={journal} trade={trade} />}
       </Box>
     </Grid>
