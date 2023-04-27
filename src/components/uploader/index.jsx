@@ -123,7 +123,7 @@ export const Uploader = ({ url, paramName, params, onFinish }) => {
   return (
     <Box sx={center}>
       <Uploady
-        multiple={false}
+        multiple={true}
         destination={destination}
         accept=".png,.jpg,.jpeg"
       >
