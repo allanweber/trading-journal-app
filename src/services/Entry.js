@@ -128,6 +128,25 @@ export const getEntryImages = (accessToken, journalId, entryId) => {
   ).then(responseOrError);
 };
 
+export const deleteEntryImage = (accessToken, journalId, entryId, imageId) => {
+  return fetch(
+    `${config.entries}/journals/${journalId}/entries/${entryId}/image/${imageId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    }
+  ).then(async (response) => {
+    if (response.ok) return response;
+    else {
+      const errors = await readErrors(response);
+      throw new Error(errors);
+    }
+  });
+};
+
 const responseOrError = async (response) => {
   if (response.ok) return response.json();
   else {

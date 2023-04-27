@@ -3,6 +3,7 @@ import { useJournalContext } from '../context/JournalContext';
 import { useAccessTokenState } from '../context/UserContext';
 import {
   deleteEntry,
+  deleteEntryImage,
   getEntries,
   getEntry,
   getEntryImages,
@@ -62,6 +63,20 @@ export const useGetEntryImages = (entryId) => {
   return useQuery(
     [`entry-${entryId}-images`],
     async () => await getEntryImages(accessToken, journal.id, entryId)
+  );
+};
+
+export const useDeleteEntryImage = (entryId) => {
+  const queryClient = useQueryClient();
+  const accessToken = useAccessTokenState();
+  const { journal } = useJournalContext();
+  return useMutation(
+    (imageId) => deleteEntryImage(accessToken, journal.id, entryId, imageId),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([`entry-${entryId}-images`]);
+      },
+    }
   );
 };
 
