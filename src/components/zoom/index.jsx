@@ -12,14 +12,14 @@ function ImageZoom({ zoom, src, alt, background }) {
 }
 
 export const Zoom = ({ image, alt }) => {
-  const zoom = useRef(mediumZoom({ background: '#000', margin: 48 }));
+  const zoom = useRef(mediumZoom({ background: '#000' }));
 
   if (!image) return null;
 
   return (
     <div>
       <ImageZoom
-        src={`data:image/png;base64,${image}`}
+        src={`${image}?auto=format&fit=crop&w=40&h=25&q=60`}
         alt={alt}
         zoom={zoom.current}
         color="#BADA55"

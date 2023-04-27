@@ -4,7 +4,7 @@ import { ColorfulCurrency } from '../../components/colorful-currency';
 import { ColorfulPercentage } from '../../components/colorful-percentage';
 import { Duration } from '../../components/duration';
 import { useJournalContext } from '../../context/JournalContext';
-import { EntryImagesPreview } from './EntryImagesPreview';
+import { EntryImagesList } from './EntryImagesList';
 
 const Title = ({ children }) => {
   return (
@@ -79,7 +79,7 @@ export const EntryDetails = ({ entry }) => {
         {isTrade && (
           <Grid item xs={12} sm={12}>
             <Title>Trade Images</Title>
-            <EntryImagesPreview entry={entry} />
+            <EntryImagesList entry={entry} />
           </Grid>
         )}
       </Grid>

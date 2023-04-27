@@ -1,8 +1,16 @@
-import { Box, Button, Stack, styled, Typography } from '@mui/material';
+import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
+import {
+  Box,
+  Card,
+  CardContent,
+  Link,
+  Stack,
+  styled,
+  Typography,
+} from '@mui/material';
 import { asUploadButton } from '@rpldy/upload-button';
 import UploadDropZone from '@rpldy/upload-drop-zone';
 import withPasteUpload from '@rpldy/upload-paste';
-import UploadPreview from '@rpldy/upload-preview';
 import Uploady, {
   useItemErrorListener,
   useItemFinishListener,
@@ -12,14 +20,6 @@ import Uploady, {
 import React, { forwardRef, useEffect, useState } from 'react';
 import { useAccessTokenState } from '../../context/UserContext';
 import { Alert } from '../alert';
-import { Card } from '../card';
-
-const PreviewContainer = styled('div')`
-  img {
-    max-width: 260px;
-    max-height: 260px;
-  }
-`;
 
 const PasteUploadDropZone = withPasteUpload(UploadDropZone);
 const SimpleContainer = styled('div')``;
@@ -28,21 +28,14 @@ const PasteArea = withPasteUpload(SimpleContainer);
 const ButtonAsUploadButton = asUploadButton(
   forwardRef((props, ref) => {
     return (
-      <Button fullWidth variant="contained" ref={ref} {...props}>
-        Or click here to upload
-      </Button>
+      <Link ref={ref} {...props}>
+        click here
+      </Link>
     );
   })
 );
 
-export const Uploader = ({
-  url,
-  paramName,
-  params,
-  preview,
-  withButton,
-  onFinish,
-}) => {
+export const Uploader = ({ url, paramName, params, onFinish }) => {
   const [status, setStatus] = useState({
     status: 'NONE',
     message: '',
@@ -135,25 +128,30 @@ export const Uploader = ({
         accept=".png,.jpg,.jpeg"
       >
         <Stack spacing={2}>
-          <PasteUploadDropZone autoUpload={true} params={{ test: 'paste' }}>
-            <PasteArea autoUpload={true}>
-              <Card title="Upload">
-                <Typography fontSize={15} sx={center}>
-                  You can drop a file here
-                </Typography>
-                <Typography fontSize={15} sx={center}>
-                  Or click and paste a file to upload
-                </Typography>
-              </Card>
-            </PasteArea>
-          </PasteUploadDropZone>
-          {withButton && <ButtonAsUploadButton />}
+          <Typography fontSize={15}>Media</Typography>
+          <Card
+            sx={{
+              border: 'dashed 1px',
+              minWidth: 250,
+              borderRadius: 2,
+            }}
+          >
+            <CardContent>
+              <PasteUploadDropZone autoUpload={true} params={{ test: 'paste' }}>
+                <PasteArea autoUpload={false}>
+                  <Typography fontSize={15} sx={center}>
+                    <CloudUploadOutlinedIcon />
+                  </Typography>
+                  <Typography fontSize={15} sx={center}>
+                    Drop files, paste or &nbsp;
+                    <ButtonAsUploadButton />
+                  </Typography>
+                </PasteArea>
+              </PasteUploadDropZone>
+            </CardContent>
+          </Card>
+
           <UploadStatusView />
-          {preview && (
-            <PreviewContainer>
-              <UploadPreview />
-            </PreviewContainer>
-          )}
         </Stack>
       </Uploady>
     </Box>

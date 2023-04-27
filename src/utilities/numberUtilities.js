@@ -21,7 +21,6 @@ export const percentFormatter = (value) => {
   } else {
     valueFormatted = currencyFormat(0);
   }
-  console.log(valueFormatted);
   return `${valueFormatted} %`;
 };
 

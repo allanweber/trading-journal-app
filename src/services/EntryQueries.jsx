@@ -1,9 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useJournalContext } from '../context/JournalContext';
 import { useAccessTokenState } from '../context/UserContext';
 import {
   deleteEntry,
   getEntries,
   getEntry,
+  getEntryImages,
   saveDeposit,
   saveTaxes,
   saveWithdrawal,
@@ -51,6 +53,15 @@ export const useGetEntry = (journalId, entryId) => {
   return useQuery(
     [`entry-${journalId}-${entryId}`],
     async () => await getEntry(accessToken, journalId, entryId)
+  );
+};
+
+export const useGetEntryImages = (entryId) => {
+  const accessToken = useAccessTokenState();
+  const { journal } = useJournalContext();
+  return useQuery(
+    [`entry-${entryId}-images`],
+    async () => await getEntryImages(accessToken, journal.id, entryId)
   );
 };
 

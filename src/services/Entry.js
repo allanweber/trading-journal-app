@@ -116,9 +116,9 @@ export const deleteEntry = (accessToken, journalId, entryId) => {
   });
 };
 
-export const getEntryImage = (accessToken, journalId, entryId, type) => {
+export const getEntryImages = (accessToken, journalId, entryId) => {
   return fetch(
-    `${config.entries}/journals/${journalId}/entries/${entryId}/image?type=${type}`,
+    `${config.entries}/journals/${journalId}/entries/${entryId}/images`,
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,

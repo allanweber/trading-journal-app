@@ -297,16 +297,6 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
               <Alert mutation={mutation} sx={{ mt: 3 }} />
               <Box display="flex" justifyContent="center" mt="20px">
                 <Grid container spacing={2}>
-                  <Grid item xs={12} sm={showMore ? 4 : 6}>
-                    <Button
-                      fullWidth
-                      onClick={onCancel}
-                      secondary
-                      type="button"
-                    >
-                      Back
-                    </Button>
-                  </Grid>
                   {showMore && (
                     <Grid item xs={12} sm={4}>
                       <CloseTradeAction
