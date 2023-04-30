@@ -1,5 +1,5 @@
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import ScreenshotMonitorOutlinedIcon from '@mui/icons-material/ScreenshotMonitorOutlined';
+import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import {
   Box,
   IconButton,
@@ -13,10 +13,13 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useConfirmationModal } from '../../components/dialog/Confirmation';
+import { Dialog } from '../../components/dialog/Dialog';
+import { Zoom } from '../../components/zoom';
 import {
   useDeleteEntryImage,
   useGetEntryImages,
 } from '../../services/EntryQueries';
+import { EntryImagesCarousel } from './EntryImagesCarousel';
 
 const theme = createTheme({
   breakpoints: {
@@ -30,6 +33,7 @@ const theme = createTheme({
 });
 
 export const EntryImagesList = ({ entry }) => {
+  const [openImages, setOpenImages] = useState(false);
   const { data } = useGetEntryImages(entry.id);
   const mutation = useDeleteEntryImage(entry.id);
   const deleteConfirmation = useConfirmationModal();
@@ -54,63 +58,62 @@ export const EntryImagesList = ({ entry }) => {
     }
   };
 
-  return (
-    <ThemeProvider theme={theme}>
-      <Box
-        sx={{
-          height: 450,
-          display: 'grid',
-          gridTemplateColumns: {
-            mobile: 'repeat(1, 1fr)',
-            bigMobile: 'repeat(2, 1fr)',
-            tablet: 'repeat(3, 1fr)',
-            desktop: 'repeat(4, 1fr)',
-          },
-          [`& .${imageListItemClasses.root}`]: {
-            display: 'flex',
-            flexDirection: 'column',
-          },
-        }}
-      >
-        {images.map((item) => (
-          <ImageListItem key={item.img}>
-            <img src={`${item.image}`} alt={item.imageName} loading="lazy" />
-            <ImageListItemBar
-              sx={{
-                background:
-                  'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
-                  'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-              }}
-              position="top"
-              actionIcon={
-                <Tooltip title="Open image in full size">
-                  <IconButton
-                    sx={{ color: 'white' }}
-                    aria-label={`expand ${item.imageName}`}
-                  >
-                    <ScreenshotMonitorOutlinedIcon />
-                  </IconButton>
-                </Tooltip>
-              }
-            />
+  const openImage = (index) => {
+    setOpenImages(true);
+  };
 
-            <ImageListItemBar
-              title={item.imageName}
-              actionIcon={
-                <Tooltip title="Delete image">
-                  <IconButton
-                    sx={{ color: 'white' }}
-                    aria-label={`delete ${item.imageName}`}
-                    onClick={(e) => deleteImage(item.id)}
-                  >
-                    <DeleteOutlineOutlinedIcon />
-                  </IconButton>
-                </Tooltip>
-              }
-            />
-          </ImageListItem>
-        ))}
-      </Box>
-    </ThemeProvider>
+  const closeDialog = () => {
+    setOpenImages(false);
+  };
+
+  return (
+    <div>
+      <ThemeProvider theme={theme}>
+        <Box
+          sx={{
+            height: 300,
+            display: 'grid',
+            gridTemplateColumns: {
+              mobile: 'repeat(1, 1fr)',
+              bigMobile: 'repeat(1, 1fr)',
+              tablet: 'repeat(3, 1fr)',
+              desktop: 'repeat(4, 1fr)',
+            },
+            [`& .${imageListItemClasses.root}`]: {
+              display: 'flex',
+              flexDirection: 'column',
+            },
+          }}
+        >
+          {images.map((item) => (
+            <ImageListItem key={item.image}>
+              <Zoom image={item.image} alt={item.imageName} />
+              <ImageListItemBar
+                position="top"
+                actionIcon={
+                  <Tooltip title="Delete image">
+                    <IconButton
+                      sx={{ color: 'white' }}
+                      aria-label={`delete ${item.imageName}`}
+                      onClick={(e) => deleteImage(item.id)}
+                    >
+                      <DeleteOutlineOutlinedIcon />
+                    </IconButton>
+                  </Tooltip>
+                }
+              />
+            </ImageListItem>
+          ))}
+        </Box>
+      </ThemeProvider>
+      <Dialog
+        open={openImages}
+        onClose={closeDialog}
+        fullScreen
+        icon={<ImageOutlinedIcon />}
+      >
+        <EntryImagesCarousel />
+      </Dialog>
+    </div>
   );
 };

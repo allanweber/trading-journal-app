@@ -78,7 +78,6 @@ export const EntryDetails = ({ entry }) => {
         )}
         {isTrade && (
           <Grid item xs={12} sm={12}>
-            <Title>Trade Images</Title>
             <EntryImagesList entry={entry} />
           </Grid>
         )}
