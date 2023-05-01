@@ -1,29 +1,21 @@
-import mediumZoom from 'medium-zoom';
-import { useRef } from 'react';
-
-function ImageZoom({ zoom, src, alt, background }) {
-  const zoomRef = useRef(zoom.clone({ background }));
-
-  function attachZoom(image) {
-    zoomRef.current.attach(image);
-  }
-
-  return <img src={src} alt={alt} ref={attachZoom} />;
-}
+import ImageZoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 
 export const Zoom = ({ image, alt }) => {
-  const zoom = useRef(mediumZoom({ background: '#000', margin: 48 }));
-
   if (!image) return null;
 
   return (
-    <div>
-      <ImageZoom
-        src={`data:image/png;base64,${image}`}
+    <ImageZoom zoomMargin={40}>
+      <img
+        src={image}
         alt={alt}
-        zoom={zoom.current}
-        color="#BADA55"
+        loading="lazy"
+        style={{
+          objectFit: 'contain',
+          objectPosition: '50% 50%;',
+          width: '100%',
+        }}
       />
-    </div>
+    </ImageZoom>
   );
 };

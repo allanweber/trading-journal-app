@@ -89,7 +89,7 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
           }) => (
             <form onSubmit={handleSubmit}>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={showMore ? 8 : 12}>
+                <Grid item xs={12} sm={showMore ? 6 : 12}>
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                       <TextField
@@ -289,7 +289,7 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                   </Grid>
                 </Grid>
                 {showMore && (
-                  <Grid item xs={12} sm={4}>
+                  <Grid item xs={12} sm={6}>
                     <EntryImages entry={tradeValues} journal={journal} />
                   </Grid>
                 )}
@@ -297,18 +297,8 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
               <Alert mutation={mutation} sx={{ mt: 3 }} />
               <Box display="flex" justifyContent="center" mt="20px">
                 <Grid container spacing={2}>
-                  <Grid item xs={12} sm={showMore ? 4 : 6}>
-                    <Button
-                      fullWidth
-                      onClick={onCancel}
-                      secondary
-                      type="button"
-                    >
-                      Back
-                    </Button>
-                  </Grid>
                   {showMore && (
-                    <Grid item xs={12} sm={4}>
+                    <Grid item xs={12} sm={6}>
                       <CloseTradeAction
                         trade={tradeValues}
                         journal={journal}
@@ -316,7 +306,7 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                       ></CloseTradeAction>
                     </Grid>
                   )}
-                  <Grid item xs={12} sm={showMore ? 4 : 6}>
+                  <Grid item xs={12} sm={showMore ? 6 : 12}>
                     <Button fullWidth loading={mutation.isLoading}>
                       Save Trade
                     </Button>

@@ -21,12 +21,11 @@ export const percentFormatter = (value) => {
   } else {
     valueFormatted = currencyFormat(0);
   }
-  console.log(valueFormatted);
   return `${valueFormatted} %`;
 };
 
 export const currencyFormat = (value, options) => {
-  if (!value) {
+  if (value === undefined) {
     value = 0;
   }
 
