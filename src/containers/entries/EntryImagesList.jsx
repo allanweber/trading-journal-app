@@ -10,7 +10,6 @@ import {
   createTheme,
   imageListItemClasses,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { useConfirmationModal } from '../../components/dialog/Confirmation';
 import { Zoom } from '../../components/zoom';
 import {
@@ -30,17 +29,9 @@ const theme = createTheme({
 });
 
 export const EntryImagesList = ({ entry }) => {
-  const { data } = useGetEntryImages(entry.id);
+  const { data: images } = useGetEntryImages(entry.id);
   const mutation = useDeleteEntryImage(entry.id);
   const deleteConfirmation = useConfirmationModal();
-
-  const [images, setImages] = useState([]);
-
-  useEffect(() => {
-    if (data && data.length > 0) {
-      setImages(data);
-    }
-  }, [data]);
 
   const deleteImage = async (imageId) => {
     const result = await deleteConfirmation.showConfirmation(
@@ -72,25 +63,26 @@ export const EntryImagesList = ({ entry }) => {
             },
           }}
         >
-          {images.map((item) => (
-            <ImageListItem key={item.image}>
-              <Zoom image={item.image} alt={item.imageName} />
-              <ImageListItemBar
-                position="top"
-                actionIcon={
-                  <Tooltip title="Delete image">
-                    <IconButton
-                      sx={{ color: 'white' }}
-                      aria-label={`delete ${item.imageName}`}
-                      onClick={(e) => deleteImage(item.id)}
-                    >
-                      <DeleteOutlineOutlinedIcon />
-                    </IconButton>
-                  </Tooltip>
-                }
-              />
-            </ImageListItem>
-          ))}
+          {images &&
+            images.map((item) => (
+              <ImageListItem key={item.image}>
+                <Zoom image={item.image} alt={item.imageName} />
+                <ImageListItemBar
+                  position="top"
+                  actionIcon={
+                    <Tooltip title="Delete image">
+                      <IconButton
+                        sx={{ color: 'white' }}
+                        aria-label={`delete ${item.imageName}`}
+                        onClick={(e) => deleteImage(item.id)}
+                      >
+                        <DeleteOutlineOutlinedIcon />
+                      </IconButton>
+                    </Tooltip>
+                  }
+                />
+              </ImageListItem>
+            ))}
         </Box>
       </ThemeProvider>
     </div>

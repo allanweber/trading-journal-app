@@ -12,7 +12,7 @@ export const Zoom = ({ image, alt }) => {
         loading="lazy"
         style={{
           objectFit: 'contain',
-          objectPosition: '50% 50%;',
+          objectPosition: '50% 50%',
           width: '100%',
         }}
       />
