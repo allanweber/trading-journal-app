@@ -28,31 +28,31 @@ export const EntryDetails = ({ entry }) => {
   return (
     <Box>
       <Grid container spacing={2}>
-        {isTrade && entry.grossResult && (
+        {isTrade && (
           <Grid item xs={12} sm={6}>
             <Title>Gross Result</Title>
             <ColorfulCurrency value={entry.grossResult} currency={currency} />
           </Grid>
         )}
-        {entry.netResult && (
+        {
           <Grid item xs={12} sm={6}>
             <Title>net Result</Title>
             <ColorfulCurrency value={entry.netResult} currency={currency} />
           </Grid>
-        )}
-        {entry.accountChange > 0 && (
+        }
+        {
           <Grid item xs={12} sm={6}>
             <Title>Account Change</Title>
             <ColorfulPercentage value={entry.accountChange} />
           </Grid>
-        )}
-        {entry.accountBalance > 0 && (
+        }
+        {
           <Grid item xs={12} sm={6}>
             <Title>Account Balance</Title>
             <ColorfulCurrency value={entry.accountBalance} />
           </Grid>
-        )}
-        {entry.accountRisked > 0 && (
+        }
+        {isTrade && (
           <Grid item xs={12} sm={6}>
             <Title>Account Risked</Title>
             <ColorfulPercentage value={entry.accountRisked} />

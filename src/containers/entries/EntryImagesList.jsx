@@ -1,5 +1,4 @@
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import {
   Box,
   IconButton,
@@ -13,13 +12,11 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useConfirmationModal } from '../../components/dialog/Confirmation';
-import { Dialog } from '../../components/dialog/Dialog';
 import { Zoom } from '../../components/zoom';
 import {
   useDeleteEntryImage,
   useGetEntryImages,
 } from '../../services/EntryQueries';
-import { EntryImagesCarousel } from './EntryImagesCarousel';
 
 const theme = createTheme({
   breakpoints: {
@@ -33,7 +30,6 @@ const theme = createTheme({
 });
 
 export const EntryImagesList = ({ entry }) => {
-  const [openImages, setOpenImages] = useState(false);
   const { data } = useGetEntryImages(entry.id);
   const mutation = useDeleteEntryImage(entry.id);
   const deleteConfirmation = useConfirmationModal();
@@ -58,26 +54,17 @@ export const EntryImagesList = ({ entry }) => {
     }
   };
 
-  const openImage = (index) => {
-    setOpenImages(true);
-  };
-
-  const closeDialog = () => {
-    setOpenImages(false);
-  };
-
   return (
     <div>
       <ThemeProvider theme={theme}>
         <Box
           sx={{
-            height: 300,
             display: 'grid',
             gridTemplateColumns: {
               mobile: 'repeat(1, 1fr)',
               bigMobile: 'repeat(1, 1fr)',
-              tablet: 'repeat(3, 1fr)',
-              desktop: 'repeat(4, 1fr)',
+              tablet: 'repeat(2, 1fr)',
+              desktop: 'repeat(3, 1fr)',
             },
             [`& .${imageListItemClasses.root}`]: {
               display: 'flex',
@@ -106,14 +93,6 @@ export const EntryImagesList = ({ entry }) => {
           ))}
         </Box>
       </ThemeProvider>
-      <Dialog
-        open={openImages}
-        onClose={closeDialog}
-        fullScreen
-        icon={<ImageOutlinedIcon />}
-      >
-        <EntryImagesCarousel />
-      </Dialog>
     </div>
   );
 };

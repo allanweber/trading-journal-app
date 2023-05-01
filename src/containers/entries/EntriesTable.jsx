@@ -270,7 +270,7 @@ export const EntriesTable = ({ args }) => {
         paginationMode="server"
       />
       <Dialog
-        maxWidth="md"
+        maxWidth="lg"
         open={openEdit}
         onClose={closeDialog}
         title={trade && `Edit ${trade.symbol}`}

@@ -7,7 +7,7 @@ export const ColorfulPercentage = ({ value }) => {
   const red = colors.redAccent[500];
   const green = colors.greenAccent[400];
 
-  if (!value) {
+  if (value === undefined) {
     return null;
   }
 

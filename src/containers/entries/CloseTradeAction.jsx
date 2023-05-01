@@ -31,7 +31,7 @@ export const CloseTradeAction = ({ trade, journal, onChange }) => {
         startIcon={<DoneAllOutlinedIcon />}
         onClick={open}
       >
-        Close this Trade
+        Close {trade.symbol}
       </Button>
       <Dialog
         open={show}
