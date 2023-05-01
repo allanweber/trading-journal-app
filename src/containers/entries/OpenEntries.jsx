@@ -37,9 +37,7 @@ export const OpenEntries = ({ journal }) => {
           alignItems="center"
           justifyContent="start"
         >
-          <Box padding={1}>
-            <Search placeholder="Symbol" onSearch={onSearch} />
-          </Box>
+          <Search placeholder="Symbol" onSearch={onSearch} />
           <Box padding={1}>
             <Direction
               showEmpty={true}
