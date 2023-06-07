@@ -16,7 +16,7 @@ jobs:
       app-version: ${{ steps.build-version.outputs.APP_VERSION }}-${{github.run_number}}
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
@@ -27,32 +27,34 @@ jobs:
         run: npm ci
       - name: Get app version
         id: build-version
-        run: echo "APP_VERSION=$(jq -r '.version' package.json)" >> "$GITHUB_ENV"
-      - name: Build
-        run: npm run build:test
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: $APP_NAME
-          path: build/
+        run: echo "APP_VERSION=$(jq -r '.version' package.json)" >> "$GITHUB_OUTPUT"
+    #   - name: Build
+    #     run: npm run build:test
+    #   - name: Archive artifacts
+    #     uses: actions/upload-artifact@v3
+    #     with:
+    #       name: $APP_NAME
+    #       path: build/
 
   docker:
     runs-on: ubuntu-latest
     name: Build and Publish Docker Image - Test
     needs: build
     steps:
-      - name: Download Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: $APP_NAME
-          path: build/
-      - name: Docker Login
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-      - name: Docker Build Version DEV
-        run: docker build -t allanweber/$APP_NAME:${{needs.build.outputs.app-version}} -f docker/Dockerfile .
-      - name: Build and Push Version
-        run: docker push allanweber/$APP_NAME:${{needs.build.outputs.app-version}}
-      - name: Delete Artifact
-        uses: geekyeggo/delete-artifact@v2
-        with:
-          name: $APP_NAME
+      - name: Show app version
+        run: echo ${{needs.build.outputs.app-version}}
+#       - name: Download Artifact
+#         uses: actions/download-artifact@v3
+#         with:
+#           name: $APP_NAME
+#           path: build/
+#       - name: Docker Login
+#         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+#       - name: Docker Build Version DEV
+#         run: docker build -t allanweber/$APP_NAME:${{needs.build.outputs.app-version}} -f docker/Dockerfile .
+#       - name: Build and Push Version
+#         run: docker push allanweber/$APP_NAME:${{needs.build.outputs.app-version}}
+#       - name: Delete Artifact
+#         uses: geekyeggo/delete-artifact@v2
+#         with:
+#           name: $APP_NAME
