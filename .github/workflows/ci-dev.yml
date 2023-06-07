@@ -14,16 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       app-version: ${{ steps.build-version.outputs.APP_VERSION }}-${{github.run_number}}
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x]
-
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18.x
           cache: 'npm'
       - name: Install jq
         run: sudo apt-get install jq -y
@@ -31,7 +27,7 @@ jobs:
         run: npm ci
       - name: Get app version
         id: build-version
-        run: echo "name=APP_VERSION=$(jq -r '.version' package.json)" >> $GITHUB_ENV
+        run: echo "APP_VERSION=$(jq -r '.version' package.json)" >> "$GITHUB_ENV"
       - name: Build
         run: npm run build:test
       - name: Archive artifacts
