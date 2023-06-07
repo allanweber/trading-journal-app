@@ -1,0 +1,62 @@
+name: Build and Publish Docker Image - Test
+
+on:
+  pull_request:
+    branches: ['master']
+
+env:
+  APP_NAME: trading-journal-web
+  NAMESPACE: trading-journal-tst
+  CONTEXT: trading-journal
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      app-version: ${{ steps.build-version.outputs.APP_VERSION }}-${{github.run_number}}
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: Install jq
+        run: sudo apt-get install jq -y
+      - name: Install dependencies
+        run: npm ci
+      - name: Get app version
+        id: build-version
+        run: echo "name=APP_VERSION=$(jq -r '.version' package.json)" >> $GITHUB_ENV
+      - name: Build
+        run: npm run build:test
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: $APP_NAME
+          path: build/
+
+  docker:
+    runs-on: ubuntu-latest
+    name: Build and Publish Docker Image - Test
+    needs: build
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: $APP_NAME
+          path: build/
+      - name: Docker Login
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+      - name: Docker Build Version DEV
+        run: docker build -t allanweber/$APP_NAME:${{needs.build.outputs.app-version}} -f docker/Dockerfile .
+      - name: Build and Push Version
+        run: docker push allanweber/$APP_NAME:${{needs.build.outputs.app-version}}
+      - name: Delete Artifact
+        uses: geekyeggo/delete-artifact@v2
+        with:
+          name: $APP_NAME
