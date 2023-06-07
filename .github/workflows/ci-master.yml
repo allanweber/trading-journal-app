@@ -1,0 +1,69 @@
+name: Build and Publish Docker Image - Production
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+
+env:
+  APP_NAME: trading-journal-web
+  NAMESPACE: trading-journal
+  CONTEXT: trading-journal
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      app-version: ${{ steps.build-version.outputs.APP_VERSION }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'npm'
+      - name: Install jq
+        run: sudo apt-get install jq -y
+      - name: Install dependencies
+        run: npm ci
+      - name: Get app version
+        id: build-version
+        run: echo "APP_VERSION=$(jq -r '.version' package.json)" >> "$GITHUB_OUTPUT"
+      - name: Build
+        run: npm run build:production
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: $APP_NAME
+          path: build/
+      - name: Create Tag
+        uses: negz/create-tag@v1
+        with:
+          version: ${{ steps.build-version.outputs.APP_VERSION }}
+          token: ${{ secrets.PACKAGE_TOKEN }}
+
+  docker:
+    runs-on: ubuntu-latest
+    name: Build and Publish Docker Image
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: $APP_NAME
+          path: build/
+      - name: Docker Login
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+      - name: Docker Build Version PRD
+        run: docker build -t allanweber/$APP_NAME:${{needs.build.outputs.app-version}} -f docker/Dockerfile .
+      - name: Build and Push Version
+        run: docker push allanweber/$APP_NAME:${{needs.build.outputs.app-version}}
+      - name: Docker Build Latest
+        run: docker build -t allanweber/$APP_NAME:latest -f docker/Dockerfile .
+      - name: Docker Push Latest
+        run: docker push allanweber/$APP_NAME:latest
+      - name: Delete Artifact
+        uses: geekyeggo/delete-artifact@v2
+        with:
+          name: $APP_NAME
