@@ -2,6 +2,10 @@
 
 ## Change Log
 
+### 1.0.0
+
+* Function application with entries simple CRUDs and authentication
+
 ### 0.1.0
 
 * Fully functional application with entries simple CRUDs

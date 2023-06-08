@@ -15,7 +15,7 @@ export const FirstJournal = () => {
     setJournal(journal);
     queryClient.invalidateQueries(['journals']);
     setTimeout(() => {
-      navigate('/trades');
+      navigate('/entries');
     }, 1000);
   };
 

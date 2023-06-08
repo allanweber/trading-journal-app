@@ -7,7 +7,6 @@ export const signIn = (email, password) => {
     body: JSON.stringify({ email, password }),
     headers: {
       'Content-Type': 'application/json',
-      mode: 'no-cors',
     },
   }).then(async (response) => {
     if (response.ok) return response.json();
