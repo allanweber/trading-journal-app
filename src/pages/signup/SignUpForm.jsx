@@ -101,6 +101,7 @@ export const SignUpForm = ({ onChange }) => {
                 name="userName"
                 error={!!touched.userName && !!errors.userName}
                 helperText={touched.userName && errors.userName}
+                autoComplete="username"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -143,6 +144,7 @@ export const SignUpForm = ({ onChange }) => {
                 name="password"
                 error={!!touched.password && !!errors.password}
                 helperText={touched.password && errors.password}
+                autoComplete="new-password"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -157,6 +159,7 @@ export const SignUpForm = ({ onChange }) => {
                 name="confirmPassword"
                 error={!!touched.confirmPassword && !!errors.confirmPassword}
                 helperText={touched.confirmPassword && errors.confirmPassword}
+                autoComplete="new-password"
               />
             </Grid>
             <Grid item xs={12} sm={12}>

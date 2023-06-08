@@ -14,8 +14,8 @@ const schema = yup.object().shape({
 });
 
 const initialValues = {
-  email: 'emailfortestsallan@gmail.com',
-  password: 'dad231#$#4',
+  email: undefined,
+  password: undefined,
 };
 
 export const SignInForm = () => {
@@ -54,6 +54,7 @@ export const SignInForm = () => {
                 name="email"
                 error={!!touched.email && !!errors.email}
                 helperText={touched.email && errors.email}
+                autoComplete="username"
               />
             </Grid>
             <Grid item xs={12} sm={12}>
@@ -68,6 +69,7 @@ export const SignInForm = () => {
                 name="password"
                 error={!!touched.password && !!errors.password}
                 helperText={touched.password && errors.password}
+                autoComplete="current-password"
               />
             </Grid>
           </Grid>

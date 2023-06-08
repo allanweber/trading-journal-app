@@ -101,6 +101,7 @@ export const ChangePassword = () => {
                           name="password"
                           error={!!touched.password && !!errors.password}
                           helperText={touched.password && errors.password}
+                          autoComplete="new-password"
                         />
                       </Grid>
                       <Grid item xs={12} sm={12}>
@@ -120,6 +121,7 @@ export const ChangePassword = () => {
                           helperText={
                             touched.confirmPassword && errors.confirmPassword
                           }
+                          autoComplete="new-password"
                         />
                       </Grid>
                     </Grid>
