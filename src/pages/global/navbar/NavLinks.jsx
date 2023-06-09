@@ -1,7 +1,9 @@
 import { AutoStoriesOutlined } from '@mui/icons-material';
+import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import TableRowsOutlinedIcon from '@mui/icons-material/TableRowsOutlined';
 import { Box, ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -69,20 +71,33 @@ export const NavLinks = ({ onChange }) => {
         <MenuHeader select={selected === '/'}>DASHBOARD</MenuHeader>
       </MenuItem>
       {journal && (
-        <MenuItem onMouseEnter={openMenu} onMouseLeave={closeMenu}>
-          <MenuHeader
-            select={
-              selected === '/journal' ||
-              selected === '/entries' ||
-              selected === '/calendar'
-            }
+        <div>
+          <Button
+            sx={{
+              color: colors.grey[100],
+              paddingLeft: isMobile ? '20px' : null,
+            }}
+            endIcon={<ArrowDropDownOutlinedIcon />}
+            aria-controls={open ? 'basic-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={openMenu}
           >
-            TRADES
-          </MenuHeader>
+            <MenuHeader
+              select={
+                selected === '/journal' ||
+                selected === '/entries' ||
+                selected === '/calendar'
+              }
+            >
+              TRADES
+            </MenuHeader>
+          </Button>
           <Menu
             id="trades-select"
             anchorEl={anchorEl}
             open={open}
+            onClose={closeMenu}
             sx={{
               '& .MuiMenu-paper': {
                 width: 320,
@@ -151,8 +166,9 @@ export const NavLinks = ({ onChange }) => {
               </ListItemText>
             </MenuItem>
           </Menu>
-        </MenuItem>
+        </div>
       )}
+
       <MenuItem key="Strategies" onClick={() => onSelect('/strategies')}>
         <MenuHeader select={selected === '/strategies'}>STRATEGIES</MenuHeader>
       </MenuItem>

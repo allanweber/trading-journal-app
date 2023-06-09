@@ -1,6 +1,6 @@
 {
   "name": "trading-journal-web",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -39,7 +39,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "env-cmd -f .env.test react-scripts start",
     "build:production": "env-cmd -f .env.production react-scripts build",
     "build:test": "env-cmd -f .env.test react-scripts build",
     "test": "react-scripts test",

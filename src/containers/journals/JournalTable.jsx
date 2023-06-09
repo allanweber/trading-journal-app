@@ -77,6 +77,7 @@ export const JournalTable = ({ onEdit }) => {
       field: 'startBalance',
       headerName: 'Start Balance',
       type: 'number',
+      flex: 1,
       valueGetter: (params) =>
         currencyFormatter(params.row.startBalance, params.row.currency),
     },
