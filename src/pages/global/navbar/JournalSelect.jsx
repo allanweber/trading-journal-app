@@ -14,12 +14,23 @@ import { AutoStoriesOutlined } from '@mui/icons-material';
 import RadioButtonCheckedOutlinedIcon from '@mui/icons-material/RadioButtonCheckedOutlined';
 import RadioButtonUncheckedOutlinedIcon from '@mui/icons-material/RadioButtonUncheckedOutlined';
 import { useJournalContext } from '../../../context/JournalContext';
+import {
+  getCurrentJournal,
+  setCurrentJournal,
+} from '../../../services/JournalStorageService';
 
-export const JournalSelect = ({ onChange }) => {
+export const JournalSelect = () => {
   const colors = useColors();
   const navigate = useNavigate();
   const { journal, setJournal } = useJournalContext();
   const { data: journals } = useGetJournals();
+
+  useEffect(() => {
+    const currentJournal = getCurrentJournal();
+    if (currentJournal) {
+      setJournal(currentJournal);
+    }
+  }, [setJournal]);
 
   useEffect(() => {
     if (!journal && journals) {
@@ -44,10 +55,8 @@ export const JournalSelect = ({ onChange }) => {
 
   const selectJournal = (selected) => {
     if (selected) {
+      setCurrentJournal(selected);
       setJournal(selected);
-      if (onChange) {
-        onChange(selected);
-      }
       closeMenu();
     }
   };

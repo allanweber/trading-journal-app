@@ -1,6 +1,6 @@
 import { Box, Grid } from '@mui/material';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Accordion } from '../../components/accordion';
 import { Direction } from '../../components/direction/Direction';
 import { EntrySelect } from '../../components/entry-select';
@@ -8,11 +8,13 @@ import { Search } from '../../components/search';
 import { StrategySelect } from '../../components/strategy-select';
 import { TimeSelect } from '../../components/time-select';
 import { WinLose } from '../../components/win-lose';
+import { useJournalContext } from '../../context/JournalContext';
 import { useIsMobile } from '../../hooks/useIsMobile';
 import { apiFormat } from '../../utilities/dateTimeUtilities';
 import { EntriesTable } from './EntriesTable';
 
-export const ClosedEntries = ({ journal }) => {
+export const ClosedEntries = () => {
+  const { journal } = useJournalContext();
   const isMobile = useIsMobile();
   const [filters, setFilters] = useState({
     journal,
@@ -20,6 +22,15 @@ export const ClosedEntries = ({ journal }) => {
     type: 'TRADE',
     from: apiFormat(dayjs().startOf('date')),
   });
+
+  useEffect(() => {
+    setFilters({
+      journal,
+      status: 'CLOSED',
+      type: 'TRADE',
+      from: apiFormat(dayjs().startOf('date')),
+    });
+  }, [journal]);
 
   const timeChanged = (time) => {
     setFilters({ ...filters, from: time });
