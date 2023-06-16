@@ -9,7 +9,6 @@ const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
   firstName: yup.string().required('First Name is required'),
   lastName: yup.string().required('Last Name is required'),
-  userName: yup.string().required('User Name is required'),
   password: yup
     .string()
     .required('Password is required')
@@ -25,7 +24,6 @@ const initialValues = {
   email: '',
   firstName: '',
   lastName: '',
-  userName: '',
   password: '',
   confirmPassword: '',
   newsletter: true,
@@ -89,35 +87,6 @@ export const SignUpForm = ({ onChange }) => {
                 helperText={touched.lastName && errors.lastName}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="User Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.userName}
-                name="userName"
-                error={!!touched.userName && !!errors.userName}
-                helperText={touched.userName && errors.userName}
-                autoComplete="username"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Company Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.companyName}
-                name="companyName"
-                error={!!touched.companyName && !!errors.companyName}
-                helperText={touched.companyName && errors.companyName}
-              />
-            </Grid>
             <Grid item xs={12} sm={12}>
               <TextField
                 fullWidth
@@ -160,6 +129,20 @@ export const SignUpForm = ({ onChange }) => {
                 error={!!touched.confirmPassword && !!errors.confirmPassword}
                 helperText={touched.confirmPassword && errors.confirmPassword}
                 autoComplete="new-password"
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Company Name"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.companyName}
+                name="companyName"
+                error={!!touched.companyName && !!errors.companyName}
+                helperText={touched.companyName && errors.companyName}
               />
             </Grid>
             <Grid item xs={12} sm={12}>
