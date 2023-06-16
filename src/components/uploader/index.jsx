@@ -17,7 +17,7 @@ import Uploady, {
   useItemProgressListener,
   useItemStartListener,
 } from '@rpldy/uploady';
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useState } from 'react';
 import { useAccessTokenState } from '../../context/UserContext';
 import { Alert } from '../alert';
 
@@ -120,12 +120,24 @@ export const Uploader = ({ url, paramName, params, onFinish }) => {
     );
   };
 
+  const fileFilter = useCallback((file) => {
+    const validaSize = file.size < 8000000;
+    if (!validaSize) {
+      setStatus({
+        status: 'ERROR',
+        message: `File is too large, must be less than 8MB`,
+      });
+    }
+    return validaSize;
+  }, []);
+
   return (
     <Box sx={center}>
       <Uploady
         multiple={true}
         destination={destination}
         accept=".png,.jpg,.jpeg"
+        fileFilter={fileFilter}
       >
         <Stack spacing={2}>
           <Typography fontSize={15}>Media</Typography>
