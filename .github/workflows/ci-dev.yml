@@ -14,7 +14,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      app-version: ${{ steps.build-version.outputs.APP_VERSION }}-${{github.run_number}}
+      app-version: ${{ steps.build-version.outputs.APP_VERSION }}
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js 18.x
