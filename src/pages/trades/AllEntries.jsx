@@ -28,7 +28,7 @@ export const AllEntries = () => {
           <AddEntryAction journal={journal} />
         </Box>
       </Box>
-      <Entries journal={journal} />
+      <Entries />
     </Box>
   );
 };

@@ -23,7 +23,7 @@ function TabPanel(props) {
   );
 }
 
-export const Entries = ({ journal }) => {
+export const Entries = () => {
   const [value, setValue] = useState(0);
 
   return (
@@ -41,10 +41,10 @@ export const Entries = ({ journal }) => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <ClosedEntries journal={journal} />
+        <ClosedEntries />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <OpenEntries journal={journal} />
+        <OpenEntries />
       </TabPanel>
     </Box>
   );

@@ -1,19 +1,28 @@
 import { Box, Grid } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Accordion } from '../../components/accordion';
 import { Direction } from '../../components/direction/Direction';
 import { Search } from '../../components/search';
 import { StrategySelect } from '../../components/strategy-select';
+import { useJournalContext } from '../../context/JournalContext';
 import { useIsMobile } from '../../hooks/useIsMobile';
 import { EntriesTable } from './EntriesTable';
 
-export const OpenEntries = ({ journal }) => {
+export const OpenEntries = () => {
+  const { journal } = useJournalContext();
   const isMobile = useIsMobile();
 
   const [filters, setFilters] = useState({
     journal,
     status: 'OPEN',
   });
+
+  useEffect(() => {
+    setFilters({
+      journal,
+      status: 'OPEN',
+    });
+  }, [journal]);
 
   const onSearch = (value) => {
     setFilters({ ...filters, symbol: value });
