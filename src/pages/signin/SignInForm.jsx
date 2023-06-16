@@ -14,8 +14,8 @@ const schema = yup.object().shape({
 });
 
 const initialValues = {
-  email: undefined,
-  password: undefined,
+  email: '',
+  password: '',
 };
 
 export const SignInForm = () => {
