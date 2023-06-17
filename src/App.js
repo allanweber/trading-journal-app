@@ -9,6 +9,7 @@ import { Routes } from './components/routes/Routes';
 import { JournalProvider } from './context/JournalContext';
 import { AuthProvider } from './context/UserContext';
 import { NavBar } from './pages/global/navbar';
+import { removeToken } from './services/LoginStorageService';
 import { ColorModeContext, useMode } from './theme';
 
 const queryClient = new QueryClient({
@@ -19,7 +20,8 @@ const queryClient = new QueryClient({
   },
   queryCache: new QueryCache({
     onError: (error) => {
-      if (error.message === 'Unauthorized') {
+      if (error.message === 401 || error.message === '401') {
+        removeToken();
         window.location.href = '/login';
       }
     },

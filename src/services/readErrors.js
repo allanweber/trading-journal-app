@@ -1,7 +1,6 @@
 export async function readErrors(rawResponse) {
   if (rawResponse.status === 401) {
-    const error = await rawResponse.json();
-    throw new Error(error.error);
+    throw new Error(rawResponse.status);
   }
   const response = await rawResponse.json();
 

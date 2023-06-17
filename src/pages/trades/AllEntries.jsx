@@ -8,7 +8,9 @@ import { useGetOpenTradesCount } from '../../services/TradeQueries';
 
 export const AllEntries = () => {
   const { journal } = useContext(JournalContext);
-  const { data: count, isSuccess } = useGetOpenTradesCount(journal.id);
+  const { data: count, isSuccess } = useGetOpenTradesCount(journal?.id);
+
+  if (!journal) return null;
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">

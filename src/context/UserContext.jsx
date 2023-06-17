@@ -1,7 +1,8 @@
 import { createContext, useContext, useReducer } from 'react';
 import { signIn } from '../services/Authentication';
+import { getToken, hasToken, setToken } from '../services/LoginStorageService';
 
-const initialState = {
+let initialState = {
   status: 'idle',
   user: undefined,
   error: null,
@@ -24,7 +25,6 @@ function useAuthState() {
 function useAccessTokenState() {
   const context = useContext(AuthStateContext);
   const { user: { accessToken } = {} } = context;
-  //Add retrieve from local storage
   if (!accessToken) throw new Error('No access token found');
   return accessToken;
 }
@@ -36,6 +36,14 @@ function useAuthDispatch() {
 }
 
 function AuthProvider({ children }) {
+  if (hasToken()) {
+    const token = getToken();
+    initialState = {
+      status: 'resolved',
+      user: token,
+      error: null,
+    };
+  }
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <AuthStateContext.Provider value={state}>
@@ -55,8 +63,23 @@ async function doLogin(dispatch, email, password) {
       user: result,
       error: null,
     });
+    setToken(result);
   } catch (error) {
-    console.log(error);
+    dispatch({ status: 'rejected', error: error.message });
+  }
+}
+
+async function doTokenLogin(dispatch) {
+  try {
+    if (hasToken()) {
+      const token = getToken();
+      dispatch({
+        status: 'resolved',
+        user: token,
+        error: null,
+      });
+    }
+  } catch (error) {
     dispatch({ status: 'rejected', error: error.message });
   }
 }
@@ -67,9 +90,10 @@ function doLogout(dispatch) {
 
 export {
   AuthProvider,
-  useAuthState,
-  useAccessTokenState,
-  useAuthDispatch,
   doLogin,
   doLogout,
+  doTokenLogin,
+  useAccessTokenState,
+  useAuthDispatch,
+  useAuthState,
 };
