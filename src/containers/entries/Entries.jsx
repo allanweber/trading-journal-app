@@ -36,15 +36,15 @@ export const Entries = () => {
           textColor="secondary"
           indicatorColor="secondary"
         >
-          <Tab label={<Typography fontSize="1rem">Closed</Typography>}></Tab>
           <Tab label={<Typography fontSize="1rem">Open</Typography>} />
+          <Tab label={<Typography fontSize="1rem">Closed</Typography>}></Tab>
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <ClosedEntries />
+        <OpenEntries />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <OpenEntries />
+        <ClosedEntries />
       </TabPanel>
     </Box>
   );
