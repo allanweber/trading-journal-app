@@ -1,7 +1,7 @@
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Avatar, Box, Typography } from '@mui/material';
 import Link from '@mui/material/Link';
-import { Link as RouterLink, Navigate } from 'react-router-dom';
+import { Navigate, Link as RouterLink } from 'react-router-dom';
 import { Alert } from '../../components/alert';
 import { useAuthState } from '../../context/UserContext';
 import { useIsMobile } from '../../hooks/useIsMobile';
@@ -32,7 +32,9 @@ export const SignIn = () => {
         <Box sx={{ mt: 3 }}>
           <SignInForm />
           <Alert show={status === 'rejected'} severity="error" sx={{ mt: 1 }}>
-            {error}
+            {error === 401 || error === '401'
+              ? 'Invalid email or password'
+              : error}
           </Alert>
         </Box>
         <Box display="flex" justifyContent="space-evenly" sx={{ mt: 3 }}>
