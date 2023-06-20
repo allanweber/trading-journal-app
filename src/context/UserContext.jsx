@@ -1,6 +1,11 @@
 import { createContext, useContext, useReducer } from 'react';
 import { signIn } from '../services/Authentication';
-import { getToken, hasToken, setToken } from '../services/LoginStorageService';
+import {
+  getToken,
+  hasToken,
+  removeToken,
+  setToken,
+} from '../services/LoginStorageService';
 
 let initialState = {
   status: 'idle',
@@ -69,30 +74,16 @@ async function doLogin(dispatch, email, password) {
   }
 }
 
-async function doTokenLogin(dispatch) {
-  try {
-    if (hasToken()) {
-      const token = getToken();
-      dispatch({
-        status: 'resolved',
-        user: token,
-        error: null,
-      });
-    }
-  } catch (error) {
-    dispatch({ status: 'rejected', error: error.message });
-  }
-}
-
 function doLogout(dispatch) {
+  removeToken();
   dispatch(initialState);
+  window.location.href = '/login';
 }
 
 export {
   AuthProvider,
   doLogin,
   doLogout,
-  doTokenLogin,
   useAccessTokenState,
   useAuthDispatch,
   useAuthState,
