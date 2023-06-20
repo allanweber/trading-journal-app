@@ -74,31 +74,16 @@ async function doLogin(dispatch, email, password) {
   }
 }
 
-async function doTokenLogin(dispatch) {
-  try {
-    if (hasToken()) {
-      const token = getToken();
-      dispatch({
-        status: 'resolved',
-        user: token,
-        error: null,
-      });
-    }
-  } catch (error) {
-    dispatch({ status: 'rejected', error: error.message });
-  }
-}
-
 function doLogout(dispatch) {
   removeToken();
   dispatch(initialState);
+  window.location.href = '/login';
 }
 
 export {
   AuthProvider,
   doLogin,
   doLogout,
-  doTokenLogin,
   useAccessTokenState,
   useAuthDispatch,
   useAuthState,

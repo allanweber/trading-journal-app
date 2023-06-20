@@ -1,42 +1,51 @@
 import { Box, FormControl, MenuItem, Select } from '@mui/material';
 import dayjs from 'dayjs';
 import { useState } from 'react';
+import {
+  loadClosedTime,
+  saveClosedTime,
+} from '../../services/ConfigurationStorage';
 import { apiFormat } from '../../utilities/dateTimeUtilities';
 
+export const timeOptionToDate = (timeOption) => {
+  let date = undefined;
+  switch (timeOption) {
+    case 1:
+      date = dayjs().startOf('date');
+      break;
+    case 2:
+      date = dayjs().subtract(1, 'day').startOf('date');
+      break;
+    case 7:
+      date = dayjs().subtract(7, 'day').startOf('date');
+      break;
+    case 30:
+      date = dayjs().subtract(1, 'month').startOf('date');
+      break;
+    case 90:
+      date = dayjs().subtract(3, 'month').startOf('date');
+      break;
+    case 180:
+      date = dayjs().subtract(6, 'month').startOf('date');
+      break;
+    case 365:
+      date = dayjs().subtract(1, 'year').startOf('date');
+      break;
+    default:
+      date = undefined;
+      break;
+  }
+  return date;
+};
+
 export const TimeSelect = ({ onChange }) => {
-  const [time, setTime] = useState(1);
+  const [time, setTime] = useState(loadClosedTime());
 
   const handleChange = (event) => {
     setTime(event.target.value);
+    saveClosedTime(event.target.value);
     if (onChange) {
-      let date = undefined;
-      switch (event.target.value) {
-        case 1:
-          date = dayjs().startOf('date');
-          break;
-        case 2:
-          date = dayjs().subtract(1, 'day').startOf('date');
-          break;
-        case 7:
-          date = dayjs().subtract(7, 'day').startOf('date');
-          break;
-        case 30:
-          date = dayjs().subtract(1, 'month').startOf('date');
-          break;
-        case 90:
-          date = dayjs().subtract(3, 'month').startOf('date');
-          break;
-        case 180:
-          date = dayjs().subtract(6, 'month').startOf('date');
-          break;
-        case 365:
-          date = dayjs().subtract(1, 'year').startOf('date');
-          break;
-        default:
-          date = undefined;
-          break;
-      }
-      onChange(apiFormat(date));
+      onChange(apiFormat(timeOptionToDate(event.target.value)));
     }
   };
 

@@ -1,26 +1,27 @@
 import { Box, Grid } from '@mui/material';
-import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { Accordion } from '../../components/accordion';
 import { Direction } from '../../components/direction/Direction';
 import { EntrySelect } from '../../components/entry-select';
 import { Search } from '../../components/search';
 import { StrategySelect } from '../../components/strategy-select';
-import { TimeSelect } from '../../components/time-select';
+import { TimeSelect, timeOptionToDate } from '../../components/time-select';
 import { WinLose } from '../../components/win-lose';
 import { useJournalContext } from '../../context/JournalContext';
 import { useIsMobile } from '../../hooks/useIsMobile';
+import { loadClosedTime } from '../../services/ConfigurationStorage';
 import { apiFormat } from '../../utilities/dateTimeUtilities';
 import { EntriesTable } from './EntriesTable';
 
 export const ClosedEntries = () => {
   const { journal } = useJournalContext();
   const isMobile = useIsMobile();
+  const dateInitialState = apiFormat(timeOptionToDate(loadClosedTime()));
   const [filters, setFilters] = useState({
     journal,
     status: 'CLOSED',
     type: 'TRADE',
-    from: apiFormat(dayjs().startOf('date')),
+    from: dateInitialState,
   });
 
   useEffect(() => {
@@ -28,9 +29,9 @@ export const ClosedEntries = () => {
       journal,
       status: 'CLOSED',
       type: 'TRADE',
-      from: apiFormat(dayjs().startOf('date')),
+      from: dateInitialState,
     });
-  }, [journal]);
+  }, [journal, dateInitialState]);
 
   const timeChanged = (time) => {
     setFilters({ ...filters, from: time });
