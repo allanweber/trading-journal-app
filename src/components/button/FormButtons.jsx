@@ -13,7 +13,7 @@ export const FormButtons = ({
     <Grid container spacing={2}>
       {showCancel && (
         <Grid item xs={12} sm={6}>
-          <Button fullWidth onClick={onCancel} secondary type="button">
+          <Button fullWidth onClick={onCancel} variant="outlined" type="button">
             {cancel && cancel}
           </Button>
         </Grid>

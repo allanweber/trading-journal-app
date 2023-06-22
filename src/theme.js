@@ -131,7 +131,7 @@ export const themeSettings = (mode) => {
         ? {
             // palette values for dark mode
             primary: {
-              main: colors.primary[500],
+              main: colors.primary[400],
             },
             secondary: {
               main: colors.greenAccent[500],
@@ -151,7 +151,7 @@ export const themeSettings = (mode) => {
               main: colors.primary[100],
             },
             secondary: {
-              main: colors.greenAccent[500],
+              main: colors.greenAccent[400],
             },
             neutral: {
               dark: colors.grey[700],
@@ -159,7 +159,7 @@ export const themeSettings = (mode) => {
               light: colors.grey[100],
             },
             background: {
-              default: '#fcfcfc',
+              default: colors.primary[400],
             },
           }),
     },
@@ -198,7 +198,8 @@ export const themeSettings = (mode) => {
             props: { color: 'secondary' },
             style: {
               color: '#E7F2FE !important',
-              backgroundColor: colors.grey[600],
+              backgroundColor:
+                mode === 'dark' ? colors.grey[600] : colors.grey[800],
               '&:hover': {
                 backgroundColor:
                   mode === 'dark'
@@ -222,6 +223,19 @@ export const themeSettings = (mode) => {
                   ? `${colors.blueAccent[500]} !important`
                   : `${colors.blueAccent[600]} !important`,
             },
+          },
+          outlined: {
+            color: mode === 'dark' ? '#ffff' : colors.primary[100],
+            backgroundColor: 'transparent',
+            '&:hover': {
+              backgroundColor:
+                mode === 'dark'
+                  ? `${colors.primary[200]} !important`
+                  : `${colors.primary[300]} !important`,
+            },
+            border: `1px solid ${
+              mode === 'dark' ? '#ffff' : colors.primary[100]
+            }`,
           },
         },
       },
@@ -254,14 +268,18 @@ export const themeSettings = (mode) => {
             border: '1px solid #5151514d',
           },
           cell: {
-            borderBottom: 'none',
-            fontSize: '1rem',
+            fontSize: '0.9rem',
           },
           columnHeaders: {
-            backgroundColor: colors.primary[400],
+            backgroundColor:
+              mode === 'dark' ? colors.primary[400] : colors.primary[300],
           },
           footerContainer: {
-            backgroundColor: colors.primary[400],
+            backgroundColor:
+              mode === 'dark' ? colors.primary[400] : colors.primary[300],
+          },
+          columnSeparator: {
+            color: mode === 'dark' ? colors.primary[100] : colors.primary[800],
           },
         },
       },

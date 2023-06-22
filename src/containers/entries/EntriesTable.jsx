@@ -163,6 +163,7 @@ export const EntriesTable = ({ args }) => {
     {
       field: 'symbol',
       headerName: 'Symbol',
+      flex: 1,
       renderCell: (params) => (
         <Link key={params.row.id} onClick={(e) => showAction(params.row)}>
           {params.row.symbol || params.row.type}

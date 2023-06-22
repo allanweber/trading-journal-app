@@ -59,7 +59,11 @@ const ConfirmationModalContextProvider = (props) => {
           <DialogTitle>{content.title}</DialogTitle>
           <DialogContent>{content.message}</DialogContent>
           <DialogActions>
-            <Button onClick={handleCancel} secondary startIcon={<ClearIcon />}>
+            <Button
+              onClick={handleCancel}
+              variant="outlined"
+              startIcon={<ClearIcon />}
+            >
               Disagree
             </Button>
             <Button onClick={handleOk} startIcon={<CheckIcon />}>
@@ -74,6 +78,6 @@ const ConfirmationModalContextProvider = (props) => {
 
 const useConfirmationModal = () => useContext(ConfirmationModalContext);
 
-export { useModalShow, useConfirmationModal };
+export { useConfirmationModal, useModalShow };
 
 export default ConfirmationModalContextProvider;
