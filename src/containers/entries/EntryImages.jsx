@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { Uploader } from '../../components/uploader';
 import { config } from '../../utilities/config';
 import { EntryImagesList } from './EntryImagesList';

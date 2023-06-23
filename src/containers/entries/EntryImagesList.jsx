@@ -74,7 +74,7 @@ export const EntryImagesList = ({ entry }) => {
                       <IconButton
                         sx={{ color: 'white' }}
                         aria-label={`delete ${item.imageName}`}
-                        onClick={(e) => deleteImage(item.id)}
+                        onClick={() => deleteImage(item.id)}
                       >
                         <DeleteOutlineOutlinedIcon />
                       </IconButton>

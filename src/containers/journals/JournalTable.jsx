@@ -59,6 +59,7 @@ export const JournalTable = ({ onEdit }) => {
       width: 30,
       getActions: (params) => [
         <GridActionsCellItem
+          key={params.row.id}
           icon={<DeleteOutlineOutlinedIcon />}
           label="Delete"
           onClick={() => deleteAction(params.row)}

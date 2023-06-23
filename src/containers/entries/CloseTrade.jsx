@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Box, Grid } from '@mui/material';
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
@@ -68,7 +66,6 @@ export const CloseTrade = ({ trade, journal, onSave, onCancel }) => {
             errors,
             touched,
             handleBlur,
-            handleChange,
             setFieldValue,
             handleSubmit,
           }) => (

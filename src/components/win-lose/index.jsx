@@ -5,7 +5,7 @@ import { Box } from '@mui/material';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useColors, useIsDarkMode } from '../../hooks/useColors';
 
 export const WinLose = ({ onChange }) => {

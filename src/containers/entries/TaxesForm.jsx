@@ -49,7 +49,6 @@ export const TaxesForm = ({ journal, onCancel, onSave }) => {
           errors,
           touched,
           handleBlur,
-          handleChange,
           setFieldValue,
           handleSubmit,
         }) => (

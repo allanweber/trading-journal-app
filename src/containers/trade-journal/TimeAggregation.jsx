@@ -1,6 +1,6 @@
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import { Box, Divider, Grid, TablePagination, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert } from '../../components/alert';
 import { ColorfulCurrency } from '../../components/colorful-currency';
 import { LoadingPage } from '../../components/loading-page';
