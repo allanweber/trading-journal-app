@@ -5,10 +5,10 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query';
 import ConfirmationModalContextProvider from './components/dialog/Confirmation';
-import { Routes } from './components/routes/Routes';
 import { JournalProvider } from './context/JournalContext';
 import { AuthProvider } from './context/UserContext';
-import { NavBar } from './pages/global/navbar';
+import { Routes } from './routes/Routes';
+import { NavBar } from './routes/header/navbar';
 import { removeToken } from './services/LoginStorageService';
 import { ColorModeContext, useMode } from './theme';
 

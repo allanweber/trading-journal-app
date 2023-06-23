@@ -1,17 +1,17 @@
-import { Route, Routes as ReactRoutes } from 'react-router-dom';
-import { Dashboard } from '../../pages/dashboard';
-import { FirstJournal } from '../../pages/journals/FirstJournal';
-import { Journals } from '../../pages/journals/Journals';
-import { ChangePassword } from '../../pages/password/ChangePassword';
-import { RequestPassword } from '../../pages/password/RequestPassword';
-import { SignIn } from '../../pages/signin';
-import { SignUp } from '../../pages/signup';
-import { Strategies } from '../../pages/strategies/Strategies';
-import { AllEntries } from '../../pages/trades/AllEntries';
-import { Calendar } from '../../pages/trades/Calendar';
-import { Journal } from '../../pages/trades/Journal';
-import { VerifyEmail } from '../../pages/verify';
+import { Routes as ReactRoutes, Route } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
+import { Dashboard } from './dashboard';
+import { Journals } from './journals';
+import { FirstJournal } from './journals/FirstJournal';
+import { ChangePassword } from './password/ChangePassword';
+import { RequestPassword } from './password/RequestPassword';
+import { SignIn } from './signin';
+import { SignUp } from './signup';
+import { Strategies } from './strategies/Strategies';
+import { AllEntries } from './trades/AllEntries';
+import { Calendar } from './trades/Calendar';
+import { Journal } from './trades/Journal';
+import { VerifyEmail } from './verify';
 
 export const Routes = () => {
   return (
