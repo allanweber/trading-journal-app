@@ -2,9 +2,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import { Box, Chip, Link, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
-import { useEffect, useState } from 'react';
-
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Alert } from '../../components/alert';
 import { useConfirmationModal } from '../../components/dialog/Confirmation';
 import {
@@ -112,6 +110,7 @@ export const StrategiesTable = ({
       hide: selectOnly,
       getActions: (params) => [
         <GridActionsCellItem
+          key={params.row.id}
           icon={<DeleteOutlineOutlinedIcon />}
           label="Delete"
           onClick={() => deleteAction(params.row)}

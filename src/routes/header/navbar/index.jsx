@@ -1,11 +1,10 @@
 import MenuIcon from '@mui/icons-material/Menu';
-import { Box, IconButton, MenuItem } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Container from '@mui/material/Container';
 import Menu from '@mui/material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import { useState } from 'react';
-import { Search } from '../../../components/search';
 import { useAuthState } from '../../../context/UserContext';
 import { useColors } from '../../../hooks/useColors';
 import { OptionsMenu } from '../options/OptionsMenu';
@@ -54,21 +53,17 @@ export const NavBar = () => {
               open={Boolean(anchorMobileMenu)}
               onClose={() => setAnchorMobileMenu(null)}
             >
-              <MenuItem
-                key="journal select"
-                onClose={() => setAnchorMobileMenu(null)}
-              >
-                <JournalSelect onChange={mobileMenuSelect} />
-              </MenuItem>
-
               <NavLinks onChange={mobileMenuSelect} />
             </Menu>
+
+            <Box mt="4px">
+              <JournalSelect />
+            </Box>
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <NavLinks />
           </Box>
-          <Search />
           <OptionsMenu />
         </Toolbar>
       </Container>

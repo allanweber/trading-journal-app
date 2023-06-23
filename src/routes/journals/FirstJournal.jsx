@@ -1,6 +1,5 @@
 import { Box } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../../components/header';
 import { JournalForm } from '../../containers/journals';

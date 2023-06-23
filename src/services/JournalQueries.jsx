@@ -25,7 +25,8 @@ export const useGetBalance = (journalId) => {
   const accessToken = useAccessTokenState();
   return useQuery(
     [`journals-balance-${journalId}`],
-    async () => await getBalance(accessToken, journalId)
+    async () => await getBalance(accessToken, journalId),
+    { enabled: !!journalId }
   );
 };
 

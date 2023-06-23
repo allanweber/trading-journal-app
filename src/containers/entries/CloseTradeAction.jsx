@@ -1,5 +1,5 @@
 import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../../components/button/Button';
 import { Dialog } from '../../components/dialog/Dialog';
 import { CloseTrade } from './CloseTrade';

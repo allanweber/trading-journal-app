@@ -30,7 +30,7 @@ export const UserActions = () => {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <PersonOutlinedIcon />
+        <PersonOutlinedIcon titleAccess="user" />
       </IconButton>
       <Menu
         id="basic-menu"

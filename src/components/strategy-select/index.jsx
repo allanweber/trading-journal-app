@@ -5,7 +5,7 @@ import { Box, IconButton, Paper, Tooltip } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
-import { StrategiesTable } from '../../pages/strategies/StrategiesTable';
+import { StrategiesTable } from '../../routes/strategies/StrategiesTable';
 import { Dialog } from '../dialog/Dialog';
 
 const ListItem = styled('li')(({ theme }) => ({

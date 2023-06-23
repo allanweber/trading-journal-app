@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useColors } from '../../../hooks/useColors';
 import { useGetJournals } from '../../../services/JournalQueries';
@@ -14,6 +14,7 @@ import { AutoStoriesOutlined } from '@mui/icons-material';
 import RadioButtonCheckedOutlinedIcon from '@mui/icons-material/RadioButtonCheckedOutlined';
 import RadioButtonUncheckedOutlinedIcon from '@mui/icons-material/RadioButtonUncheckedOutlined';
 import { useJournalContext } from '../../../context/JournalContext';
+import { useIsMobile } from '../../../hooks/useIsMobile';
 import {
   getCurrentJournal,
   setCurrentJournal,
@@ -21,6 +22,7 @@ import {
 
 export const JournalSelect = () => {
   const colors = useColors();
+  const isMobile = useIsMobile();
   const navigate = useNavigate();
   const { journal, setJournal } = useJournalContext();
   const { data: journals } = useGetJournals();
@@ -77,23 +79,17 @@ export const JournalSelect = () => {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={openMenu}
-        startIcon={
-          <AutoStoriesOutlined
-            sx={{
-              mr: 1,
-              mb: '3px',
-              color: colors.grey[100],
-            }}
-          />
-        }
+        startIcon={isMobile ? null : <AutoStoriesOutlined />}
       >
         <Typography
           variant="h5"
           noWrap
           sx={{
-            mr: 2,
+            overflow: isMobile ? 'hidden' : 'visible',
+            textOverflow: 'ellipsis',
+            width: isMobile ? '11rem' : null,
             fontWeight: 700,
-            letterSpacing: '.2rem',
+            letterSpacing: '.1rem',
             textDecoration: 'none',
             color: colors.grey[100],
           }}

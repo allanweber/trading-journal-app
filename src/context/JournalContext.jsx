@@ -17,4 +17,4 @@ function JournalProvider({ children }) {
 
 const useJournalContext = () => useContext(JournalContext);
 
-export { JournalProvider, JournalContext, useJournalContext };
+export { JournalContext, JournalProvider, useJournalContext };

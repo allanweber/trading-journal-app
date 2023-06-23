@@ -2,11 +2,13 @@ import { Box } from '@mui/material';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../../components/header';
+import { JournalBalance } from '../../containers/journals';
 import { useJournalContext } from '../../context/JournalContext';
-import { useGetJournals } from '../../services/JournalQueries';
+import { useGetBalance, useGetJournals } from '../../services/JournalQueries';
 
 export const Dashboard = () => {
   const { journal } = useJournalContext();
+  const { data: balance } = useGetBalance(journal?.id);
   const { data: journals } = useGetJournals();
   const navigate = useNavigate();
 
@@ -26,6 +28,7 @@ export const Dashboard = () => {
           subtitle="Welcome To Trading Journal "
         />
       </Box>
+      <JournalBalance balance={balance} />
     </Box>
   );
 };

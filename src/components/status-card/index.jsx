@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useColors } from '../../hooks/useColors';
+import { useColors, useIsDarkMode } from '../../hooks/useColors';
 import {
   currencyFormatter,
   percentFormatter,
@@ -12,6 +12,7 @@ export const StatusCard = ({ title, value, currency, icon, percentage }) => {
   const [formattedPercentage, setFormattedPercentage] = useState();
   const [valueColor, setValueColor] = useState();
   const [percentageColor, setPercentageColor] = useState();
+  const isDarkMode = useIsDarkMode();
 
   useEffect(() => {
     if (typeof value === 'number') {
@@ -41,7 +42,11 @@ export const StatusCard = ({ title, value, currency, icon, percentage }) => {
   }, [percentage, colors]);
 
   return (
-    <Box p="20px" backgroundColor={colors.primary[400]}>
+    <Box
+      p="20px"
+      maxWidth="300px"
+      backgroundColor={isDarkMode ? colors.primary[400] : colors.primary[300]}
+    >
       <Box display="flex" justifyContent="space-between">
         <Box>
           <Typography variant="h3" fontWeight="bold" sx={{ color: valueColor }}>

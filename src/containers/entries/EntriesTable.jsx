@@ -127,6 +127,7 @@ export const EntriesTable = ({ args }) => {
       width: 30,
       getActions: (params) => [
         <GridActionsCellItem
+          key={params.row.id}
           icon={<DeleteOutlineOutlinedIcon />}
           label="Delete"
           onClick={() => deleteAction(params.row)}
@@ -141,6 +142,7 @@ export const EntriesTable = ({ args }) => {
       hide: args.status === 'CLOSED',
       getActions: (params) => [
         <GridActionsCellItem
+          key={params.row.id}
           icon={<ModeOutlinedIcon />}
           label="Edit"
           onClick={() => editAction(params.row)}
@@ -163,8 +165,9 @@ export const EntriesTable = ({ args }) => {
     {
       field: 'symbol',
       headerName: 'Symbol',
+      flex: 1,
       renderCell: (params) => (
-        <Link key={params.row.id} onClick={(e) => showAction(params.row)}>
+        <Link key={params.row.id} onClick={() => showAction(params.row)}>
           {params.row.symbol || params.row.type}
         </Link>
       ),
@@ -256,7 +259,6 @@ export const EntriesTable = ({ args }) => {
         loading={isLoading}
         rows={items}
         columns={columns}
-        density="comfortable"
         autoHeight
         disableSelectionOnClick
         disableColumnMenu

@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { TimeAggregation } from './TimeAggregation';
 import { Trade } from './Trade';
 import { TradeAggregation } from './TradeAggregation';

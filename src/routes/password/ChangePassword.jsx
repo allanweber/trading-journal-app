@@ -10,9 +10,9 @@ import * as yup from 'yup';
 import { Alert } from '../../components/alert';
 import { Button } from '../../components/button/Button';
 import { Feedback } from '../../components/feedback';
+import { ThemeChange } from '../../components/theme-change';
 import { useIsMobile } from '../../hooks/useIsMobile';
 import { useChangePassword } from '../../services/AuthenticationQueries';
-import { ThemeChange } from '../global/theme-change';
 
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),

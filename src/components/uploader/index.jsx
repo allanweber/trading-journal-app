@@ -17,7 +17,7 @@ import Uploady, {
   useItemProgressListener,
   useItemStartListener,
 } from '@rpldy/uploady';
-import React, { forwardRef, useCallback, useEffect, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useState } from 'react';
 import { useAccessTokenState } from '../../context/UserContext';
 import { Alert } from '../alert';
 

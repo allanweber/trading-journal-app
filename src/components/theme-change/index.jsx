@@ -3,12 +3,14 @@ import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import { IconButton } from '@mui/material';
 import { useContext, useEffect } from 'react';
-import { saveTheme } from '../../../services/ConfigurationStorage';
-import { ColorModeContext } from '../../../theme';
+import { useIsDarkMode } from '../../hooks/useColors';
+import { saveTheme } from '../../services/ConfigurationStorage';
+import { ColorModeContext } from '../../theme';
 
 export const ThemeChange = () => {
   const colorMode = useContext(ColorModeContext);
   const theme = useTheme();
+  const isDarkMode = useIsDarkMode();
 
   const changeTheme = () => {
     colorMode.toggleColorMode();
@@ -20,10 +22,10 @@ export const ThemeChange = () => {
 
   return (
     <IconButton onClick={changeTheme}>
-      {theme.palette.mode === 'dark' ? (
-        <LightModeOutlinedIcon />
+      {isDarkMode ? (
+        <LightModeOutlinedIcon titleAccess="use light mode" />
       ) : (
-        <DarkModeOutlinedIcon />
+        <DarkModeOutlinedIcon titleAccess="use dark mode" />
       )}
     </IconButton>
   );
