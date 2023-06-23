@@ -9,7 +9,7 @@ export const OptionsMenu = () => {
     <Box display="flex">
       <ThemeChange />
       <IconButton>
-        <NotificationsOutlinedIcon />
+        <NotificationsOutlinedIcon titleAccess="notifications" />
       </IconButton>
       <UserActions />
     </Box>

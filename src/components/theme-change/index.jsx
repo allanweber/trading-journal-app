@@ -22,7 +22,11 @@ export const ThemeChange = () => {
 
   return (
     <IconButton onClick={changeTheme}>
-      {isDarkMode ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
+      {isDarkMode ? (
+        <LightModeOutlinedIcon titleAccess="use light mode" />
+      ) : (
+        <DarkModeOutlinedIcon titleAccess="use dark mode" />
+      )}
     </IconButton>
   );
 };
