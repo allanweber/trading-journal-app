@@ -1,16 +1,16 @@
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
-import { Box, Divider, Typography, useTheme } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Alert } from '../../components/alert';
 import { ColorfulCurrency } from '../../components/colorful-currency';
 import { LoadingPage } from '../../components/loading-page';
-import { useColors } from '../../hooks/useColors';
+import { useColors, useIsDarkMode } from '../../hooks/useColors';
 import { useAggregateTrades } from '../../services/TradeQueries';
 import { ShortDisplay } from './ShortDisplay';
 
 export const TradeAggregation = ({ journal, period, onChange }) => {
   const colors = useColors();
-  const theme = useTheme();
+  const isDarkMode = useIsDarkMode();
   const [selected, setSelected] = useState(undefined);
 
   const {
@@ -72,9 +72,7 @@ export const TradeAggregation = ({ journal, period, onChange }) => {
               sx={{
                 '& .selected': {
                   backgroundColor: `${
-                    theme.palette.mode === 'dark'
-                      ? colors.primary[400]
-                      : colors.primary[400]
+                    isDarkMode ? colors.primary[400] : colors.primary[400]
                   }`,
                 },
               }}
@@ -103,9 +101,7 @@ export const TradeAggregation = ({ journal, period, onChange }) => {
                     '&:hover': {
                       cursor: 'pointer',
                       backgroundColor: `${
-                        theme.palette.mode === 'dark'
-                          ? colors.primary[400]
-                          : colors.primary[400]
+                        isDarkMode ? colors.primary[400] : colors.primary[400]
                       }`,
                     },
                   }}

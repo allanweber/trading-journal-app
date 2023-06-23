@@ -10,3 +10,13 @@ export const useMode = () => {
   const theme = useTheme();
   return theme.palette.mode;
 };
+
+export const useIsDarkMode = () => {
+  const theme = useTheme();
+  return theme.palette.mode === 'dark';
+};
+
+export const useIsLightMode = () => {
+  const theme = useTheme();
+  return theme.palette.mode === 'light';
+};

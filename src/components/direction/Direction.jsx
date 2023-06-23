@@ -1,12 +1,12 @@
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import TrendingDownOutlinedIcon from '@mui/icons-material/TrendingDownOutlined';
 import TrendingUpOutlinedIcon from '@mui/icons-material/TrendingUpOutlined';
-import { Box, useTheme } from '@mui/material';
+import { Box } from '@mui/material';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
-import { useColors } from '../../hooks/useColors';
+import { useColors, useIsDarkMode } from '../../hooks/useColors';
 
 export const Direction = ({
   onChange,
@@ -15,7 +15,7 @@ export const Direction = ({
   size = 'medium',
 }) => {
   const colors = useColors();
-  const theme = useTheme();
+  const isDarkMode = useIsDarkMode();
   const [type, setType] = useState(showEmpty ? 'ALL' : value || 'LONG');
   const changeFilter = (type) => {
     if (type !== null) {
@@ -36,30 +36,22 @@ export const Direction = ({
           '& .Mui-selected.long': {
             color: '#E7F2FE !important',
             backgroundColor: `${
-              theme.palette.mode === 'dark'
-                ? colors.greenAccent[700]
-                : colors.greenAccent[300]
+              isDarkMode ? colors.greenAccent[700] : colors.greenAccent[300]
             }`,
             '&:hover': {
               backgroundColor: `${
-                theme.palette.mode === 'dark'
-                  ? colors.greenAccent[700]
-                  : colors.greenAccent[300]
+                isDarkMode ? colors.greenAccent[700] : colors.greenAccent[300]
               }`,
             },
           },
           '& .Mui-selected.short': {
             color: '#E7F2FE !important',
             backgroundColor: `${
-              theme.palette.mode === 'dark'
-                ? colors.redAccent[700]
-                : colors.redAccent[300]
+              isDarkMode ? colors.redAccent[700] : colors.redAccent[300]
             }`,
             '&:hover': {
               backgroundColor: `${
-                theme.palette.mode === 'dark'
-                  ? colors.redAccent[700]
-                  : colors.redAccent[300]
+                isDarkMode ? colors.redAccent[700] : colors.redAccent[300]
               }`,
             },
           },

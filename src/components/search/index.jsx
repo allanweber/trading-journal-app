@@ -2,11 +2,11 @@ import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, IconButton, InputBase } from '@mui/material';
 import { useState } from 'react';
-import { useColors, useMode } from '../../hooks/useColors';
+import { useColors, useIsDarkMode } from '../../hooks/useColors';
 
 export const Search = ({ placeholder, onSearch }) => {
   const colors = useColors();
-  const mode = useMode();
+  const isDarkMode = useIsDarkMode();
   const [value, setValue] = useState('');
   function isBlank(str) {
     return !str || /^\s*$/.test(str);
@@ -20,9 +20,7 @@ export const Search = ({ placeholder, onSearch }) => {
   return (
     <Box
       display="flex"
-      backgroundColor={
-        mode === 'dark' ? colors.primary[200] : colors.primary[900]
-      }
+      backgroundColor={isDarkMode ? colors.primary[200] : colors.primary[900]}
       borderRadius="3px"
       maxWidth="200px"
     >
@@ -31,7 +29,7 @@ export const Search = ({ placeholder, onSearch }) => {
         sx={{ ml: 2, flex: 1 }}
         placeholder={placeholder ? placeholder : 'Search'}
         onChange={(event) => setValue(event.target.value)}
-        onKeyPress={(e) => {
+        onKeyDown={(e) => {
           if (e.key === 'Enter') {
             setValue(e.target.value);
             onSearch(isBlank(value) ? undefined : value);

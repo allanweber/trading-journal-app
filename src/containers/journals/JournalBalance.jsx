@@ -11,7 +11,7 @@ const BalanceCards = ({ balance }) => {
   const accountBalance =
     (balance.accountBalance - balance.startBalance) / balance.startBalance;
 
-  const available = balance.accountBalance / balance.available;
+  const available = balance.available / balance.accountBalance;
 
   return (
     <Grid container spacing={2}>

@@ -1,25 +1,18 @@
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
-import {
-  Box,
-  Divider,
-  Grid,
-  TablePagination,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Box, Divider, Grid, TablePagination, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Alert } from '../../components/alert';
 import { ColorfulCurrency } from '../../components/colorful-currency';
 import { LoadingPage } from '../../components/loading-page';
 import { TimeGroup } from '../../components/time-group';
-import { useColors } from '../../hooks/useColors';
+import { useColors, useIsDarkMode } from '../../hooks/useColors';
 import { useAggregateTime } from '../../services/TradeQueries';
 import { periodToDates } from '../../utilities/dateTimeUtilities';
 import { ShortDisplay } from './ShortDisplay';
 
 export const TimeAggregation = ({ journal, onChange }) => {
   const colors = useColors();
-  const theme = useTheme();
+  const isDarkMode = useIsDarkMode();
   const [aggregation, setAggregation] = useState('DAY');
   const [selected, setSelected] = useState(undefined);
   const [page, setPage] = useState(0);
@@ -98,9 +91,7 @@ export const TimeAggregation = ({ journal, onChange }) => {
               sx={{
                 '& .selected': {
                   backgroundColor: `${
-                    theme.palette.mode === 'dark'
-                      ? colors.primary[400]
-                      : colors.primary[400]
+                    isDarkMode ? colors.primary[400] : colors.primary[400]
                   }`,
                 },
               }}
@@ -130,9 +121,7 @@ export const TimeAggregation = ({ journal, onChange }) => {
                     '&:hover': {
                       cursor: 'pointer',
                       backgroundColor: `${
-                        theme.palette.mode === 'dark'
-                          ? colors.primary[400]
-                          : colors.primary[400]
+                        isDarkMode ? colors.primary[400] : colors.primary[400]
                       }`,
                     },
                   }}
