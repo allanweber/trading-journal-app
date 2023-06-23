@@ -257,7 +257,6 @@ export const EntriesTable = ({ args }) => {
         loading={isLoading}
         rows={items}
         columns={columns}
-        density="comfortable"
         autoHeight
         disableSelectionOnClick
         disableColumnMenu
