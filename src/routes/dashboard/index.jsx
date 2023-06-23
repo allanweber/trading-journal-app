@@ -8,7 +8,7 @@ import { useGetBalance, useGetJournals } from '../../services/JournalQueries';
 
 export const Dashboard = () => {
   const { journal } = useJournalContext();
-  const { data: balance } = useGetBalance(journal.id);
+  const { data: balance } = useGetBalance(journal?.id);
   const { data: journals } = useGetJournals();
   const navigate = useNavigate();
 
