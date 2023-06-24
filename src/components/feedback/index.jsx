@@ -40,7 +40,7 @@ export const Feedback = ({ header, subtitle, icon, to, toLabel }) => {
         alignItems: 'center',
       }}
     >
-      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>{icon}</Avatar>
+      {icon && <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>{icon}</Avatar>}
       <Typography variant="h5" sx={{ mt: 2 }}>
         {header}
       </Typography>
