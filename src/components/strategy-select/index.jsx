@@ -15,9 +15,11 @@ const ListItem = styled('li')(({ theme }) => ({
 export const StrategySelect = ({
   onChanged,
   selectedValues,
+  emptyLabel = 'All Strategies',
   small = false,
 }) => {
   const [selected, setSelected] = useState();
+  const [hasSelection, setHasSelection] = useState(false);
   const [openForm, setOpenForm] = useState(false);
 
   useEffect(() => {
@@ -55,6 +57,14 @@ export const StrategySelect = ({
     }
   };
 
+  useEffect(() => {
+    if (selected && selected.length > 0) {
+      setHasSelection(true);
+    } else {
+      setHasSelection(false);
+    }
+  }, [selected]);
+
   return (
     <div>
       <Dialog
@@ -82,10 +92,10 @@ export const StrategySelect = ({
             p: small ? null : 0.5,
           }}
         >
-          {!selected && (
+          {!hasSelection && (
             <Chip
               size={small ? 'small' : 'medium'}
-              label="All Strategies"
+              label={emptyLabel}
               onClick={openDialog}
             />
           )}
@@ -110,7 +120,7 @@ export const StrategySelect = ({
               <FilterAltOutlinedIcon />
             </IconButton>
           </Tooltip>
-          {selected && (
+          {hasSelection && (
             <Tooltip title="Clear Strategies Filter">
               <IconButton type="button" onClick={deleteAll}>
                 <FilterAltOffOutlinedIcon />

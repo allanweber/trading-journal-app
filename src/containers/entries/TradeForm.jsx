@@ -36,7 +36,7 @@ const initialValues = {
   graphType: undefined,
   graphMeasure: undefined,
   notes: undefined,
-  strategyIds: [],
+  strategies: [],
 };
 
 export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
@@ -264,10 +264,11 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                     <Grid item xs={12} sm={12}>
                       <StrategySelect
                         selectedValues={values.strategies}
+                        emptyLabel="Select strategies"
                         onChanged={(value) =>
                           setFieldValue(
-                            'strategyIds',
-                            value.map((strategy) => strategy.id),
+                            'strategies',
+                            value.map((strategy) => strategy),
                             false
                           )
                         }

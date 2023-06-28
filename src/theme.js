@@ -272,14 +272,21 @@ export const themeSettings = (mode) => {
           },
           columnHeaders: {
             backgroundColor:
-              mode === 'dark' ? colors.primary[400] : colors.primary[300],
+              mode === 'dark' ? colors.primary[400] : colors.grey[900],
           },
           footerContainer: {
             backgroundColor:
-              mode === 'dark' ? colors.primary[400] : colors.primary[300],
+              mode === 'dark' ? colors.primary[400] : colors.grey[900],
           },
           columnSeparator: {
             color: mode === 'dark' ? colors.primary[100] : colors.primary[800],
+          },
+          checkboxInput: {
+            color: mode === 'dark' ? colors.primary[100] : colors.primary[700],
+            '&.Mui-checked': {
+              color:
+                mode === 'dark' ? colors.primary[100] : colors.primary[700],
+            },
           },
         },
       },
