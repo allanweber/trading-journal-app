@@ -120,7 +120,6 @@ export const StrategiesTable = ({
     {
       field: 'name',
       headerName: 'Name',
-      flex: 1,
       renderCell: (params) => (
         <Stack direction="row" spacing={1}>
           {selectOnly ? (
@@ -167,6 +166,7 @@ export const StrategiesTable = ({
         rowCount={rowCount}
         paginationMode="server"
         sortingMode="server"
+        hideFooterSelectedRowCount={true}
       />
     </Box>
   );

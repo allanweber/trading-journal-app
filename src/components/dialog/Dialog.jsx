@@ -34,7 +34,7 @@ export const Dialog = ({ open, children, title, icon, onClose, ...rest }) => {
         },
       }}
     >
-      <DialogTitle minWidth={300}>
+      <DialogTitle>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">{icon && icon}</Box>
           <Box display="flex">
