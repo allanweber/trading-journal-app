@@ -75,7 +75,6 @@ export const CloseTrade = ({ trade, journal, onSave, onCancel }) => {
                   <DateTime
                     fullWidth
                     required
-                    variant="filled"
                     type="text"
                     label="Exit trading date"
                     onBlur={handleBlur}
@@ -89,7 +88,6 @@ export const CloseTrade = ({ trade, journal, onSave, onCancel }) => {
                 <Grid item xs={12} sm={6}>
                   <NumberInput
                     fullWidth
-                    variant="filled"
                     type="text"
                     label={`Exit Price (${currencySymbol(journal.currency)})`}
                     onBlur={handleBlur}

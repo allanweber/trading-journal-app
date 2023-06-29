@@ -84,7 +84,6 @@ export const JournalForm = ({
               <Grid item xs={12} sm={12}>
                 <TextField
                   fullWidth
-                  variant="filled"
                   label="Journal Name"
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -98,7 +97,6 @@ export const JournalForm = ({
                 <DateTime
                   dateOnly
                   fullWidth
-                  variant="filled"
                   type="text"
                   label="Start Journal at"
                   onBlur={handleBlur}
@@ -114,7 +112,6 @@ export const JournalForm = ({
               <Grid item xs={12} sm={12}>
                 <NumberInput
                   fullWidth
-                  variant="filled"
                   type="text"
                   label={`Start Balance (${currencySymbol(values.currency)})`}
                   onBlur={handleBlur}

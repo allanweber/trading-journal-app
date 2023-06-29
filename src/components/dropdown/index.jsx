@@ -11,7 +11,6 @@ export const Dropdown = ({ items, onChange, small, name, ...rest }) => {
   return (
     <TextField
       size={small ? 'small' : 'normal'}
-      variant="filled"
       name={name}
       id={`${name}-select`}
       select

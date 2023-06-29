@@ -20,9 +20,13 @@ export const Search = ({ placeholder, onSearch }) => {
   return (
     <Box
       display="flex"
-      backgroundColor={isDarkMode ? colors.primary[200] : colors.primary[900]}
+      sx={{
+        border: `1px solid ${
+          isDarkMode ? colors.primary[100] : colors.primary[800]
+        }`,
+      }}
       borderRadius="3px"
-      maxWidth="200px"
+      maxWidth="150px"
     >
       <InputBase
         value={value}

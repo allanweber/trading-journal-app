@@ -59,7 +59,6 @@ export const DepositForm = ({ journal, onCancel, onSave }) => {
                   dateOnly
                   fullWidth
                   required
-                  variant="filled"
                   type="text"
                   label="Deposit at"
                   onBlur={handleBlur}
@@ -74,7 +73,6 @@ export const DepositForm = ({ journal, onCancel, onSave }) => {
                 <NumberInput
                   fullWidth
                   required
-                  variant="filled"
                   type="text"
                   label={`Deposit Value (${currencySymbol(journal.currency)})`}
                   onBlur={handleBlur}

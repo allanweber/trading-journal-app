@@ -11,14 +11,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import Slide from '@mui/material/Slide';
 import { forwardRef } from 'react';
-import { useColors } from '../../hooks/useColors';
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export const Dialog = ({ open, children, title, icon, onClose, ...rest }) => {
-  const colors = useColors();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -28,11 +26,6 @@ export const Dialog = ({ open, children, title, icon, onClose, ...rest }) => {
       fullScreen={fullScreen}
       {...rest}
       TransitionComponent={Transition}
-      sx={{
-        '& .MuiDialogContent-root, & .MuiDialogTitle-root': {
-          backgroundColor: colors.primary[400],
-        },
-      }}
     >
       <DialogTitle>
         <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -56,7 +49,9 @@ export const Dialog = ({ open, children, title, icon, onClose, ...rest }) => {
           </Box>
         </Box>
       </DialogTitle>
-      <DialogContent>{children}</DialogContent>
+      <DialogContent>
+        <Box pt="5px">{children}</Box>
+      </DialogContent>
     </MuiDialog>
   );
 };

@@ -59,7 +59,6 @@ export const WithdrawalForm = ({ journal, onCancel, onSave }) => {
                   dateOnly
                   required
                   fullWidth
-                  variant="filled"
                   type="text"
                   label="Withdrawal at"
                   onBlur={handleBlur}
@@ -74,7 +73,6 @@ export const WithdrawalForm = ({ journal, onCancel, onSave }) => {
                 <NumberInput
                   fullWidth
                   required
-                  variant="filled"
                   type="text"
                   label={`Withdrawal Value (${currencySymbol(
                     journal.currency

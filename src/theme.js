@@ -131,7 +131,7 @@ export const themeSettings = (mode) => {
         ? {
             // palette values for dark mode
             primary: {
-              main: colors.primary[400],
+              main: colors.primary[100],
             },
             secondary: {
               main: colors.greenAccent[500],
@@ -150,7 +150,7 @@ export const themeSettings = (mode) => {
             },
 
             background: {
-              default: colors.primary[400],
+              default: '#f8fafc',
             },
           }),
     },
@@ -184,22 +184,6 @@ export const themeSettings = (mode) => {
     },
     components: {
       MuiButton: {
-        variants: [
-          {
-            props: { color: 'secondary' },
-            style: {
-              color: '#E7F2FE !important',
-              backgroundColor:
-                mode === 'dark' ? colors.grey[600] : colors.grey[800],
-              '&:hover': {
-                backgroundColor:
-                  mode === 'dark'
-                    ? `${colors.grey[500]} !important`
-                    : `${colors.grey[700]} !important`,
-              },
-            },
-          },
-        ],
         styleOverrides: {
           root: {
             fontSize: '14px',
@@ -207,33 +191,16 @@ export const themeSettings = (mode) => {
             padding: '10px 10px',
           },
           contained: {
-            backgroundColor: colors.blueAccent[700],
             '&:hover': {
-              backgroundColor:
-                mode === 'dark'
-                  ? `${colors.blueAccent[500]} !important`
-                  : `${colors.blueAccent[600]} !important`,
+              backgroundColor: colors.grey[200],
             },
-          },
-          outlined: {
-            color: mode === 'dark' ? '#ffff' : colors.primary[100],
-            backgroundColor: 'transparent',
-            '&:hover': {
-              backgroundColor:
-                mode === 'dark'
-                  ? `${colors.primary[200]} !important`
-                  : `${colors.primary[300]} !important`,
-            },
-            border: `1px solid ${
-              mode === 'dark' ? '#ffff' : colors.primary[100]
-            }`,
           },
         },
       },
       MuiLink: {
         styleOverrides: {
           root: {
-            color: colors.blueAccent[300],
+            color: colors.primary[100],
             cursor: 'pointer',
           },
         },
@@ -249,28 +216,33 @@ export const themeSettings = (mode) => {
       MuiCircularProgress: {
         styleOverrides: {
           root: {
-            color: colors.grey[100],
+            color: colors.primary[100],
           },
         },
       },
       MuiDataGrid: {
         styleOverrides: {
           root: {
-            border: '1px solid #5151514d',
+            border: `0.5px solid ${mode === 'dark' ? '#64686e' : '#e0e0e0'}`,
           },
           cell: {
             fontSize: '0.9rem',
           },
           columnHeaders: {
-            backgroundColor:
-              mode === 'dark' ? colors.primary[400] : colors.grey[900],
+            borderBottom: `1px solid ${
+              mode === 'dark' ? '#64686e' : '#e0e0e0'
+            }`,
+            '&:hover': {
+              backgroundColor:
+                mode === 'dark' ? colors.primary[300] : '#645f5f08',
+            },
           },
           footerContainer: {
-            backgroundColor:
-              mode === 'dark' ? colors.primary[400] : colors.grey[900],
-          },
-          columnSeparator: {
-            color: mode === 'dark' ? colors.primary[100] : colors.primary[800],
+            borderTop: `1px solid ${mode === 'dark' ? '#64686e' : '#e0e0e0'}`,
+            '&:hover': {
+              backgroundColor:
+                mode === 'dark' ? colors.primary[300] : '#645f5f08',
+            },
           },
           checkboxInput: {
             color: mode === 'dark' ? colors.primary[100] : colors.primary[700],
