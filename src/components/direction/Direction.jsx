@@ -13,6 +13,7 @@ export const Direction = ({
   value,
   showEmpty = false,
   size = 'medium',
+  ...rest
 }) => {
   const colors = useColors();
   const isDarkMode = useIsDarkMode();
@@ -33,6 +34,7 @@ export const Direction = ({
         exclusive
         size={size}
         sx={{
+          height: `${size === 'large' ? '52px' : null}`,
           '& .Mui-selected.long': {
             color: '#E7F2FE !important',
             backgroundColor: `${

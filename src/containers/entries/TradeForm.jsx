@@ -121,15 +121,15 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                         helperText={touched.date && errors.date}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={4} sx={{ mt: '10px' }}>
+                    <Grid item xs={12} sm={4}>
                       <FormControl fullWidth>
                         <Direction
-                          size="small"
                           onChange={(value) =>
                             setFieldValue('direction', value, true)
                           }
                           value={values.direction}
                           name="direction"
+                          size="large"
                         />
                       </FormControl>
                     </Grid>
