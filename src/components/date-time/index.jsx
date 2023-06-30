@@ -11,7 +11,6 @@ export const DateTime = ({
   onChange,
   name,
   value,
-  variant,
   label,
   onBlur,
   error,
@@ -26,10 +25,14 @@ export const DateTime = ({
   const onDateChange = (newValue) => {
     if (newValue) {
       setCurrent(newValue);
-      onChange(newValue.toDate());
+      if (onChange) {
+        onChange(newValue.toDate());
+      }
     } else {
-      onChange(undefined);
       setCurrent(null);
+      if (onChange) {
+        onChange(undefined);
+      }
     }
   };
 
@@ -46,7 +49,6 @@ export const DateTime = ({
             }}
             renderInput={(props) => (
               <TextField
-                variant={variant}
                 onBlur={onBlur}
                 name={name}
                 {...props}
@@ -71,7 +73,6 @@ export const DateTime = ({
             }}
             renderInput={(props) => (
               <TextField
-                variant={variant}
                 onBlur={onBlur}
                 name={name}
                 {...props}

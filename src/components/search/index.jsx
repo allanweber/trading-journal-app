@@ -14,7 +14,7 @@ export const Search = ({ placeholder, onSearch }) => {
 
   const clear = () => {
     setValue('');
-    onSearch(undefined);
+    if (onSearch) onSearch(undefined);
   };
 
   return (
@@ -44,9 +44,9 @@ export const Search = ({ placeholder, onSearch }) => {
         <IconButton
           type="button"
           sx={{ p: 1 }}
-          {...(onSearch && {
+          {...{
             onClick: clear,
-          })}
+          }}
         >
           <ClearOutlinedIcon />
         </IconButton>

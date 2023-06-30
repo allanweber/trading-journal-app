@@ -78,6 +78,6 @@ const ConfirmationModalContextProvider = (props) => {
 
 const useConfirmationModal = () => useContext(ConfirmationModalContext);
 
-export { useConfirmationModal, useModalShow };
+export { useConfirmationModal };
 
 export default ConfirmationModalContextProvider;

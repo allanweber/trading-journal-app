@@ -59,7 +59,7 @@ export const StatusCard = ({ title, value, currency, icon, percentage }) => {
         <Typography variant="h5" sx={{ color: colors.grey[100] }}>
           {title}
         </Typography>
-        {percentage > 0 && (
+        {percentage && (
           <Typography
             variant="h5"
             fontStyle="italic"

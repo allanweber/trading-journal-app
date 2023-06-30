@@ -1,9 +1,9 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
-  Accordion as MuiAccordion,
   AccordionDetails,
   AccordionSummary,
   Box,
+  Accordion as MuiAccordion,
 } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useColors } from '../../hooks/useColors';

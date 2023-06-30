@@ -5,6 +5,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query';
 import ConfirmationModalContextProvider from './components/dialog/Confirmation';
+import ToastrContextProvider from './components/toastr/Toastr';
 import { JournalProvider } from './context/JournalContext';
 import { AuthProvider } from './context/UserContext';
 import { Routes } from './routes/Routes';
@@ -37,14 +38,16 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
             <ConfirmationModalContextProvider>
-              <div className="app">
-                <main className="content">
-                  <JournalProvider>
-                    <NavBar />
-                    <Routes />
-                  </JournalProvider>
-                </main>
-              </div>
+              <ToastrContextProvider>
+                <div className="app">
+                  <main className="content">
+                    <JournalProvider>
+                      <NavBar />
+                      <Routes />
+                    </JournalProvider>
+                  </main>
+                </div>
+              </ToastrContextProvider>
             </ConfirmationModalContextProvider>
           </AuthProvider>
         </QueryClientProvider>

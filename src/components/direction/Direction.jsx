@@ -13,7 +13,6 @@ export const Direction = ({
   value,
   showEmpty = false,
   size = 'medium',
-  ...rest
 }) => {
   const colors = useColors();
   const isDarkMode = useIsDarkMode();
