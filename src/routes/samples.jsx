@@ -40,12 +40,13 @@ import { useToastr } from '../components/toastr/Toastr';
 import { WinLose } from '../components/win-lose';
 
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
+import { MultiSelect } from '../components/multi.select';
 
 //
 //
 //TODO: Missing components:
+// - Multi Select Dropdown: DONE (Strategies)
 // - DateRange
-// - Multi Select Dropdown (Strategies)
 // - Uploader dummy
 // - Nav Bar dummy
 // - User menu with avatar
@@ -87,6 +88,24 @@ export const Samples = () => {
   const [loading, setLoading] = useState(false);
   const confirmation = useConfirmationModal();
   const toastr = useToastr();
+
+  const multiSelectItems = [
+    { label: 'Item 1', value: '1' },
+    { label: 'Item 2', value: '2' },
+    { label: 'Item 3', value: '3' },
+    { label: 'Item 4', value: '4' },
+    { label: 'Item 5', value: '5' },
+    { label: 'Item 6', value: '6' },
+  ];
+
+  const multiSelectItemsWithDescriptions = [
+    { label: 'Item 1', value: '1', description: 'Description 1' },
+    { label: 'Item 2', value: '2', description: 'Description 2' },
+    { label: 'Item 3', value: '3', description: 'Description 3' },
+    { label: 'Item 4', value: '4', description: 'Description 4' },
+    { label: 'Item 5', value: '5', description: 'Description 5' },
+    { label: 'Item 6', value: '6', description: 'Description 6' },
+  ];
 
   const openDialog = () => {
     setDialog(true);
@@ -231,6 +250,7 @@ export const Samples = () => {
           <Fragment>
             <Grid item md={6} xs={12}>
               <Dropdown
+                label="DropDown"
                 fullWidth
                 value={'1'}
                 items={[
@@ -242,6 +262,7 @@ export const Samples = () => {
             </Grid>
             <Grid item md={6} xs={12}>
               <Dropdown
+                label="DropDown"
                 fullWidth
                 items={[{ value: '1', label: 'value 1' }]}
                 error={true}
@@ -251,12 +272,38 @@ export const Samples = () => {
           </Fragment>
           <Fragment>
             <Grid item md={6} xs={12}>
-              <GraphSelect fullWidth value="RENKO" />
+              <GraphSelect fullWidth value="RENKO" label="Graph" />
             </Grid>
             <Grid item md={6} xs={12}>
               <GraphSelect
+                label="Graph"
                 fullWidth
                 value="RENKO"
+                error={true}
+                helperText="Value required"
+              />
+            </Grid>
+          </Fragment>
+          <Fragment>
+            <Grid item md={6} xs={12}>
+              <MultiSelect
+                label="Multi Select"
+                name="names"
+                items={multiSelectItems}
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <MultiSelect
+                label="Multi Select with descriptions"
+                name="names"
+                items={multiSelectItemsWithDescriptions}
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <MultiSelect
+                label="Multi Select"
+                name="names"
+                items={multiSelectItems}
                 error={true}
                 helperText="Value required"
               />
