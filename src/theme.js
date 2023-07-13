@@ -213,6 +213,14 @@ export const themeSettings = (mode) => {
           },
         },
       },
+      MuiCard: {
+        styleOverrides: {
+          root: {
+            backgroundColor:
+              mode === 'dark' ? colors.primary[400] : colors.primary[400],
+          },
+        },
+      },
       MuiCircularProgress: {
         styleOverrides: {
           root: {

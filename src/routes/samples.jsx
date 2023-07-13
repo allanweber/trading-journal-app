@@ -40,13 +40,12 @@ import { useToastr } from '../components/toastr/Toastr';
 import { WinLose } from '../components/win-lose';
 
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
-import { MultiSelect } from '../components/multi.select';
+import { MultiSelect } from '../components/multi-select';
 
 //
 //
 //TODO: Missing components:
-// - Multi Select Dropdown: DONE (Strategies)
-// - DateRange
+// - Multi Select Dropdown: DONE replace Strategies with this
 // - Uploader dummy
 // - Nav Bar dummy
 // - User menu with avatar

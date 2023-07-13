@@ -1,6 +1,6 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Card, CardContent, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useColors, useIsDarkMode } from '../../hooks/useColors';
+import { useColors } from '../../hooks/useColors';
 import {
   currencyFormatter,
   percentFormatter,
@@ -12,7 +12,6 @@ export const StatusCard = ({ title, value, currency, icon, percentage }) => {
   const [formattedPercentage, setFormattedPercentage] = useState();
   const [valueColor, setValueColor] = useState();
   const [percentageColor, setPercentageColor] = useState();
-  const isDarkMode = useIsDarkMode();
 
   useEffect(() => {
     if (typeof value === 'number') {
@@ -42,33 +41,35 @@ export const StatusCard = ({ title, value, currency, icon, percentage }) => {
   }, [percentage, colors]);
 
   return (
-    <Box
-      p="20px"
-      maxWidth="300px"
-      backgroundColor={isDarkMode ? colors.primary[400] : colors.primary[300]}
-    >
-      <Box display="flex" justifyContent="space-between">
-        <Box>
-          <Typography variant="h3" fontWeight="bold" sx={{ color: valueColor }}>
-            {formattedValue}
-          </Typography>
+    <Card variant="outlined">
+      <CardContent>
+        <Box display="flex" justifyContent="space-between">
+          <Box>
+            <Typography
+              variant="h3"
+              fontWeight="bold"
+              sx={{ color: valueColor }}
+            >
+              {formattedValue}
+            </Typography>
+          </Box>
+          <Box>{icon}</Box>
         </Box>
-        <Box>{icon}</Box>
-      </Box>
-      <Box display="flex" justifyContent="space-between" mt="2px">
-        <Typography variant="h5" sx={{ color: colors.grey[100] }}>
-          {title}
-        </Typography>
-        {percentage && (
-          <Typography
-            variant="h5"
-            fontStyle="italic"
-            sx={{ color: percentageColor }}
-          >
-            {formattedPercentage}
+        <Box display="flex" justifyContent="space-between" mt="2px">
+          <Typography variant="h5" sx={{ color: colors.grey[100] }}>
+            {title}
           </Typography>
-        )}
-      </Box>
-    </Box>
+          {percentage && (
+            <Typography
+              variant="h5"
+              fontStyle="italic"
+              sx={{ color: percentageColor }}
+            >
+              {formattedPercentage}
+            </Typography>
+          )}
+        </Box>
+      </CardContent>
+    </Card>
   );
 };
