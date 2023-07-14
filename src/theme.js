@@ -48,7 +48,7 @@ export const themeSettings = (mode) => {
       ...(mode === 'dark'
         ? {
             primary: {
-              main: colors.slate[500],
+              main: colors.slate[100],
             },
             secondary: {
               main: colors.neutral[100],
@@ -65,7 +65,7 @@ export const themeSettings = (mode) => {
           }
         : {
             primary: {
-              main: colors.slate[500],
+              main: colors.slate[900],
             },
             secondary: {
               main: colors.neutral[700],
