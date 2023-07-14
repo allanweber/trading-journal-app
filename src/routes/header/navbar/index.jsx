@@ -28,49 +28,51 @@ export const NavBar = () => {
   if (!user) return <div></div>;
 
   return (
-    <AppBar position="static">
-      <Container
-        maxWidth={false}
-        sx={{
-          backgroundColor: isDarkMode ? color.slate[900] : color.slate[100],
-        }}
-      >
-        <Toolbar disableGutters>
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <JournalSelect />
-          </Box>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="navigation menu"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={openMobileMenu}
-            >
-              <MenuIcon fontSize="1.2rem" />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorMobileMenu}
-              keepMounted
-              open={Boolean(anchorMobileMenu)}
-              onClose={() => setAnchorMobileMenu(null)}
-            >
-              <NavLinks onChange={mobileMenuSelect} />
-            </Menu>
-
-            <Box mt="4px">
+    <Box marginBottom={user ? '75px' : null}>
+      <AppBar component="nav">
+        <Container
+          maxWidth={false}
+          sx={{
+            backgroundColor: isDarkMode ? color.slate[900] : color.slate[100],
+          }}
+        >
+          <Toolbar disableGutters>
+            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               <JournalSelect />
             </Box>
-          </Box>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <NavLinks />
-          </Box>
-          <OptionsMenu />
-        </Toolbar>
-      </Container>
-    </AppBar>
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="navigation menu"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={openMobileMenu}
+              >
+                <MenuIcon fontSize="1.2rem" />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorMobileMenu}
+                keepMounted
+                open={Boolean(anchorMobileMenu)}
+                onClose={() => setAnchorMobileMenu(null)}
+              >
+                <NavLinks onChange={mobileMenuSelect} />
+              </Menu>
+
+              <Box mt="4px">
+                <JournalSelect />
+              </Box>
+            </Box>
+
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              <NavLinks />
+            </Box>
+            <OptionsMenu />
+          </Toolbar>
+        </Container>
+      </AppBar>
+    </Box>
   );
 };

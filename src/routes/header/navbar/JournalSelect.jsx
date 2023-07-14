@@ -1,4 +1,3 @@
-import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { Divider, ListItemIcon, ListItemText } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -12,7 +11,9 @@ import { useGetJournals } from '../../../services/JournalQueries';
 import { AutoStoriesOutlined } from '@mui/icons-material';
 import RadioButtonCheckedOutlinedIcon from '@mui/icons-material/RadioButtonCheckedOutlined';
 import RadioButtonUncheckedOutlinedIcon from '@mui/icons-material/RadioButtonUncheckedOutlined';
+import UnfoldMoreOutlinedIcon from '@mui/icons-material/UnfoldMoreOutlined';
 import { useJournalContext } from '../../../context/JournalContext';
+import { useColors, useIsDarkMode } from '../../../hooks/useColors';
 import { useIsMobile } from '../../../hooks/useIsMobile';
 import {
   getCurrentJournal,
@@ -21,6 +22,8 @@ import {
 
 export const JournalSelect = () => {
   const isMobile = useIsMobile();
+  const isDarkMode = useIsDarkMode();
+  const colors = useColors();
   const navigate = useNavigate();
   const { journal, setJournal } = useJournalContext();
   const { data: journals } = useGetJournals();
@@ -71,7 +74,13 @@ export const JournalSelect = () => {
   return (
     <div>
       <Button
-        endIcon={<ArrowDropDownOutlinedIcon />}
+        sx={{
+          border: `1px solid ${
+            isDarkMode ? colors.neutral[800] : colors.neutral[200]
+          } `,
+          padding: '10px 20px 10px 20px',
+        }}
+        endIcon={<UnfoldMoreOutlinedIcon />}
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
@@ -82,9 +91,9 @@ export const JournalSelect = () => {
           variant="h5"
           noWrap
           sx={{
-            overflow: isMobile ? 'hidden' : 'visible',
+            overflow: 'hidden',
             textOverflow: 'ellipsis',
-            width: isMobile ? '11rem' : null,
+            width: '11rem',
             fontWeight: 700,
             letterSpacing: '.1rem',
             textDecoration: 'none',
