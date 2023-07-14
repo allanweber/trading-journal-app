@@ -7,9 +7,9 @@ import { Box } from '@mui/system';
 import { Accordion } from '../../components/accordion';
 import { StatusCard } from '../../components/status-card';
 
-const BalanceCards = ({ balance }) => {
+const BalanceCards = ({ balance, journal }) => {
   const accountBalance =
-    (balance.accountBalance - balance.startBalance) / balance.startBalance;
+    (balance.accountBalance - journal.startBalance) / journal.startBalance;
 
   const available = balance.available / balance.accountBalance;
 
@@ -53,16 +53,20 @@ const BalanceCards = ({ balance }) => {
   );
 };
 
-export const JournalBalance = ({ balance }) => {
+export const JournalBalance = ({ balance, journal }) => {
   return (
     <div>
       <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
         <Accordion title="Journal Balance">
-          {balance && <BalanceCards balance={balance}></BalanceCards>}
+          {balance && (
+            <BalanceCards balance={balance} journal={journal}></BalanceCards>
+          )}
         </Accordion>
       </Box>
       <Grid container sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-        {balance && <BalanceCards balance={balance}></BalanceCards>}
+        {balance && (
+          <BalanceCards balance={balance} journal={journal}></BalanceCards>
+        )}
       </Grid>
     </div>
   );

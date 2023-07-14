@@ -91,7 +91,7 @@ export const TimeAggregation = ({ journal, onChange }) => {
               sx={{
                 '& .selected': {
                   backgroundColor: `${
-                    isDarkMode ? colors.primary[400] : colors.primary[400]
+                    isDarkMode ? colors.slate[700] : colors.slate[200]
                   }`,
                 },
               }}
@@ -121,7 +121,7 @@ export const TimeAggregation = ({ journal, onChange }) => {
                     '&:hover': {
                       cursor: 'pointer',
                       backgroundColor: `${
-                        isDarkMode ? colors.primary[400] : colors.primary[400]
+                        isDarkMode ? colors.slate[700] : colors.slate[200]
                       }`,
                     },
                   }}

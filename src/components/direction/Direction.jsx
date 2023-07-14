@@ -6,7 +6,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
-import { useColors, useIsDarkMode } from '../../hooks/useColors';
+import { useColors, usePalette } from '../../hooks/useColors';
 
 export const Direction = ({
   onChange,
@@ -15,7 +15,9 @@ export const Direction = ({
   size = 'medium',
 }) => {
   const colors = useColors();
-  const isDarkMode = useIsDarkMode();
+  const palette = usePalette();
+  const red = palette.error.main;
+  const green = palette.success.main;
   const [type, setType] = useState(showEmpty ? 'ALL' : value || 'LONG');
   const changeFilter = (type) => {
     if (type !== null) {
@@ -35,25 +37,17 @@ export const Direction = ({
         sx={{
           height: `${size === 'large' ? '52px' : null}`,
           '& .Mui-selected.long': {
-            color: '#E7F2FE !important',
-            backgroundColor: `${
-              isDarkMode ? colors.greenAccent[700] : colors.greenAccent[300]
-            }`,
+            color: colors.slate[100],
+            backgroundColor: green,
             '&:hover': {
-              backgroundColor: `${
-                isDarkMode ? colors.greenAccent[700] : colors.greenAccent[300]
-              }`,
+              backgroundColor: green,
             },
           },
           '& .Mui-selected.short': {
-            color: '#E7F2FE !important',
-            backgroundColor: `${
-              isDarkMode ? colors.redAccent[700] : colors.redAccent[300]
-            }`,
+            color: colors.slate[100],
+            backgroundColor: red,
             '&:hover': {
-              backgroundColor: `${
-                isDarkMode ? colors.redAccent[700] : colors.redAccent[300]
-              }`,
+              backgroundColor: red,
             },
           },
         }}

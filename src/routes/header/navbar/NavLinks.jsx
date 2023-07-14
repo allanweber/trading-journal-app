@@ -8,11 +8,12 @@ import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useJournalContext } from '../../../context/JournalContext';
-import { useColors } from '../../../hooks/useColors';
+import { useColors, useIsDarkMode } from '../../../hooks/useColors';
 import { useIsMobile } from '../../../hooks/useIsMobile';
 
 export const NavLinks = ({ onChange }) => {
   const colors = useColors();
+  const isDarkMode = useIsDarkMode();
   const location = useLocation();
   const isMobile = useIsMobile();
   const navigate = useNavigate();
@@ -45,7 +46,9 @@ export const NavLinks = ({ onChange }) => {
   };
 
   const selectedStyle = {
-    borderBottom: `1px solid ${colors.grey[100]}`,
+    borderBottom: `1px solid ${
+      isDarkMode ? colors.slate[100] : colors.slate[900]
+    }`,
     fontWeight: 900,
     borderRadius: 0,
   };
@@ -55,7 +58,7 @@ export const NavLinks = ({ onChange }) => {
       <Typography
         textAlign="center"
         fontSize="1rem"
-        color={colors.grey[100]}
+        variant="h3"
         paddingBottom="5px"
         style={select ? selectedStyle : null}
         {...rest}
@@ -74,7 +77,6 @@ export const NavLinks = ({ onChange }) => {
         <div>
           <Button
             sx={{
-              color: colors.grey[100],
               paddingLeft: isMobile ? '20px' : null,
             }}
             endIcon={<ArrowDropDownOutlinedIcon />}

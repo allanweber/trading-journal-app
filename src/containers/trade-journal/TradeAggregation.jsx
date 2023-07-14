@@ -34,7 +34,7 @@ export const TradeAggregation = ({ journal, period, onChange }) => {
         <ColorfulCurrency value={trade.netResult} currency={journal.currency} />
       );
     } else {
-      return <Typography color={colors.greenAccent[400]}>OPEN</Typography>;
+      return <Typography>OPEN</Typography>;
     }
   };
 
@@ -72,7 +72,7 @@ export const TradeAggregation = ({ journal, period, onChange }) => {
               sx={{
                 '& .selected': {
                   backgroundColor: `${
-                    isDarkMode ? colors.primary[400] : colors.primary[400]
+                    isDarkMode ? colors.slate[700] : colors.slate[200]
                   }`,
                 },
               }}
@@ -101,7 +101,7 @@ export const TradeAggregation = ({ journal, period, onChange }) => {
                     '&:hover': {
                       cursor: 'pointer',
                       backgroundColor: `${
-                        isDarkMode ? colors.primary[400] : colors.primary[400]
+                        isDarkMode ? colors.slate[700] : colors.slate[200]
                       }`,
                     },
                   }}

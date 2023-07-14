@@ -4,12 +4,14 @@ export const Button = ({
   children,
   fullWidth,
   icon,
+  variant,
   type = 'submit',
-  variant = 'contained',
   loading = false,
-  secondary = false,
   ...rest
 }) => {
+  if (!variant) {
+    variant = 'contained';
+  }
   return (
     <LoadingButton
       fullWidth={fullWidth}
@@ -17,7 +19,6 @@ export const Button = ({
       variant={variant}
       loading={loading}
       {...(icon && { startIcon: icon })}
-      {...(secondary && { color: 'secondary' })}
       {...rest}
     >
       {children}

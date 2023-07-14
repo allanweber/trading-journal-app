@@ -1,12 +1,16 @@
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
 import ExtensionOutlinedIcon from '@mui/icons-material/ExtensionOutlined';
 import {
   Box,
   DialogContentText,
   Grid,
+  Link,
   TextField,
   Typography,
 } from '@mui/material';
+import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Accordion } from '../components/accordion';
 import { Alert } from '../components/alert';
@@ -29,6 +33,7 @@ import { Feedback } from '../components/feedback';
 import { GraphSelect } from '../components/graph-select';
 import { Header } from '../components/header';
 import { LoadingPage } from '../components/loading-page';
+import { MultiSelect } from '../components/multi-select';
 import { NumberInput } from '../components/number-input';
 import { Search } from '../components/search';
 import { StatusCard } from '../components/status-card';
@@ -38,9 +43,8 @@ import { TimeGroup } from '../components/time-group';
 import { TimeSelect } from '../components/time-select';
 import { useToastr } from '../components/toastr/Toastr';
 import { WinLose } from '../components/win-lose';
-
-import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
-import { MultiSelect } from '../components/multi-select';
+import { displayDate } from '../utilities/dateTimeUtilities';
+import { currencyFormatter } from '../utilities/numberUtilities';
 
 //
 //
@@ -148,6 +152,58 @@ export const Samples = () => {
     toastr.showToastr('Toastr message 2');
     toastr.showToastr('Toastr message 3');
   };
+
+  const columns = [
+    {
+      field: 'actions',
+      type: 'actions',
+      width: 30,
+      getActions: (params) => [
+        <GridActionsCellItem
+          key={params.row.id}
+          icon={<DeleteOutlineOutlinedIcon />}
+          label="Delete"
+        />,
+      ],
+    },
+    {
+      field: 'name',
+      headerName: 'Name',
+      flex: 1,
+      renderCell: (params) => <Link>{params.row.name}</Link>,
+    },
+    {
+      field: 'startBalance',
+      headerName: 'Start Balance',
+      type: 'number',
+      flex: 1,
+      valueGetter: (params) =>
+        currencyFormatter(params.row.startBalance, params.row.currency),
+    },
+    {
+      field: 'startJournal',
+      headerName: 'Start Journal',
+      flex: 1,
+      valueGetter: (params) => displayDate(params.row.startJournal),
+    },
+  ];
+
+  const data = [
+    {
+      id: 1,
+      name: 'Account 1',
+      startBalance: 1000,
+      currency: 'USD',
+      startJournal: new Date(),
+    },
+    {
+      id: 2,
+      name: 'Account 2',
+      startBalance: 2000,
+      currency: 'USD',
+      startJournal: new Date(),
+    },
+  ];
 
   return (
     <div>
@@ -363,14 +419,6 @@ export const Samples = () => {
               </Button>
             </Grid>
             <Grid item md={4} xs={6}>
-              <Button secondary>Secondary</Button>
-            </Grid>
-            <Grid item md={4} xs={6}>
-              <Button secondary loading={true}>
-                Secondary
-              </Button>
-            </Grid>
-            <Grid item md={4} xs={6}>
               <Button icon={<DownloadOutlinedIcon />}>Primary Icon</Button>
             </Grid>
             <Grid item md={4} xs={6}>
@@ -378,10 +426,13 @@ export const Samples = () => {
                 Outlined Icon
               </Button>
             </Grid>
+          </Fragment>
+          <Fragment>
             <Grid item md={4} xs={6}>
-              <Button secondary icon={<DownloadOutlinedIcon />}>
-                Secondary Icon
-              </Button>
+              <Button variant="text">Text Button</Button>
+            </Grid>
+            <Grid item md={4} xs={6}>
+              <Link>Link</Link>
             </Grid>
           </Fragment>
 
@@ -558,6 +609,18 @@ export const Samples = () => {
             </Grid>
             <Grid item md={4} xs={6}>
               <Header title="Header" subtitle=" and subtitle" />
+            </Grid>
+          </Fragment>
+          <Fragment>
+            <Grid item md={12} xs={12}>
+              <DataGrid
+                rows={data || []}
+                columns={columns}
+                autoHeight
+                disableSelectionOnClick
+                disableColumnMenu
+                checkboxSelection
+              />
             </Grid>
           </Fragment>
         </Grid>

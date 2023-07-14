@@ -21,9 +21,14 @@ export const Search = ({ placeholder, onSearch }) => {
     <Box
       display="flex"
       sx={{
-        border: `1px solid ${
-          isDarkMode ? colors.primary[100] : colors.primary[800]
+        border: `0.5px solid ${
+          isDarkMode ? colors.slate[500] : colors.slate[200]
         }`,
+        '&:hover': {
+          border: `0.5px solid ${
+            isDarkMode ? colors.slate[100] : colors.slate[500]
+          }`,
+        },
       }}
       borderRadius="3px"
       maxWidth="150px"

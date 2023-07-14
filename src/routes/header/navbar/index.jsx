@@ -6,14 +6,14 @@ import Menu from '@mui/material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import { useState } from 'react';
 import { useAuthState } from '../../../context/UserContext';
-import { useColors } from '../../../hooks/useColors';
+import { useColors, useIsDarkMode } from '../../../hooks/useColors';
 import { OptionsMenu } from '../options/OptionsMenu';
 import { JournalSelect } from './JournalSelect';
 import { NavLinks } from './NavLinks';
 
 export const NavBar = () => {
-  const colors = useColors();
-
+  const color = useColors();
+  const isDarkMode = useIsDarkMode();
   const { user } = useAuthState();
 
   const [anchorMobileMenu, setAnchorMobileMenu] = useState();
@@ -29,7 +29,12 @@ export const NavBar = () => {
 
   return (
     <AppBar position="static">
-      <Container maxWidth={false} sx={{ backgroundColor: colors.primary[400] }}>
+      <Container
+        maxWidth={false}
+        sx={{
+          backgroundColor: isDarkMode ? color.slate[900] : color.slate[100],
+        }}
+      >
         <Toolbar disableGutters>
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <JournalSelect />
@@ -42,7 +47,6 @@ export const NavBar = () => {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={openMobileMenu}
-              sx={{ color: colors.grey[100] }}
             >
               <MenuIcon fontSize="1.2rem" />
             </IconButton>
