@@ -59,7 +59,6 @@ export const TaxesForm = ({ journal, onCancel, onSave }) => {
                   dateOnly
                   required
                   fullWidth
-                  variant="filled"
                   type="text"
                   label="Taxes at"
                   onBlur={handleBlur}
@@ -74,7 +73,6 @@ export const TaxesForm = ({ journal, onCancel, onSave }) => {
                 <NumberInput
                   fullWidth
                   required
-                  variant="filled"
                   type="text"
                   label={`Taxes Value (${currencySymbol(journal.currency)})`}
                   onBlur={handleBlur}

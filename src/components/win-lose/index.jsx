@@ -6,11 +6,12 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
-import { useColors, useIsDarkMode } from '../../hooks/useColors';
+import { usePalette } from '../../hooks/useColors';
 
 export const WinLose = ({ onChange }) => {
-  const colors = useColors();
-  const isDarkMode = useIsDarkMode();
+  const palette = usePalette();
+  const red = palette.error.main;
+  const green = palette.success.main;
   const [type, setType] = useState('ALL');
   const changeFilter = (type) => {
     setType(type);
@@ -28,24 +29,16 @@ export const WinLose = ({ onChange }) => {
         sx={{
           '& .Mui-selected.win': {
             color: '#E7F2FE !important',
-            backgroundColor: `${
-              isDarkMode ? colors.greenAccent[700] : colors.greenAccent[300]
-            }`,
+            backgroundColor: green,
             '&:hover': {
-              backgroundColor: `${
-                isDarkMode ? colors.greenAccent[700] : colors.greenAccent[300]
-              }`,
+              backgroundColor: green,
             },
           },
           '& .Mui-selected.lose': {
             color: '#E7F2FE !important',
-            backgroundColor: `${
-              isDarkMode ? colors.redAccent[700] : colors.redAccent[300]
-            }`,
+            backgroundColor: red,
             '&:hover': {
-              backgroundColor: `${
-                isDarkMode ? colors.redAccent[700] : colors.redAccent[300]
-              }`,
+              backgroundColor: red,
             },
           },
         }}

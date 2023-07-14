@@ -11,6 +11,11 @@ export const useMode = () => {
   return theme.palette.mode;
 };
 
+export const usePalette = () => {
+  const theme = useTheme();
+  return theme.palette;
+};
+
 export const useIsDarkMode = () => {
   const theme = useTheme();
   return theme.palette.mode === 'dark';

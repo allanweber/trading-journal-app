@@ -1,74 +1,78 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Card, CardContent, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useColors, useIsDarkMode } from '../../hooks/useColors';
+import { usePalette } from '../../hooks/useColors';
 import {
   currencyFormatter,
   percentFormatter,
 } from '../../utilities/numberUtilities';
 
 export const StatusCard = ({ title, value, currency, icon, percentage }) => {
-  const colors = useColors();
+  const palette = usePalette();
+
   const [formattedValue, setFormattedValue] = useState();
   const [formattedPercentage, setFormattedPercentage] = useState();
   const [valueColor, setValueColor] = useState();
   const [percentageColor, setPercentageColor] = useState();
-  const isDarkMode = useIsDarkMode();
+
+  const red = palette.error.main;
+  const green = palette.success.main;
+  const secondary = palette.secondary.main;
 
   useEffect(() => {
     if (typeof value === 'number') {
       setFormattedValue(currencyFormatter(value, currency));
       if (value === 0) {
-        setValueColor(colors.grey[100]);
+        setValueColor(secondary);
       } else if (value >= 0) {
-        setValueColor(colors.greenAccent[400]);
+        setValueColor(green);
       } else {
-        setValueColor(colors.redAccent[500]);
+        setValueColor(red);
       }
     } else {
       setFormattedValue(value);
-      setValueColor(colors.grey[100]);
+      setValueColor(secondary);
     }
-  }, [value, currency, colors]);
+  }, [value, currency, secondary, green, red]);
 
   useEffect(() => {
     if (percentage === 0) {
-      setPercentageColor(colors.grey[100]);
+      setPercentageColor(secondary);
     } else if (percentage > 0) {
-      setPercentageColor(colors.greenAccent[400]);
+      setPercentageColor(green);
     } else {
-      setPercentageColor(colors.redAccent[500]);
+      setPercentageColor(red);
     }
     setFormattedPercentage(percentFormatter(percentage));
-  }, [percentage, colors]);
+  }, [percentage, secondary, green, red]);
 
   return (
-    <Box
-      p="20px"
-      maxWidth="300px"
-      backgroundColor={isDarkMode ? colors.primary[400] : colors.primary[300]}
-    >
-      <Box display="flex" justifyContent="space-between">
-        <Box>
-          <Typography variant="h3" fontWeight="bold" sx={{ color: valueColor }}>
-            {formattedValue}
-          </Typography>
+    <Card variant="outlined">
+      <CardContent>
+        <Box display="flex" justifyContent="space-between">
+          <Box>
+            <Typography
+              variant="h3"
+              fontWeight="bold"
+              sx={{ color: valueColor }}
+            >
+              {formattedValue}
+            </Typography>
+          </Box>
+          <Box>{icon}</Box>
         </Box>
-        <Box>{icon}</Box>
-      </Box>
-      <Box display="flex" justifyContent="space-between" mt="2px">
-        <Typography variant="h5" sx={{ color: colors.grey[100] }}>
-          {title}
-        </Typography>
-        {percentage > 0 && (
-          <Typography
-            variant="h5"
-            fontStyle="italic"
-            sx={{ color: percentageColor }}
-          >
-            {formattedPercentage}
-          </Typography>
-        )}
-      </Box>
-    </Box>
+        <Box display="flex" justifyContent="space-between" mt="2px">
+          <Typography variant="h5">{title}</Typography>
+          {percentage && (
+            <Typography
+              variant="h5"
+              fontStyle="italic"
+              sx={{ color: percentageColor }}
+            >
+              {formattedPercentage}
+            </Typography>
+          )}
+        </Box>
+      </CardContent>
+    </Card>
   );
 };

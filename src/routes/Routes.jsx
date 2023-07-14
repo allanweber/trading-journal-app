@@ -5,6 +5,7 @@ import { Journals } from './journals';
 import { FirstJournal } from './journals/FirstJournal';
 import { ChangePassword } from './password/ChangePassword';
 import { RequestPassword } from './password/RequestPassword';
+import { Samples } from './samples';
 import { SignIn } from './signin';
 import { SignUp } from './signup';
 import { Pending } from './signup/pending';
@@ -19,6 +20,7 @@ import { VerifyAgain } from './verify/verify-again';
 export const Routes = () => {
   return (
     <ReactRoutes>
+      <Route path="/samples" element={<Samples />} />
       <Route path="/login" element={<SignIn />} />
       <Route path="/register" element={<SignUp />} />
       <Route path="/register/success" element={<Success />} />

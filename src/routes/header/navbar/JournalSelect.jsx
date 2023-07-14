@@ -7,7 +7,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useColors } from '../../../hooks/useColors';
 import { useGetJournals } from '../../../services/JournalQueries';
 
 import { AutoStoriesOutlined } from '@mui/icons-material';
@@ -21,7 +20,6 @@ import {
 } from '../../../services/JournalStorageService';
 
 export const JournalSelect = () => {
-  const colors = useColors();
   const isMobile = useIsMobile();
   const navigate = useNavigate();
   const { journal, setJournal } = useJournalContext();
@@ -73,7 +71,6 @@ export const JournalSelect = () => {
   return (
     <div>
       <Button
-        sx={{ color: colors.grey[100] }}
         endIcon={<ArrowDropDownOutlinedIcon />}
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
@@ -91,7 +88,6 @@ export const JournalSelect = () => {
             fontWeight: 700,
             letterSpacing: '.1rem',
             textDecoration: 'none',
-            color: colors.grey[100],
           }}
         >
           {journal.name}
@@ -135,7 +131,6 @@ export const JournalSelect = () => {
           <Typography
             sx={{
               textDecoration: 'none',
-              color: colors.grey[100],
             }}
           >
             Manage Journals

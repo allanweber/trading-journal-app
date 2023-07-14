@@ -61,7 +61,6 @@ export const ChangePassword = () => {
                     <Grid item xs={12} sm={12}>
                       <TextField
                         fullWidth
-                        variant="filled"
                         type="text"
                         label="Email"
                         onBlur={handleBlur}
@@ -75,7 +74,6 @@ export const ChangePassword = () => {
                     <Grid item xs={12} sm={12}>
                       <TextField
                         fullWidth
-                        variant="filled"
                         type="password"
                         label="Password"
                         onBlur={handleBlur}
@@ -90,7 +88,6 @@ export const ChangePassword = () => {
                     <Grid item xs={12} sm={12}>
                       <TextField
                         fullWidth
-                        variant="filled"
                         type="password"
                         label="Password Confirmation"
                         onBlur={handleBlur}

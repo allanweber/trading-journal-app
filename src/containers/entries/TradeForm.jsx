@@ -96,7 +96,6 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                         fullWidth
                         required
                         rows={2}
-                        variant="filled"
                         label="Symbol"
                         onBlur={handleBlur}
                         onChange={handleChange}
@@ -110,7 +109,6 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                       <DateTime
                         fullWidth
                         required
-                        variant="filled"
                         type="text"
                         label="Start trading date"
                         onBlur={handleBlur}
@@ -121,15 +119,15 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                         helperText={touched.date && errors.date}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={4} sx={{ mt: '10px' }}>
+                    <Grid item xs={12} sm={4}>
                       <FormControl fullWidth>
                         <Direction
-                          size="small"
                           onChange={(value) =>
                             setFieldValue('direction', value, true)
                           }
                           value={values.direction}
                           name="direction"
+                          size="large"
                         />
                       </FormControl>
                     </Grid>
@@ -137,7 +135,6 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                       <NumberInput
                         fullWidth
                         required
-                        variant="filled"
                         type="text"
                         label="Quantity"
                         onBlur={handleBlur}
@@ -154,7 +151,6 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                       <NumberInput
                         fullWidth
                         required
-                        variant="filled"
                         type="text"
                         label={`Entry Price (${currencySymbol(
                           journal.currency
@@ -177,7 +173,6 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                     <Grid item xs={12} sm={4}>
                       <NumberInput
                         fullWidth
-                        variant="filled"
                         type="text"
                         label={`Take Profit Price (${currencySymbol(
                           journal.currency
@@ -197,7 +192,6 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                     <Grid item xs={12} sm={4}>
                       <NumberInput
                         fullWidth
-                        variant="filled"
                         type="text"
                         label={`Stop Loss Price (${currencySymbol(
                           journal.currency
@@ -217,7 +211,6 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                     <Grid item xs={12} sm={4}>
                       <NumberInput
                         fullWidth
-                        variant="filled"
                         type="text"
                         label={`Commission (${currencySymbol(
                           journal.currency
@@ -253,7 +246,6 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                     <Grid item xs={12} sm={6}>
                       <TextField
                         fullWidth
-                        variant="filled"
                         label="Graph Measure"
                         onBlur={handleBlur}
                         onChange={handleChange}
@@ -279,7 +271,6 @@ export const TradeForm = ({ trade, journal, onCancel, onSave }) => {
                         fullWidth
                         multiline
                         rows={2}
-                        variant="filled"
                         label="Notes"
                         onBlur={handleBlur}
                         onChange={handleChange}

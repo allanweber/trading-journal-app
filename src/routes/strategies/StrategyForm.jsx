@@ -51,7 +51,6 @@ export const StrategyForm = ({ strategy, onCancel, onSaved }) => {
                 <TextField
                   autoFocus={true}
                   fullWidth
-                  variant="filled"
                   label="Strategy Name"
                   onBlur={handleBlur}
                   onChange={handleChange}

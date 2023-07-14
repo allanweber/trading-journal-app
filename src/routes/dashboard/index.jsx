@@ -28,7 +28,7 @@ export const Dashboard = () => {
           subtitle="Welcome To Trading Journal "
         />
       </Box>
-      <JournalBalance balance={balance} />
+      <JournalBalance balance={balance} journal={journal} />
     </Box>
   );
 };

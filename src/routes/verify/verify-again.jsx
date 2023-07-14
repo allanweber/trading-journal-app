@@ -54,7 +54,6 @@ export const VerifyAgain = () => {
                 <Grid item xs={12} sm={12}>
                   <TextField
                     fullWidth
-                    variant="filled"
                     type="text"
                     label="Email"
                     onBlur={handleBlur}

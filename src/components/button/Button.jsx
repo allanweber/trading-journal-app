@@ -3,19 +3,22 @@ import LoadingButton from '@mui/lab/LoadingButton';
 export const Button = ({
   children,
   fullWidth,
+  icon,
+  variant,
   type = 'submit',
-  variant = 'contained',
   loading = false,
-  secondary = false,
   ...rest
 }) => {
+  if (!variant) {
+    variant = 'contained';
+  }
   return (
     <LoadingButton
       fullWidth={fullWidth}
       type={type}
       variant={variant}
       loading={loading}
-      {...(secondary && { color: 'secondary' })}
+      {...(icon && { startIcon: icon })}
       {...rest}
     >
       {children}

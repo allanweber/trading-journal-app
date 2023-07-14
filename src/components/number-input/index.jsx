@@ -47,10 +47,14 @@ export const NumberInput = ({
     const value = parseFloat(event.target.value);
     if (value === 0 && (zeroIsInvalid || zeroIsNull)) {
       setCurrent(undefined);
-      onChange(undefined);
+      if (onChange) {
+        onChange(undefined);
+      }
     } else {
       setCurrent(value);
-      onChange(value);
+      if (onChange) {
+        onChange(value);
+      }
     }
   };
 

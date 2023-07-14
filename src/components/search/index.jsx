@@ -14,15 +14,24 @@ export const Search = ({ placeholder, onSearch }) => {
 
   const clear = () => {
     setValue('');
-    onSearch(undefined);
+    if (onSearch) onSearch(undefined);
   };
 
   return (
     <Box
       display="flex"
-      backgroundColor={isDarkMode ? colors.primary[200] : colors.primary[900]}
+      sx={{
+        border: `0.5px solid ${
+          isDarkMode ? colors.slate[500] : colors.slate[200]
+        }`,
+        '&:hover': {
+          border: `0.5px solid ${
+            isDarkMode ? colors.slate[100] : colors.slate[500]
+          }`,
+        },
+      }}
       borderRadius="3px"
-      maxWidth="200px"
+      maxWidth="150px"
     >
       <InputBase
         value={value}
@@ -40,9 +49,9 @@ export const Search = ({ placeholder, onSearch }) => {
         <IconButton
           type="button"
           sx={{ p: 1 }}
-          {...(onSearch && {
+          {...{
             onClick: clear,
-          })}
+          }}
         >
           <ClearOutlinedIcon />
         </IconButton>
