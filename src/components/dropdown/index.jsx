@@ -1,3 +1,4 @@
+import UnfoldMoreOutlinedIcon from '@mui/icons-material/UnfoldMoreOutlined';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import React, { useState } from 'react';
@@ -22,6 +23,9 @@ export const Dropdown = ({ items, onChange, value, small, name, ...rest }) => {
       onChange={handleChange}
       value={currentValue}
       {...rest}
+      SelectProps={{
+        IconComponent: UnfoldMoreOutlinedIcon,
+      }}
     >
       {items &&
         items.map((item) => (

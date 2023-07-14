@@ -69,7 +69,10 @@ export const NavLinks = ({ onChange }) => {
   };
 
   return (
-    <Box display={isMobile ? 'block' : 'flex'}>
+    <Box
+      display={isMobile ? 'block' : 'flex'}
+      marginLeft={isMobile ? null : '20px'}
+    >
       <MenuItem key="Dashboard" onClick={() => onSelect('/')}>
         <MenuHeader select={selected === '/'}>DASHBOARD</MenuHeader>
       </MenuItem>
@@ -77,7 +80,7 @@ export const NavLinks = ({ onChange }) => {
         <div>
           <Button
             sx={{
-              paddingLeft: isMobile ? '20px' : null,
+              paddingLeft: isMobile ? '16px' : null,
             }}
             endIcon={<ArrowDropDownOutlinedIcon />}
             aria-controls={open ? 'basic-menu' : undefined}
@@ -107,11 +110,7 @@ export const NavLinks = ({ onChange }) => {
               },
             }}
           >
-            <MenuItem
-              key="Trades"
-              onClick={() => onSelect('/journal')}
-              sx={{ padding: '20px' }}
-            >
+            <MenuItem key="Trades" onClick={() => onSelect('/journal')}>
               <ListItemIcon>
                 <AutoStoriesOutlined />
               </ListItemIcon>
@@ -127,11 +126,7 @@ export const NavLinks = ({ onChange }) => {
                 </Typography>
               </ListItemText>
             </MenuItem>
-            <MenuItem
-              key="Table"
-              onClick={() => onSelect('/entries')}
-              sx={{ padding: '20px' }}
-            >
+            <MenuItem key="Table" onClick={() => onSelect('/entries')}>
               <ListItemIcon>
                 <TableRowsOutlinedIcon />
               </ListItemIcon>
@@ -147,11 +142,7 @@ export const NavLinks = ({ onChange }) => {
                 </Typography>
               </ListItemText>
             </MenuItem>
-            <MenuItem
-              key="Calendar"
-              onClick={() => onSelect('/calendar')}
-              sx={{ padding: '20px' }}
-            >
+            <MenuItem key="Calendar" onClick={() => onSelect('/calendar')}>
               <ListItemIcon>
                 <CalendarMonthOutlinedIcon />
               </ListItemIcon>

@@ -14,8 +14,10 @@ export const tokens = (mode) => ({
   },
   neutral: {
     100: '#f5f5f5',
+    200: '#c9cacc',
     500: '#737373',
     700: '#404040',
+    800: '#2d2d2d',
   },
   red: {
     100: '#fee2e2',
@@ -212,6 +214,18 @@ export const themeSettings = (mode) => {
           standardWarning: {
             backgroundColor: colors.orange[500],
             color: mode === 'dark' ? colors.slate[900] : colors.slate[100],
+          },
+        },
+      },
+      MuiAppBar: {
+        styleOverrides: {
+          root: {
+            boxShadow: `${
+              mode === 'dark'
+                ? '0px 0px 0px 0px rgba(0,0,00), 0px 0px 0px 0px rgba(0,0,00),0px 0px 0px 1px rgba(120, 117, 117 ,0.62)'
+                : '0px 0px 0px 0px rgba(0,0,00), 0px 0px 0px 0px rgba(0,0,0,0), 0px 0px 0px 1px rgba(0,0,0,0.12)'
+            }`,
+            // box-shadow:;
           },
         },
       },

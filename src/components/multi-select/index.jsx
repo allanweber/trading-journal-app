@@ -1,3 +1,4 @@
+import UnfoldMoreOutlinedIcon from '@mui/icons-material/UnfoldMoreOutlined';
 import { FormHelperText } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
@@ -66,6 +67,7 @@ export const MultiSelect = ({
             return `${selectedValues.length} selected`;
           }
         }}
+        IconComponent={UnfoldMoreOutlinedIcon}
         MenuProps={MenuProps}
         error={error}
         {...rest}
