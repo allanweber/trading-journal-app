@@ -32,6 +32,11 @@ export const tokens = (mode) => ({
     500: '#22c55e',
     900: '#14532d',
   },
+  orange: {
+    100: '#ffedd5',
+    500: '#f97316',
+    900: '#7c2d12',
+  },
 });
 
 // mui theme settings
@@ -182,6 +187,31 @@ export const themeSettings = (mode) => {
         styleOverrides: {
           root: {
             color: mode === 'dark' ? colors.slate[200] : colors.slate[500],
+          },
+        },
+      },
+      MuiAlert: {
+        styleOverrides: {
+          root: {
+            '& .MuiAlert-icon': {
+              color: mode === 'dark' ? colors.slate[900] : colors.slate[100],
+            },
+          },
+          standardSuccess: {
+            backgroundColor: colors.green[500],
+            color: mode === 'dark' ? colors.slate[900] : colors.slate[100],
+          },
+          standardInfo: {
+            backgroundColor: colors.blue[500],
+            color: mode === 'dark' ? colors.slate[900] : colors.slate[100],
+          },
+          standardError: {
+            backgroundColor: colors.red[500],
+            color: mode === 'dark' ? colors.slate[900] : colors.slate[100],
+          },
+          standardWarning: {
+            backgroundColor: colors.orange[500],
+            color: mode === 'dark' ? colors.slate[900] : colors.slate[100],
           },
         },
       },
